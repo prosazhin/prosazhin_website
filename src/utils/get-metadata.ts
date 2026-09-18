@@ -3,8 +3,7 @@ import { MetadataType } from '@/types';
 const PROD = process.env.NEXT_PUBLIC_NODE_ENV === 'production';
 const SITE_URL = PROD ? 'https://prosazhin.dev' : 'http://localhost:8080';
 const SITE_NAME = 'prosazhin';
-const GOOGLE = 'oXkccV9eEltz10YzICaE33ZUFtjof1E4fFLFE4EgW-0';
-const YANDEX = 'dd48801ed051b178';
+const YANDEX = '3bd565ceeb010e00';
 
 const getMetadata = ({
   locale,
@@ -58,7 +57,6 @@ const getMetadata = ({
       },
     },
     verification: {
-      google: GOOGLE,
       yandex: YANDEX,
     },
     other: [
