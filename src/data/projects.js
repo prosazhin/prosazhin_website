@@ -1,20 +1,12 @@
 const projects = {
-  'get-offer-ru': {
-    order: 1,
-    size: 2,
-    accent: true,
-    first: true,
-    tags: ['Design', 'Development'],
-    resourceLinks: [{ url: 'https://get-offer.ru', title: 'get-offer.ru' }],
-  },
   pbcomponents: {
-    order: 2,
+    order: 1,
     size: 3,
     accent: true,
     first: true,
     tags: ['Design', 'Development'],
     resourceLinks: [
-      { url: 'https://pbcomponents.vercel.app/?path=/docs/intro--docs', title: 'Preview' },
+      { url: '/docs/pbcomponents', title: 'docs' },
       {
         url: 'https://github.com/prosazhin/pbcomponents',
         title: 'GitHub',
@@ -28,12 +20,13 @@ const projects = {
     ],
   },
   pbstyles: {
-    order: 3,
+    order: 2,
     size: 4,
     accent: true,
     first: false,
     tags: ['Design', 'Development'],
     resourceLinks: [
+      { url: '/docs/pbstyles', title: 'docs' },
       { url: 'https://github.com/prosazhin/pbstyles', title: 'GitHub' },
       { url: 'https://www.npmjs.com/package/@prosazhin/pbstyles', title: 'NPM' },
       {
@@ -44,7 +37,7 @@ const projects = {
     ],
   },
   prosazhin_website: {
-    order: 4,
+    order: 3,
     size: 2,
     accent: false,
     first: false,
@@ -59,29 +52,31 @@ const projects = {
     ],
   },
   'mixin-dictionary': {
+    order: 4,
+    size: 3,
+    accent: false,
+    first: false,
+    tags: ['Development'],
+    resourceLinks: [
+      { url: '/docs/mixin-dictionary', title: 'docs' },
+      { url: 'https://www.npmjs.com/package/mixin-dictionary', title: 'NPM' },
+      { url: 'https://github.com/prosazhin/mixin-dictionary', title: 'GitHub' },
+    ],
+  },
+  'tailwind-dictionary': {
     order: 5,
     size: 3,
     accent: false,
     first: false,
     tags: ['Development'],
     resourceLinks: [
-      { url: 'https://www.npmjs.com/package/mixin-dictionary', title: 'NPM' },
-      { url: 'https://github.com/prosazhin/mixin-dictionary', title: 'GitHub' },
-    ],
-  },
-  'tailwind-dictionary': {
-    order: 6,
-    size: 3,
-    accent: false,
-    first: false,
-    tags: ['Development'],
-    resourceLinks: [
+      { url: '/docs/tailwind-dictionary', title: 'docs' },
       { url: 'https://www.npmjs.com/package/tailwind-dictionary', title: 'NPM' },
       { url: 'https://github.com/prosazhin/tailwind-dictionary', title: 'GitHub' },
     ],
   },
   'bank-money-time': {
-    order: 7,
+    order: 6,
     size: 4,
     accent: true,
     first: false,
@@ -95,7 +90,7 @@ const projects = {
     ],
   },
   'telegram-assistent-bot': {
-    order: 8,
+    order: 7,
     size: 2,
     accent: false,
     first: false,
@@ -105,7 +100,7 @@ const projects = {
     ],
   },
   'telegram-access-permission-bot': {
-    order: 9,
+    order: 8,
     size: 2,
     accent: false,
     first: false,
@@ -118,7 +113,7 @@ const projects = {
     ],
   },
   'shake-to-mind': {
-    order: 10,
+    order: 9,
     size: 4,
     accent: true,
     first: false,

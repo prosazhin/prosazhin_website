@@ -1,0 +1,29 @@
+---
+title: useNotifications
+description: 'Reads notifications and exposes show and hide methods.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Reads notifications and exposes show and hide methods.
+Call this inside `NotificationsProvider` or `PBCProvider`.
+
+## Usage
+
+```tsx
+'use client';
+
+import { useNotifications } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { showNotification } = useNotifications();
+  return <button onClick={() => showNotification({ headline: 'Saved' })}>Show</button>;
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useNotifications'
+  locale='en'
+/>

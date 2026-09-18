@@ -1,4 +1,5 @@
 {
+  "about": "What a competency matrix is",
   "headline": "Levels of skill assessment",
   "levels": [
     {
@@ -34,6 +35,14 @@
         {
           "id": "communication-and-teamwork",
           "title": "Communication and teamwork"
+        },
+        {
+          "id": "stakeholder-management-and-presenting-solutions",
+          "title": "Stakeholder management and presenting solutions"
+        },
+        {
+          "id": "mentoring",
+          "title": "Mentoring and developing others"
         }
       ]
     },
@@ -59,7 +68,7 @@
       ]
     },
     {
-      "title": "User research and analytics",
+      "title": "User research",
       "competencies": [
         {
           "id": "understanding-and-describing-users-personas-scenarios-customer-journey-maps-etc",
@@ -67,7 +76,7 @@
         },
         {
           "id": "insight-and-needs-discovery",
-          "title": "Insight and Needs Discovery"
+          "title": "Insight and needs discovery"
         },
         {
           "id": "validation-of-design-solutions",
@@ -93,6 +102,10 @@
         {
           "id": "description-of-interface-working-principles-and-patterns",
           "title": "Description of interface working principles and patterns"
+        },
+        {
+          "id": "accessibility-design",
+          "title": "Accessible interface design (a11y, WCAG)"
         }
       ]
     },
@@ -112,6 +125,10 @@
           "title": "Interface animation and motion design"
         },
         {
+          "id": "design-systems-and-tokens",
+          "title": "Design systems and tokens: architecture, maintenance, governance"
+        },
+        {
           "id": "creating-guidelines",
           "title": "Creating guidelines"
         },
@@ -122,19 +139,23 @@
         {
           "id": "identity-and-branding",
           "title": "Identity and branding"
-        },
-        {
-          "id": "typography-design",
-          "title": "Typography design"
         }
       ]
     },
     {
-      "title": "Frontend",
+      "title": "Design engineering",
       "competencies": [
         {
           "id": "layout-html-css-javascript-and-interface-animation",
           "title": "Layout (HTML, CSS, JavaScript) and interface animation"
+        },
+        {
+          "id": "prototyping-in-code",
+          "title": "Prototyping in code"
+        },
+        {
+          "id": "developer-handoff-and-documentation",
+          "title": "Developer handoff and documentation"
         },
         {
           "id": "working-with-data-sources",
@@ -159,7 +180,7 @@
         },
         {
           "id": "building-content-strategy-and-planning",
-          "title": "Building Content Strategy and Planning"
+          "title": "Building content strategy and planning"
         }
       ]
     },
@@ -181,20 +202,16 @@
       "competencies": [
         {
           "id": "publications-and-presentations",
-          "title": "Publications and presentations"
+          "title": "Publications and public talks"
         },
         {
           "id": "search-engine-optimization-seo",
           "title": "Search engine optimization (SEO)"
-        },
-        {
-          "id": "mobile-app-promotion",
-          "title": "Mobile app promotion"
         }
       ]
     },
     {
-      "title": "Project and Product Management",
+      "title": "Project and product management",
       "competencies": [
         {
           "id": "project-planning",
@@ -207,13 +224,50 @@
         {
           "id": "building-ux-strategy",
           "title": "Building UX strategy"
+        },
+        {
+          "id": "product-thinking-and-business-models",
+          "title": "Product thinking and understanding business models"
+        },
+        {
+          "id": "prioritization-and-design-roi",
+          "title": "Prioritization and measuring design impact (ROI)"
+        }
+      ]
+    },
+    {
+      "title": "AI in design",
+      "competencies": [
+        {
+          "id": "ai-assisted-design-workflow",
+          "title": "AI-assisted workflow: generating options, research synthesis, copy"
+        },
+        {
+          "id": "prompt-engineering-and-prompt-to-prototype",
+          "title": "Prompt engineering and prompt-to-prototype"
+        },
+        {
+          "id": "evaluating-and-curating-ai-output",
+          "title": "Evaluating and refining AI output to product and design system standards"
+        },
+        {
+          "id": "designing-ai-products",
+          "title": "Designing AI products: conversational UX, agents, uncertainty, trust"
+        },
+        {
+          "id": "design-process-automation",
+          "title": "Design process automation: plugins, scripts, MCP"
+        },
+        {
+          "id": "ethical-and-responsible-ai",
+          "title": "Ethical and responsible AI"
         }
       ]
     }
   ],
   "developer": [
     {
-      "title": "Basics",
+      "title": "Fundamentals",
       "competencies": [
         {
           "id": "analytics-services",
@@ -221,7 +275,7 @@
         },
         {
           "id": "authorization-and-authentication",
-          "title": "Authorization and Authentication"
+          "title": "Authorization and authentication"
         },
         {
           "id": "algorithms",
@@ -236,16 +290,8 @@
           "title": "Docker"
         },
         {
-          "id": "ide",
-          "title": "IDE"
-        },
-        {
-          "id": "markdown",
-          "title": "Markdown"
-        },
-        {
           "id": "chrome-devtools",
-          "title": "Chrome Devtools"
+          "title": "Chrome DevTools"
         }
       ]
     },
@@ -278,7 +324,7 @@
       "title": "HTML",
       "competencies": [
         {
-          "id": "basics",
+          "id": "html-basics",
           "title": "Basics"
         },
         {
@@ -303,7 +349,7 @@
       "title": "CSS",
       "competencies": [
         {
-          "id": "basics-2",
+          "id": "css-basics",
           "title": "Basics"
         },
         {
@@ -312,7 +358,7 @@
         },
         {
           "id": "responsive-design",
-          "title": "Responsive Design"
+          "title": "Responsive design"
         },
         {
           "id": "tailwind-css",
@@ -336,7 +382,7 @@
         },
         {
           "id": "css-modules",
-          "title": "CSS modules"
+          "title": "CSS Modules"
         },
         {
           "id": "css-in-js",
@@ -348,7 +394,7 @@
       "title": "JavaScript",
       "competencies": [
         {
-          "id": "basics-3",
+          "id": "js-basics",
           "title": "Basics"
         },
         {
@@ -356,8 +402,8 @@
           "title": "DOM"
         },
         {
-          "id": "fetch-api-ajax",
-          "title": "Fetch API / Ajax"
+          "id": "http-clients-and-error-handling",
+          "title": "HTTP clients and error handling (fetch, axios)"
         },
         {
           "id": "typescript",
@@ -374,36 +420,153 @@
         },
         {
           "id": "next",
-          "title": "Next"
+          "title": "Next.js"
         },
         {
-          "id": "vue-2",
-          "title": "Vue 2"
+          "id": "vue",
+          "title": "Vue"
         },
         {
-          "id": "nuxt-2",
-          "title": "Nuxt 2"
+          "id": "nuxt",
+          "title": "Nuxt"
         },
         {
-          "id": "vue-3",
-          "title": "Vue 3"
+          "id": "svelte-sveltekit",
+          "title": "Svelte / SvelteKit"
         },
         {
-          "id": "nuxt-3",
-          "title": "Nuxt 3"
+          "id": "astro",
+          "title": "Astro"
         },
         {
           "id": "angular",
           "title": "Angular"
         },
         {
-          "id": "svelte",
-          "title": "Svelte"
+          "id": "web-components",
+          "title": "Web Components"
         }
       ]
     },
     {
-      "title": "Version Control Systems and VCS Hosting",
+      "title": "Application architecture",
+      "competencies": [
+        {
+          "id": "state-management",
+          "title": "State management (client / server state)"
+        },
+        {
+          "id": "data-fetching-and-caching",
+          "title": "Data fetching and caching (TanStack Query, SWR)"
+        },
+        {
+          "id": "routing-and-url-state",
+          "title": "Routing and URL state"
+        },
+        {
+          "id": "ui-states-loading-error-empty",
+          "title": "UI states: loading, error, empty"
+        },
+        {
+          "id": "error-handling-and-monitoring",
+          "title": "Error handling and monitoring (Sentry)"
+        },
+        {
+          "id": "i18n",
+          "title": "Internationalization (i18n)"
+        },
+        {
+          "id": "tables-and-charts",
+          "title": "Tables and charts (TanStack Table, ECharts)"
+        }
+      ]
+    },
+    {
+      "title": "Rendering",
+      "competencies": [
+        {
+          "id": "ssr-ssg-isr",
+          "title": "SSR / SSG / ISR"
+        },
+        {
+          "id": "react-server-components",
+          "title": "React Server Components"
+        },
+        {
+          "id": "streaming-and-edge",
+          "title": "Streaming and edge runtime"
+        }
+      ]
+    },
+    {
+      "title": "Performance",
+      "competencies": [
+        {
+          "id": "core-web-vitals",
+          "title": "Core Web Vitals (LCP, INP, CLS)"
+        },
+        {
+          "id": "code-splitting-and-lazy-loading",
+          "title": "Code splitting and lazy loading"
+        },
+        {
+          "id": "assets-optimization",
+          "title": "Images and fonts optimization"
+        },
+        {
+          "id": "render-profiling",
+          "title": "Render profiling"
+        },
+        {
+          "id": "caching-strategies",
+          "title": "Caching strategies"
+        }
+      ]
+    },
+    {
+      "title": "Security",
+      "competencies": [
+        {
+          "id": "xss-and-csrf",
+          "title": "XSS and CSRF"
+        },
+        {
+          "id": "csp",
+          "title": "Content Security Policy"
+        },
+        {
+          "id": "tokens-storage-and-sessions",
+          "title": "Tokens storage and sessions"
+        },
+        {
+          "id": "dependencies-and-supply-chain",
+          "title": "Dependencies and supply chain security"
+        }
+      ]
+    },
+    {
+      "title": "Design systems in code",
+      "competencies": [
+        {
+          "id": "storybook",
+          "title": "Storybook"
+        },
+        {
+          "id": "component-api-design",
+          "title": "Component API design"
+        },
+        {
+          "id": "design-tokens-in-code",
+          "title": "Design tokens in code"
+        },
+        {
+          "id": "npm-packages-publishing",
+          "title": "Publishing npm packages"
+        }
+      ]
+    },
+    {
+      "title": "Version control systems",
       "competencies": [
         {
           "id": "git",
@@ -416,32 +579,32 @@
         {
           "id": "gitlab",
           "title": "GitLab"
-        },
-        {
-          "id": "bitbucket",
-          "title": "Bitbucket"
         }
       ]
     },
     {
-      "title": "Package managers",
+      "title": "Package managers and monorepo",
       "competencies": [
         {
           "id": "npm",
-          "title": "NPM"
+          "title": "npm"
         },
         {
-          "id": "yarn",
-          "title": "Yarn"
+          "id": "pnpm",
+          "title": "pnpm"
         },
         {
           "id": "bun",
           "title": "Bun"
+        },
+        {
+          "id": "monorepo-turborepo",
+          "title": "Monorepos (Turborepo, workspaces)"
         }
       ]
     },
     {
-      "title": "Build tools",
+      "title": "Build tools and code quality",
       "competencies": [
         {
           "id": "eslint",
@@ -464,8 +627,12 @@
           "title": "Rollup"
         },
         {
-          "id": "parcel",
-          "title": "Parcel"
+          "id": "git-hooks-and-commit-conventions",
+          "title": "Git hooks and commit conventions"
+        },
+        {
+          "id": "ci-cd",
+          "title": "CI/CD"
         }
       ]
     },
@@ -473,21 +640,25 @@
       "title": "Testing",
       "competencies": [
         {
-          "id": "jest",
-          "title": "Jest"
+          "id": "unit-testing",
+          "title": "Unit testing (Jest, Vitest)"
         },
         {
-          "id": "vitest",
-          "title": "Vitest"
+          "id": "component-testing",
+          "title": "Component testing (React Testing Library)"
         },
         {
-          "id": "playwright",
-          "title": "Playwright"
+          "id": "e2e-testing",
+          "title": "E2E testing (Playwright)"
+        },
+        {
+          "id": "visual-regression-testing",
+          "title": "Visual regression testing"
         }
       ]
     },
     {
-      "title": "Wep API",
+      "title": "Web API",
       "competencies": [
         {
           "id": "service-workers",
@@ -498,24 +669,78 @@
           "title": "Web Workers"
         },
         {
-          "id": "shared-workers",
-          "title": "Shared Workers"
-        },
-        {
           "id": "local-session-storage",
           "title": "Local & Session Storage"
         },
         {
-          "id": "iframe",
-          "title": "IFrame"
+          "id": "indexeddb",
+          "title": "IndexedDB"
         },
         {
           "id": "pwa",
           "title": "PWA"
         },
         {
-          "id": "indexeddb",
-          "title": "IndexedDB"
+          "id": "websockets-and-sse",
+          "title": "WebSockets and SSE"
+        },
+        {
+          "id": "intersection-and-resize-observer",
+          "title": "Intersection / Resize Observer"
+        },
+        {
+          "id": "view-transitions",
+          "title": "View Transitions API"
+        },
+        {
+          "id": "browser-extensions",
+          "title": "Browser extensions"
+        }
+      ]
+    },
+    {
+      "title": "Backend and integrations",
+      "competencies": [
+        {
+          "id": "nodejs-api-routes-bff",
+          "title": "Node.js, API routes and BFF"
+        },
+        {
+          "id": "headless-cms",
+          "title": "Headless CMS (Strapi, Contentful, Sanity)"
+        },
+        {
+          "id": "databases-and-redis-basics",
+          "title": "Databases and Redis (basics)"
+        },
+        {
+          "id": "telegram-bots",
+          "title": "Telegram bots"
+        }
+      ]
+    },
+    {
+      "title": "AI in development",
+      "competencies": [
+        {
+          "id": "ai-assisted-development",
+          "title": "AI-assisted development in agentic environments (Claude Code, Cursor, Codex)"
+        },
+        {
+          "id": "context-engineering",
+          "title": "Context engineering: AGENTS.md, rules, skills, MCP"
+        },
+        {
+          "id": "ai-code-review-and-verification",
+          "title": "Review and verification of AI-generated code"
+        },
+        {
+          "id": "building-ai-features",
+          "title": "Building AI features: LLM API, streaming UI, tool calling, RAG"
+        },
+        {
+          "id": "evaluating-ai-features",
+          "title": "Evaluating AI features: evals, cost, latency"
         }
       ]
     }

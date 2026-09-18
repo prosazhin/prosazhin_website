@@ -1,0 +1,40 @@
+---
+title: CheckboxGroup
+description: 'Группа флажков с массивом выбранных значений.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Дочерние элементы — `Checkbox` или `Switch`; `onChange` возвращает массив `value`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='CheckboxGroup'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Checkbox, CheckboxGroup } from '@prosazhin/pbcomponents';
+
+<CheckboxGroup defaultValue={['One']}>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <Checkbox
+      key={item}
+      value={item}
+    >
+      {item}
+    </Checkbox>
+  ))}
+</CheckboxGroup>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='CheckboxGroup'
+  locale='ru'
+/>

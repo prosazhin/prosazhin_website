@@ -1,0 +1,138 @@
+---
+title: pbcomponents
+description: 'Installation, setup, and the React component reference.'
+---
+
+`@prosazhin/pbcomponents` is a React 19 component library. The reference covers components, helpers, providers, and hooks with examples and API signatures.
+
+Resources: [GitHub](https://github.com/prosazhin/pbcomponents) · [npm](https://www.npmjs.com/package/@prosazhin/pbcomponents) · [Figma Community](https://www.figma.com/community/file/1214486013859546496) · [Behance](https://www.behance.net/gallery/206064847/pbcomponents).
+
+## Installation
+
+```bash
+npm install @prosazhin/pbcomponents @prosazhin/pbstyles
+```
+
+The component package has React 19 as a peer dependency and uses Tailwind CSS 4. Import `pbstyles` in your global CSS for its design tokens:
+
+```css
+@import 'tailwindcss';
+@import '@prosazhin/pbstyles/styles/tailwind/theme.css';
+```
+
+## Your first button
+
+```tsx
+import { Button } from '@prosazhin/pbcomponents';
+
+export default function Example() {
+  return (
+    <Button
+      size='m'
+      color='primary'
+      theme='filled'
+    >
+      Save
+    </Button>
+  );
+}
+```
+
+## Dialogs and notifications
+
+If you use `Dialog`, `Notification`, or their hooks, wrap the app in `PBCProvider` once:
+
+```tsx
+import { PBCProvider } from '@prosazhin/pbcomponents';
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <PBCProvider notifications={{ top: 80 }}>{children}</PBCProvider>;
+}
+```
+
+This site places the provider in its root layout. Other components do not require a provider.
+
+## Themes and Next.js links
+
+Component colors come from `pbstyles`. Without setup, they follow `prefers-color-scheme`; set `data-theme="dark"` or `data-theme="light"` on `<html>` or a container to override it.
+
+Components with `href` (`Button`, `Tab`, `DropdownItem`, `Tag`) accept `linkComponent` when you need `next/link` instead of a plain anchor:
+
+```tsx
+import NextLink from 'next/link';
+import { Button } from '@prosazhin/pbcomponents';
+
+<Button
+  href='/projects'
+  linkComponent={NextLink}
+>
+  Projects
+</Button>;
+```
+
+## Reference
+
+### Components
+
+| Export                                                    | Purpose                                                      |
+| --------------------------------------------------------- | ------------------------------------------------------------ |
+| [Container](/docs/pbcomponents/container)                 | A page container with main and aside regions.                |
+| [Headline](/docs/pbcomponents/headline)                   | A heading with a configurable semantic level.                |
+| [Button](/docs/pbcomponents/button)                       | An action or link with size, color, theme and loading state. |
+| [ButtonGroup](/docs/pbcomponents/button-group)            | A group of buttons with a shared size.                       |
+| [Tag](/docs/pbcomponents/tag)                             | An interactive tag, link or filter.                          |
+| [Badge](/docs/pbcomponents/badge)                         | A compact status or category label.                          |
+| [Field](/docs/pbcomponents/field)                         | A wrapper for a label, control, description and error state. |
+| [Input](/docs/pbcomponents/input)                         | A single-line input with optional addons.                    |
+| [Textarea](/docs/pbcomponents/textarea)                   | A multi-line text input.                                     |
+| [Search](/docs/pbcomponents/search)                       | Search and select options from a list.                       |
+| [Select](/docs/pbcomponents/select)                       | Select one or multiple options from a list.                  |
+| [Checkbox](/docs/pbcomponents/checkbox)                   | An independent checkbox with a label.                        |
+| [CheckboxGroup](/docs/pbcomponents/checkbox-group)        | A checkbox group with an array of selected values.           |
+| [Radio](/docs/pbcomponents/radio)                         | One option in a mutually exclusive set.                      |
+| [RadioGroup](/docs/pbcomponents/radio-group)              | A radio group with one selected value.                       |
+| [InlineRadio](/docs/pbcomponents/inline-radio)            | A compact radio option.                                      |
+| [InlineRadioGroup](/docs/pbcomponents/inline-radio-group) | A group of compact radio options.                            |
+| [Switch](/docs/pbcomponents/switch)                       | A switch for a boolean setting.                              |
+| [Tabs](/docs/pbcomponents/tabs)                           | A set of tabs with an active index.                          |
+| [Tab](/docs/pbcomponents/tab)                             | A tab inside Tabs or a standalone navigation item.           |
+| [Collapse](/docs/pbcomponents/collapse)                   | An expandable disclosure with a summary.                     |
+| [CollapseGroup](/docs/pbcomponents/collapse-group)        | A group of disclosures.                                      |
+| [Dropdown](/docs/pbcomponents/dropdown)                   | A menu with a trigger and content.                           |
+| [DropdownItem](/docs/pbcomponents/dropdown-item)          | A standalone menu item: action or link.                      |
+| [Dialog](/docs/pbcomponents/dialog)                       | A modal with trigger, sections and close control.            |
+| [Alert](/docs/pbcomponents/alert)                         | An inline status message with title and actions.             |
+| [Notification](/docs/pbcomponents/notification)           | A toast notification with timer and progress.                |
+
+### Helpers
+
+| Export                                | Purpose                                        |
+| ------------------------------------- | ---------------------------------------------- |
+| [Content](/docs/pbcomponents/content) | Text with optional leading and trailing icons. |
+| [Icon](/docs/pbcomponents/icon)       | An SVG icon with a defined size.               |
+| [Text](/docs/pbcomponents/text)       | Text with prop-controlled size and weight.     |
+
+### Providers
+
+| Export                                                             | Purpose                                             |
+| ------------------------------------------------------------------ | --------------------------------------------------- |
+| [DialogProvider](/docs/pbcomponents/dialog-provider)               | Context for opening dialogs from descendants.       |
+| [NotificationsProvider](/docs/pbcomponents/notifications-provider) | Context for showing notifications from descendants. |
+| [PBCProvider](/docs/pbcomponents/pbc-provider)                     | Combined dialog and notification provider.          |
+
+### Hooks
+
+| Export                                                            | Purpose                                                                        |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [useClickOutside](/docs/pbcomponents/use-click-outside)           | Calls a callback on a click or touch outside the provided elements.            |
+| [useControllableState](/docs/pbcomponents/use-controllable-state) | State that can be controlled by a value prop or stored inside the component.   |
+| [useCountdown](/docs/pbcomponents/use-countdown)                  | Returns timer progress from 0 to 100 with pause support.                       |
+| [useDialog](/docs/pbcomponents/use-dialog)                        | Reads dialogs from DialogProvider and closes the active or a specified dialog. |
+| [useHoverControllable](/docs/pbcomponents/use-hover-controllable) | Tracks hover as controlled or internal state.                                  |
+| [useKeydown](/docs/pbcomponents/use-keydown)                      | Calls a callback when one of the specified keys is pressed.                    |
+| [useMergeRefs](/docs/pbcomponents/use-merge-refs)                 | Combines multiple React refs into one callback ref.                            |
+| [useNotifications](/docs/pbcomponents/use-notifications)          | Reads notifications and exposes show and hide methods.                         |
+| [useScreenSize](/docs/pbcomponents/use-screen-size)               | Returns window width and height, updating on resize.                           |
+| [useShowDialog](/docs/pbcomponents/use-show-dialog)               | Registers a dialog and returns a function to open it.                          |
+
+Types are available from the package root and `@prosazhin/pbcomponents/types`. Export pages include examples and API signatures.

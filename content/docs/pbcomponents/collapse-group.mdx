@@ -1,0 +1,38 @@
+---
+title: CollapseGroup
+description: 'Группа раскрываемых блоков.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Передайте несколько `Collapse`; `joined` объединяет визуальное оформление, `name` связывает группу.
+
+## Живой пример
+
+<ComponentShowcase
+  name='CollapseGroup'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Collapse, CollapseGroup } from '@prosazhin/pbcomponents';
+
+<CollapseGroup name='sections'>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <Collapse
+      key={item}
+      summary={item}
+    >{`Content for ${item}`}</Collapse>
+  ))}
+</CollapseGroup>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='CollapseGroup'
+  locale='ru'
+/>

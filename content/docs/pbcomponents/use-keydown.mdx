@@ -1,0 +1,30 @@
+---
+title: useKeydown
+description: 'Вызывает callback при нажатии указанных клавиш.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Вызывает callback при нажатии указанных клавиш.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { useKeydown } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const [open, setOpen] = useState(true);
+  useKeydown({ keys: ['Escape'], callback: () => setOpen(false) });
+  return open ? <div>Press Escape</div> : null;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useKeydown'
+  locale='ru'
+/>

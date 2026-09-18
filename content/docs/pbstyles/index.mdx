@@ -1,0 +1,97 @@
+---
+title: pbstyles
+description: Готовые цвета, типографика, размеры и темы для CSS, LESS, SCSS и Tailwind CSS 4.
+---
+
+`@prosazhin/pbstyles` — базовые стили для быстрой сборки интерфейса. Пакет содержит типографику, палитру, семантические цвета, размеры, контейнеры, брейкпоинты, скругления и тени. Те же токены поставляются в форматах CSS, LESS, SCSS и как тема Tailwind CSS 4.
+
+Ресурсы: [GitHub](https://github.com/prosazhin/pbstyles) · [npm](https://www.npmjs.com/package/@prosazhin/pbstyles) · [Figma Community](https://www.figma.com/community/file/1213609862805339771) · [Behance](https://www.behance.net/gallery/162935391/pbstyles).
+
+## Установка
+
+```bash
+npm install @prosazhin/pbstyles
+```
+
+Пакет содержит готовые файлы. Для использования опубликованных стилей запуск генераторов не нужен.
+
+## Tailwind CSS 4
+
+```css
+@import 'tailwindcss';
+@import '@prosazhin/pbstyles/styles/tailwind/theme.css';
+```
+
+После импорта доступны утилиты на основе токенов, например `bg-basic-0`, `text-basic-400`, `text-primary-400` и размеры из темы. Этот сайт подключает пакет именно так. Импорт работает и с префиксом Tailwind, например `@import 'tailwindcss' prefix(tw);`.
+
+## CSS, LESS и SCSS
+
+```css
+@import '@prosazhin/pbstyles/styles/css';
+```
+
+```less
+@import '@prosazhin/pbstyles/styles/less';
+```
+
+```scss
+@import '@prosazhin/pbstyles/styles/scss';
+```
+
+## Что входит в тему
+
+В `pbstyles` есть типографика, семантические цвета (`basic`, `primary`, `secondary`, `success`, `danger`, `warning`, `outline`, `text`), палитра, размеры, контейнеры, брейкпоинты, скругления, непрозрачность и тени. LESS и SCSS также содержат миксины типографики, анимации и брейкпоинтов.
+
+Семантические цвета меняются между светлой и тёмной темой. Цвета самой палитры остаются постоянными.
+
+## Переключение темы
+
+Без явного атрибута тема следует `prefers-color-scheme`. Атрибут на `<html>` или вложенном контейнере задаёт режим вручную:
+
+```html
+<html data-theme="dark">
+  <body>
+    <section data-theme="light">Светлый блок внутри тёмной страницы</section>
+  </body>
+</html>
+```
+
+На этом сайте переключатель записывает `THEME` в cookie, а сервер ставит `data-theme` на `<html>`. Этот атрибут одновременно управляет сайтом и документацией.
+
+## Переопределение
+
+В Tailwind CSS 4 семантические переменные имеют имена `--theme-color-*`. Переопределяйте их после импорта темы:
+
+```css
+:root {
+  --theme-color-primary-300: #7c3aed;
+}
+[data-theme='dark'] {
+  --theme-color-primary-300: #a78bfa;
+}
+```
+
+Утилиты вроде `bg-primary-300` ссылаются на эти переменные и обновляются без пересборки CSS. Обычный CSS использует имена `--color-*`; LESS — `@color-*`, SCSS — `$color-*`.
+
+## Форматы
+
+| Формат     | Импорт                                          | Содержимое                                            |
+| ---------- | ----------------------------------------------- | ----------------------------------------------------- |
+| CSS        | `@prosazhin/pbstyles/styles/css`                | CSS-переменные и семантическая тема.                  |
+| LESS       | `@prosazhin/pbstyles/styles/less`               | Переменные и миксины.                                 |
+| SCSS       | `@prosazhin/pbstyles/styles/scss`               | Переменные и миксины.                                 |
+| Tailwind 4 | `@prosazhin/pbstyles/styles/tailwind/theme.css` | Тема, утилиты через токены и светлые/тёмные значения. |
+
+## Семейства токенов
+
+| Категория                                                                                       | CSS | LESS | SCSS | Tailwind 4 |
+| ----------------------------------------------------------------------------------------------- | --- | ---- | ---- | ---------- |
+| Типографика, цвета, размеры, контейнеры, брейкпоинты, границы, скругления, непрозрачность, тени | ✓   | ✓    | ✓    | ✓          |
+| Колонки                                                                                         | ✓   | ✓    | ✓    | —          |
+| Миксины анимации, типографики и брейкпоинтов                                                    | —   | ✓    | ✓    | ✓          |
+
+Обычный CSS содержит переменные без миксинов. В LESS и SCSS доступны переменные и миксины; в Tailwind 4 они становятся частью темы и утилит.
+
+## Как создаётся пакет
+
+Готовые CSS/LESS/SCSS-файлы генерируются `mixin-dictionary`, а тема Tailwind CSS — `tailwind-dictionary` из токенов репозитория `pbstyles`. Если нужно изменить систему токенов для своего проекта, смотрите [mixin-dictionary](/docs/mixin-dictionary) и [tailwind-dictionary](/docs/tailwind-dictionary).

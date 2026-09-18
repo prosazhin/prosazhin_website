@@ -1,0 +1,29 @@
+---
+title: useDialog
+description: 'Читает диалоги из DialogProvider и закрывает активный или указанный диалог.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Читает диалоги из DialogProvider и закрывает активный или указанный диалог.
+Вызывайте внутри `DialogProvider` или `PBCProvider`.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useDialog } from '@prosazhin/pbcomponents';
+
+function CloseButton() {
+  const { activeDialog, closeDialog } = useDialog();
+  return <button onClick={() => closeDialog(activeDialog?.id)}>Close</button>;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useDialog'
+  locale='ru'
+/>

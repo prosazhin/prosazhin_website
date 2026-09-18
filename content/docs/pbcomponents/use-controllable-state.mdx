@@ -1,0 +1,28 @@
+---
+title: useControllableState
+description: 'Состояние, которое может управляться пропсом value или храниться внутри компонента.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Состояние, которое может управляться пропсом value или храниться внутри компонента.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useControllableState } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const [open, setOpen] = useControllableState({ defaultValue: false });
+  return <button onClick={() => setOpen(!open)}>{open ? 'Open' : 'Closed'}</button>;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useControllableState'
+  locale='ru'
+/>

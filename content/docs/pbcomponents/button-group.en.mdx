@@ -1,0 +1,42 @@
+---
+title: ButtonGroup
+description: 'A group of buttons with a shared size.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Pass several `Button` elements as children; set their shared size on the group.
+
+## Live example
+
+<ComponentShowcase
+  name='ButtonGroup'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Button, ButtonGroup, Dropdown } from '@prosazhin/pbcomponents';
+
+<ButtonGroup size='m'>
+  <Button theme='border'>One</Button>
+  <Button theme='border'>Two</Button>
+  <Dropdown>
+    <Dropdown.Trigger theme='border'>Three</Dropdown.Trigger>
+    <Dropdown.Content>
+      <Dropdown.Item>One</Dropdown.Item>
+      <Dropdown.Item>Two</Dropdown.Item>
+      <Dropdown.Item>Three</Dropdown.Item>
+    </Dropdown.Content>
+  </Dropdown>
+</ButtonGroup>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='ButtonGroup'
+  locale='en'
+/>

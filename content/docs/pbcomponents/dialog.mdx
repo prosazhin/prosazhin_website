@@ -1,0 +1,40 @@
+---
+title: Dialog
+description: 'Модальное окно с триггером, секциями и закрытием.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Нужен уникальный `id`. Доступны `Dialog.Trigger`, `Content`, `Header`, `Body`, `Footer`, `Close`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Dialog'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Dialog } from '@prosazhin/pbcomponents';
+
+<Dialog id='example'>
+  <Dialog.Trigger>Open</Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Header>Title</Dialog.Header>
+    <Dialog.Body>Content</Dialog.Body>
+    <Dialog.Footer>
+      <Dialog.Close>Close</Dialog.Close>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Dialog'
+  locale='ru'
+/>

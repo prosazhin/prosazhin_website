@@ -27,8 +27,8 @@ const Nav = ({
             <NextLink
               href={url}
               className={clsx(
-                'text-tm16 text-basic-main group-hover:text-basic-light hover:text-primary-darker! no-underline! transition-colors duration-150',
-                active.some((path) => pathname === path) ? 'text-primary-darker!' : ''
+                'text-tm16 text-basic-400 group-hover:text-basic-300 hover:text-primary-400! no-underline! transition-colors duration-150',
+                active.includes(pathname) ? 'text-primary-400!' : ''
               )}
               onClick={() => closeDialog('mobile-menu')}
             >

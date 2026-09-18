@@ -1,0 +1,37 @@
+---
+title: PBCProvider
+description: 'Общий провайдер диалогов и уведомлений.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Разместите один раз над компонентами, которые вызывают диалоги и уведомления. Настройки передаются через `dialog` и `notifications`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='PBCProvider'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Button, PBCProvider } from '@prosazhin/pbcomponents';
+
+function App() {
+  return (
+    <PBCProvider notifications={{ top: 20 }}>
+      <Button>Ready</Button>
+    </PBCProvider>
+  );
+}
+```
+
+## API компонента
+
+<ComponentAPI
+  name='PBCProvider'
+  locale='ru'
+/>

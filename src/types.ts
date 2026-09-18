@@ -10,7 +10,7 @@ export type MetadataType = {
   title: string;
   description: string;
   pathname: string;
-  isRobotsIndexPage: boolean;
+  isRobotsIndexPage?: boolean;
 };
 
 export type MatrixBannerType = {
@@ -33,8 +33,14 @@ export type MatrixCategoryType = {
   competencies: MatrixCompetenciesType[];
 };
 
+export type MatrixLevelType = {
+  title: string;
+  description: string;
+};
+
 export type MatrixType = {
   locale: LangType;
+  levels: MatrixLevelType[];
   matrix: {
     type: string;
     category: MatrixCategoryType[];

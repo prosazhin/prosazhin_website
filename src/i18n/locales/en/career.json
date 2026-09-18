@@ -1,45 +1,84 @@
 {
   "positions": {
     "design": "Designer",
-    "frontend": "Frontend developer",
-    "frontendLead": "Frontend development team lead",
-    "html": "Markup developer"
+    "productDesign": "Product Designer",
+    "uxuiDesign": "UX/UI Designer",
+    "frontend": "Frontend Developer",
+    "frontendSenior": "Senior Frontend Developer",
+    "frontendLead": "Frontend Team Lead",
+    "html": "HTML/CSS Developer"
+  },
+  "groups": {
+    "project": {
+      "title": "Project work"
+    }
   },
   "entries": [
     {
       "type": "sellmonitorCurrent",
       "title": "sellmonitor.com",
-      "titleForAside": "sellmonitor.com",
+      "subtitle": "Sales analytics service for marketplace sellers",
       "positions": {
-        "frontend": "Product interface development."
+        "frontendSenior": "Building new and growing existing analytics and automation tools that bring marketplace sellers to the service.",
+        "productDesign": "Designing interfaces for new sections of the service without mockups — directly in code, on the component library."
+      },
+      "details": {
+        "frontendSenior": [
+          {
+            "text": "Launched 6 new sections of the service.",
+            "items": [
+              "Order geography — a region and warehouse map on ECharts.",
+              "Query monitoring — product positions for selected search queries.",
+              "Positions in shelves — product distribution across recommendation shelves.",
+              "Niche analysis — a niche table with filters and drill-down into products.",
+              "Suggestions — a public idea board on Next.js and Strapi: moderation, comments, and text pre-moderation via OpenAI.",
+              "Promo banners — targeting, display frequency, and content through Strapi."
+            ]
+          },
+          "Developed 5 more existing sections: Repricer, Sales, Unit economics, Ad management, and Support tickets.",
+          "Rebuilt the public sellmonitor.com website: home page, pricing, marketplace pages, partner program, and SEO pages.",
+          "Developed the shared component library on TanStack Table and ECharts."
+        ],
+        "productDesign": [
+          "Designed the interfaces of 6 new sections of the service: page structure, tables, filters, charts, and user flows — without mockups, directly on the frontend.",
+          "Designed improvements to 5 existing sections during development.",
+          "Evolved the visual language of the shared component library: tables, charts, loading and empty states."
+        ]
       }
     },
     {
       "type": "15web",
       "title": "Studio 15",
-      "titleForAside": "Studio 15",
+      "subtitle": "Web development outsourcing studio",
       "positions": {
-        "frontendLead": "Organization of the frontend development team's work. Development and maintenance of a project for an agricultural holding.",
-        "design": "Support of internal and client projects."
+        "frontendLead": "Organizing the frontend team's work and developing the studio's client projects.",
+        "uxuiDesign": "Reviewing contractor mockups and refining designs during development."
       },
       "details": {
         "frontendLead": [
-          "Handled operational tasks: creating, assigning, and prioritizing tasks for the frontend development team.",
-          "Conducted task reviews and deployments for the team.",
-          "Made architectural and technology stack decisions for projects.",
-          "Created a CMS and website for an agricultural holding.",
-          "Migrated the CMS project from Next 14 Pages Router to Next 15 App Router, and from Redux to Zustand. Implemented SSR, \"use client,\" and server-side data fetching.",
-          "Improved the CMS project's linter. Introduced Prettier and automated code style enforcement. Integrated packages for collaboration: simple-git-hooks, lint-staged, and commitlint.",
-          "Designed the CMS interface without a design file, considering component libraries. Assisted the team in interface planning.",
-          "Refined critical modules (authentication, etc.) and launched the CMS project.",
-          "Built the agricultural holding's website from scratch using technologies new to the team.",
-          "Implemented Tailwind for layout and Framer Motion for animated sections on the website.",
-          "Created a component base for the agricultural holding's website.",
-          "Applied the PixelPerfect principle to the agricultural holding's website."
-        ],
-        "design": [
-          "Reviewed designs from contractors.",
-          "Refined designs within the team during the development process."
+          "Led a frontend team of 5 developers: task prioritization, code review, releases, and stack decisions.",
+          "Established a shared code style across the team's projects: ESLint, Prettier, lint-staged, and commitlint.",
+          {
+            "text": "Worked on 8 studio projects across different stacks.",
+            "items": [
+              "CMS and corporate website for an agricultural holding — Next.js.",
+              "Marketplace of ghost-produced music tracks — Nuxt.",
+              "Coconut water brand website — Laravel and Vite.",
+              "Promo landing for a charity fund — Laravel and Blade.",
+              "Hot sauce brand landing — Next.js.",
+              "Mango snack brand landing — Next.js.",
+              "Widgets for an airport parking service."
+            ]
+          },
+          {
+            "text": "Key project — the CMS and corporate website for an agricultural holding.",
+            "items": [
+              "Migrated the CMS from Next.js 14 Pages Router to Next.js 15 App Router and from Redux to Zustand.",
+              "Completed and launched the CMS — 18 sections: pages, menus, products and brands, production sites, press center, banners, partners, vacancies, a WYSIWYG editor with images. Designed the interface without mockups on a component library.",
+              "Built the website from scratch on Tailwind CSS and Motion — 16 pages from mockups: a component base, animated sections, a brand and product catalog, a press center, an interactive map, and feedback forms with attachments."
+            ]
+          },
+          "Wrote unit tests for components and business logic with Jest."
         ]
       },
       "dismissal": "Project completion. Work on the CMS and the website for the agricultural holding was finished."
@@ -47,41 +86,51 @@
     {
       "type": "opensource",
       "title": "Open source",
-      "titleForAside": "Open source",
+      "subtitle": "My own npm packages and Figma libraries",
       "positions": {
-        "frontend": "Development and maintenance of your own npm packages and projects.",
-        "design": "Development and maintenance of your own projects."
+        "frontend": "Development and publishing of my own npm packages.",
+        "uxuiDesign": "Built the pbstyles and pbcomponents Figma libraries, kept in sync with the npm packages, and published them on Figma Community and Behance."
       },
       "details": {
         "frontend": [
-          "Created and published the npm package <a href='https://github.com/prosazhin/tailwind-dictionary' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>Tailwind Dictionary</a> for converting design tokens into a Tailwind theme.",
-          "Created and published the npm package <a href='https://github.com/prosazhin/mixin-dictionary' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>Mixin Dictionary</a> for converting design tokens into Less or SCSS mixins.",
-          "Refined and published the npm package <a href='https://github.com/prosazhin/pbstyles' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>pbstyles</a>, a style library for rapid prototyping.",
-          "Created and published the npm package <a href='https://github.com/prosazhin/pbcomponents' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>pbcomponents</a>, a component library for rapid prototyping."
-        ],
-        "design": [
-          "Refined the pbstyles style library, created a presentation, and published it on <a href='https://www.figma.com/community/file/1213609862805339771' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>Figma Community</a> and <a href='https://www.behance.net/gallery/162935391/pbstyles' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>Behance</a>.",
-          "Refined the pbcomponents component library, created a presentation, and published it on <a href='https://www.figma.com/community/file/1214486013859546496' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>Figma Community</a> and <a href='https://www.behance.net/gallery/206064847/pbcomponents' target='_blank' class='text-primary-darker focus:text-primary-darker active:text-primary-darker hover:text-danger-main cursor-pointer no-underline transition-colors duration-150 hover:underline'>Behance</a>."
+          {
+            "text": "Published 4 npm packages.",
+            "items": [
+              "Tailwind Dictionary — design tokens into a Tailwind theme.",
+              "Mixin Dictionary — design tokens into Less and SCSS mixins.",
+              "pbstyles — a style library for rapid prototyping.",
+              "pbcomponents — a React component library built on pbstyles."
+            ]
+          }
         ]
       }
     },
     {
       "type": "pixelpoint",
       "title": "pixelpoint.io",
-      "titleForAside": "pixelpoint.io",
+      "subtitle": "Product web studio",
       "positions": {
-        "frontend": "Development and support of projects."
+        "frontend": "Development and maintenance of the studio's client marketing websites on Gatsby and Next.js with a Headless CMS."
       },
       "details": {
         "frontend": [
-          "Participated in the development of 9 client projects.",
-          "Created PixelPerfect pages and sections for websites based on ready-made designs with content managed via Headless CMS.",
-          "Developed interactive sections with animations and logic integrated with other services.",
-          "Enhanced the component base of the projects.",
-          "Actively used SSR, \"use client\" and server-side data fetching.",
-          "Optimized performance and loading of new and existing pages and modules.",
-          "Reviewed tasks from other developers. Ensured accessibility, quality, and SEO analysis on the projects.",
-          "Implemented and maintained multilingual functionality of the projects."
+          {
+            "text": "Worked on 9 client websites on Gatsby and Next.js with Tailwind CSS and Framer Motion.",
+            "items": [
+              "isovalent.com — Gatsby and WordPress.",
+              "revenuecat.com — Gatsby and WordPress.",
+              "fonoa.com — Next.js and Sanity.",
+              "observiq.com — Next.js App Router and Sanity.",
+              "kcdzurich.ch — Gatsby.",
+              "terminal49.com — Next.js and Sanity.",
+              "terzo.ai — Next.js.",
+              "ebpf.io and cilium.io — Gatsby."
+            ]
+          },
+          "Built pixel-perfect pages from mockups with content from a Headless CMS: Sanity (including document schemas) and WordPress via GraphQL.",
+          "Built interactive sections: animations with Framer Motion, Rive and Lottie, sliders, forms on react-hook-form integrated with HubSpot.",
+          "Developed the projects' component base, used SSR and server-side data fetching in the Next.js App Router, and optimized loading of new and existing pages.",
+          "Reviewed other developers' tasks, kept an eye on accessibility and SEO."
         ]
       },
       "dismissal": "Difficulties working with a foreign company from Russia."
@@ -89,23 +138,16 @@
     {
       "type": "ipgate",
       "title": "ipgate.io",
-      "titleForAside": "ipgate.io",
+      "subtitle": "Proxy rental service",
       "positions": {
-        "frontend": "Improvement of the client side for project launch. Project maintenance and refactoring.",
-        "design": "Project support."
+        "frontend": "Project launch, feedback-driven improvements and migration from Quasar to Nuxt.",
+        "productDesign": "Based on user feedback, completed a full redesign of the project while preserving functionality and implemented it in code during the Nuxt migration."
       },
       "details": {
         "frontend": [
-          "Fixed critical bugs after the project's beta testing.",
-          "Refined core modules for the full launch of the project: authentication, ordering, pricing, etc.",
-          "Handled refactoring and improvement of the project's component base.",
-          "Created informational pages for the project.",
-          "Implemented and maintained the multilingual functionality of the project.",
-          "Migrated the project from Quasar to Nuxt and carried out a redesign."
-        ],
-        "design": [
-          "Prototyped new pages and sections of the project.",
-          "Completed a full redesign of the project as a roadmap for future development after launch, while preserving functionality."
+          "Brought the project to launch: authentication, ordering, pricing, informational pages and multilingual support.",
+          "After launch, fixed critical bugs and refined core modules based on user feedback without changing the design.",
+          "Migrated the project from Quasar to Nuxt as part of the redesign, refactored the component base and covered key modules with unit tests."
         ]
       },
       "dismissal": "Project completion. Work on the product was finished."
@@ -113,17 +155,29 @@
     {
       "type": "sellmonitor",
       "title": "sellmonitor.com",
-      "titleForAside": "sellmonitor.com",
+      "subtitle": "Sales analytics service for marketplace sellers",
       "positions": {
-        "frontend": "Product interface development.",
-        "design": "Product interface design."
+        "frontend": "Building new analytics tools that bring marketplace sellers to the service.",
+        "productDesign": "Designing interfaces for new sections of the service without mockups — directly in code."
       },
       "details": {
         "frontend": [
-          "Participated in the development and maintenance of the product.",
-          "Handled refactoring and improvement of the project's component base.",
-          "Created a separate large module for analytics of sellers' data from API-sourced marketplace data.",
-          "Maintained the multilingual functionality of the project."
+          {
+            "text": "Launched 6 new sections of the service in 10 months.",
+            "items": [
+              "Business — a seller's personal dashboard: marketplace API key connection and analytics on their own data.",
+              "Sales — a sales summary, per-product statistics, and lost profit.",
+              "Review autoreplier — reply rules, templates, stop words, and statistics.",
+              "Unit economics — calculations based on marketplace tariffs and saved calculations.",
+              "Categories — a list with search and filters, a category card with charts, brands, and merchants.",
+              "Exports — a report list with real-time status and file downloads."
+            ]
+          },
+          "Built the project's base component library: buttons, inputs and forms, pagination, popovers, loading and empty states."
+        ],
+        "productDesign": [
+          "Designed the interfaces of 6 new sections of the service: page structure, tables, filters, charts, and user flows — without mockups, directly on the frontend.",
+          "Defined the visual language of the base component library: buttons, inputs and forms, pagination, popovers, loading and empty states."
         ]
       },
       "dismissal": "Staff reduction due to the crisis in the fall of 2022."
@@ -131,22 +185,21 @@
     {
       "type": "regru",
       "title": "reg.ru",
-      "titleForAside": "reg.ru",
+      "subtitle": "Russia's largest domain registrar and hosting provider",
       "positions": {
-        "design": "Support and development of the domain area and other parts of the service. Designing internal projects.",
-        "frontend": "Support and development of the domain area and other parts of the service. Development of internal projects."
+        "productDesign": "Designing an internal HR project, the domain area and the company's design system.",
+        "frontend": "Developing an internal HR project, the domain area and the component library."
       },
       "details": {
-        "design": [
-          "Created an internal project for HR and company employees.",
-          "Participated as a designer in the domain development team.",
-          "Contributed to the company's design system as part of the design team.",
-          "Participated in a working group on the implementation of design tokens and a unified component library."
+        "productDesign": [
+          "Designed an internal HR project for managing company employees.",
+          "Designed the domain purchase flow with add-on services that had never been sold in it before — sales grew.",
+          "Implemented design tokens and a unified component library in the company's design system."
         ],
         "frontend": [
-          "Participated as a senior developer in the team creating an internal project for HR and company employees.",
-          "Conducted code reviews and led the internal project to release.",
-          "Participated as a developer in the domain development team."
+          "As a senior developer, led the internal HR project to release: development, code reviews and unit tests for components and logic.",
+          "Built the purchase flows for domains and add-on services in the domain area.",
+          "Implemented design tokens and the component library in the company's projects."
         ]
       },
       "dismissal": "Desire for growth in development."
@@ -154,9 +207,9 @@
     {
       "type": "suplbiz",
       "title": "supl.biz",
-      "titleForAside": "supl.biz",
+      "subtitle": "B2B wholesale marketplace",
       "positions": {
-        "design": "Designing a marketplace and internal projects for the company.",
+        "productDesign": "Designing a marketplace and internal projects for the company.",
         "frontend": "Development of a marketplace and internal projects for the company."
       },
       "dismissal": "Desire for growth in design and development."
@@ -164,7 +217,7 @@
     {
       "type": "franbazar",
       "title": "franbazar.com",
-      "titleForAside": "franbazar.com",
+      "subtitle": "Franchise marketplace",
       "positions": {
         "html": "Layout development for new projects and mobile applications using WebView. Maintenance of existing projects.",
         "design": "Designing new projects. Supporting existing projects."
@@ -174,7 +227,7 @@
     {
       "type": "pixlpark",
       "title": "pixlpark.ru",
-      "titleForAside": "pixlpark.ru",
+      "subtitle": "Web-to-print platform for printing houses",
       "positions": {
         "design": "Designing a demo website for a printing shop.",
         "html": "Development of a demo website for a printing shop. Assistance to new and regular clients."
@@ -184,7 +237,7 @@
     {
       "type": "freelance",
       "title": "Freelance and Printing houses",
-      "titleForAside": "Freelance",
+      "subtitle": "Print production and graphic design",
       "positions": {
         "design": "Typesetting of books, newspapers and magazines. Graphic design. Advertising printing."
       }

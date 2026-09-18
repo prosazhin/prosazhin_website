@@ -1,0 +1,30 @@
+---
+title: useKeydown
+description: 'Calls a callback when one of the specified keys is pressed.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Calls a callback when one of the specified keys is pressed.
+
+## Usage
+
+```tsx
+'use client';
+
+import { useState } from 'react';
+import { useKeydown } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const [open, setOpen] = useState(true);
+  useKeydown({ keys: ['Escape'], callback: () => setOpen(false) });
+  return open ? <div>Press Escape</div> : null;
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useKeydown'
+  locale='en'
+/>

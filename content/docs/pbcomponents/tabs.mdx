@@ -1,0 +1,40 @@
+---
+title: Tabs
+description: 'Набор вкладок с выбранным индексом.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Передайте массив `Tab` как дочерние элементы. `onChange` получает индекс выбранной вкладки.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Tabs'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Tab, Tabs } from '@prosazhin/pbcomponents';
+
+<Tabs defaultIndex={0}>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((label) => (
+    <Tab
+      key={label}
+      label={label}
+    >
+      <div style={{ marginTop: 24 }}>{`Content for "${label}" tab`}</div>
+    </Tab>
+  ))}
+</Tabs>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Tabs'
+  locale='ru'
+/>

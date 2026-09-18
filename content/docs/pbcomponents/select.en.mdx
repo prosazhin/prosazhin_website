@@ -1,0 +1,39 @@
+---
+title: Select
+description: 'Select one or multiple options from a list.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`options` contains `{ display, value, disabled, badge }` objects. `multiple` enables multi-select; `search` enables filtering.
+
+## Live example
+
+<ComponentShowcase
+  name='Select'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Select } from '@prosazhin/pbcomponents';
+
+const options = ['One', 'Two', 'Three', 'Four', 'Five'].map((display, index) => ({
+  display,
+  value: String(index),
+}));
+
+<Select
+  options={options}
+  placeholder='Placeholder'
+/>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Select'
+  locale='en'
+/>

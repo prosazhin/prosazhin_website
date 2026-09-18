@@ -1,0 +1,43 @@
+---
+title: Textarea
+description: 'A multi-line text input.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Pass a string as `value`; `onChange` returns the next value and the event.
+
+## Live example
+
+<ComponentShowcase
+  name='Textarea'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+'use client';
+
+import { Textarea } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [value, setValue] = useState('');
+  return (
+    <Textarea
+      value={value}
+      onChange={setValue}
+      placeholder='Placeholder'
+    />
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='Textarea'
+  locale='en'
+/>

@@ -1,0 +1,42 @@
+---
+title: NotificationsProvider
+description: 'Контекст для вызова уведомлений из любой вложенной части.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`useNotifications` даёт `notifications`, `showNotification` и `hideNotification`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='NotificationsProvider'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Button, NotificationsProvider, useNotifications } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { showNotification } = useNotifications();
+  return (
+    <Button onClick={() => showNotification({ headline: 'Saved', children: 'Changes saved.' })}>
+      Show
+    </Button>
+  );
+}
+
+<NotificationsProvider top={80}>
+  <Example />
+</NotificationsProvider>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='NotificationsProvider'
+  locale='ru'
+/>

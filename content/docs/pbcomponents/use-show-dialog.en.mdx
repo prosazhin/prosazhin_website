@@ -1,0 +1,35 @@
+---
+title: useShowDialog
+description: 'Registers a dialog and returns a function to open it.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Registers a dialog and returns a function to open it.
+Call this inside `DialogProvider` or `PBCProvider`.
+
+## Usage
+
+```tsx
+'use client';
+
+import { Dialog, useShowDialog } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const open = useShowDialog(() => (
+    <Dialog id='example'>
+      <Dialog.Content>
+        <Dialog.Body>Content</Dialog.Body>
+      </Dialog.Content>
+    </Dialog>
+  ));
+  return <button onClick={open}>Open</button>;
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useShowDialog'
+  locale='en'
+/>

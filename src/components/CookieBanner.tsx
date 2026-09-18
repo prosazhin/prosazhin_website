@@ -64,13 +64,13 @@ const CookieBanner = () => {
       <Container size='s'>
         <div
           className={clsx(
-            'border-secondary-lighter rounded-24 desktop:flex-row desktop:items-center pointer-events-auto flex w-full flex-col gap-16 border bg-white p-24 shadow-xl transition-all duration-300 ease-in',
+            'border-secondary-200 rounded-24 desktop:flex-row desktop:items-center bg-basic-0 pointer-events-auto flex w-full flex-col gap-16 border p-24 shadow-xl transition-all duration-300 ease-in',
             closing ? 'translate-y-[150%] opacity-0' : 'translate-y-0 opacity-100'
           )}
         >
           <div className='flex flex-1 flex-col gap-2'>
-            <p className='text-tm16 text-basic-main'>{t('cookie.title')}</p>
-            <p className='text-t14 text-basic-light link'>
+            <p className='text-tm16 text-basic-400'>{t('cookie.title')}</p>
+            <p className='text-t14 text-basic-300 link'>
               {t('cookie.text')} <NextLink href='/privacy'>{t('cookie.more')}</NextLink>
             </p>
           </div>

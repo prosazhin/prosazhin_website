@@ -1,0 +1,38 @@
+---
+title: CollapseGroup
+description: 'A group of disclosures.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Pass several `Collapse` elements; `joined` connects their appearance and `name` groups them.
+
+## Live example
+
+<ComponentShowcase
+  name='CollapseGroup'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Collapse, CollapseGroup } from '@prosazhin/pbcomponents';
+
+<CollapseGroup name='sections'>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <Collapse
+      key={item}
+      summary={item}
+    >{`Content for ${item}`}</Collapse>
+  ))}
+</CollapseGroup>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='CollapseGroup'
+  locale='en'
+/>

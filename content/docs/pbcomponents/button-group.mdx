@@ -1,0 +1,42 @@
+---
+title: ButtonGroup
+description: 'Группа кнопок одного размера.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Передайте несколько `Button` дочерними элементами; общий размер задавайте на группе.
+
+## Живой пример
+
+<ComponentShowcase
+  name='ButtonGroup'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Button, ButtonGroup, Dropdown } from '@prosazhin/pbcomponents';
+
+<ButtonGroup size='m'>
+  <Button theme='border'>One</Button>
+  <Button theme='border'>Two</Button>
+  <Dropdown>
+    <Dropdown.Trigger theme='border'>Three</Dropdown.Trigger>
+    <Dropdown.Content>
+      <Dropdown.Item>One</Dropdown.Item>
+      <Dropdown.Item>Two</Dropdown.Item>
+      <Dropdown.Item>Three</Dropdown.Item>
+    </Dropdown.Content>
+  </Dropdown>
+</ButtonGroup>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='ButtonGroup'
+  locale='ru'
+/>

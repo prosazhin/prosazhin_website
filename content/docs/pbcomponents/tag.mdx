@@ -1,0 +1,44 @@
+---
+title: Tag
+description: 'Интерактивная метка, ссылка или фильтр.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`checked` показывает выбор; `href` превращает метку в ссылку.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Tag'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+'use client';
+
+import { Tag } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Tag
+      checked={checked}
+      onClick={() => setChecked(!checked)}
+    >
+      Tag
+    </Tag>
+  );
+}
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Tag'
+  locale='ru'
+/>

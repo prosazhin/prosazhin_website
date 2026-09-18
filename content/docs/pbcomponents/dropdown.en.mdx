@@ -1,0 +1,44 @@
+---
+title: Dropdown
+description: 'A menu with a trigger and content.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Compose `Dropdown.Trigger`, `Dropdown.Content`, and `Dropdown.Item`. Control visibility with `open` and `onOpenChange`.
+
+## Live example
+
+<ComponentShowcase
+  name='Dropdown'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { Badge, Dropdown } from '@prosazhin/pbcomponents';
+
+<Dropdown>
+  <Dropdown.Trigger>Dropdown Button</Dropdown.Trigger>
+  <Dropdown.Content align='left'>
+    <Dropdown.Item
+      leftIcon={UserCircleIcon}
+      badge={<Badge color='secondary'>2</Badge>}
+    >
+      My orders
+    </Dropdown.Item>
+    <Dropdown.Item>Profile setting</Dropdown.Item>
+    <Dropdown.Item borderTop>Sign out</Dropdown.Item>
+  </Dropdown.Content>
+</Dropdown>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Dropdown'
+  locale='en'
+/>

@@ -1,0 +1,28 @@
+---
+title: useControllableState
+description: 'State that can be controlled by a value prop or stored inside the component.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+State that can be controlled by a value prop or stored inside the component.
+
+## Usage
+
+```tsx
+'use client';
+
+import { useControllableState } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const [open, setOpen] = useControllableState({ defaultValue: false });
+  return <button onClick={() => setOpen(!open)}>{open ? 'Open' : 'Closed'}</button>;
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useControllableState'
+  locale='en'
+/>

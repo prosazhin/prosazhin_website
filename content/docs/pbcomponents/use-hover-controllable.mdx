@@ -1,0 +1,28 @@
+---
+title: useHoverControllable
+description: 'Отслеживает наведение как управляемое или внутреннее состояние.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Отслеживает наведение как управляемое или внутреннее состояние.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useHoverControllable } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const [hovered, , hoverRef] = useHoverControllable<HTMLButtonElement>({ defaultValue: false });
+  return <button ref={hoverRef}>{hovered ? 'Hovered' : 'Idle'}</button>;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useHoverControllable'
+  locale='ru'
+/>

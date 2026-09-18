@@ -1,0 +1,45 @@
+---
+title: Switch
+description: 'A switch for a boolean setting.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`onChange` receives the next state, `value`, and the event. Use it for settings that take effect immediately.
+
+## Live example
+
+<ComponentShowcase
+  name='Switch'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+'use client';
+
+import { Switch } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Switch
+      value='one'
+      checked={checked}
+      onChange={setChecked}
+    >
+      Label
+    </Switch>
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='Switch'
+  locale='en'
+/>

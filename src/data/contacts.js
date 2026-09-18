@@ -46,4 +46,13 @@ const contacts = [
   },
 ];
 
+// Телефон — только в PDF (для ATS и рекрутёров), на сайте не публикуется.
+const phone = {
+  title: '+7 913 823-78-16',
+  url: 'tel:+79138237816',
+  link: false,
+};
+
+export const cvContacts = [contacts[0], phone, ...contacts.slice(1)];
+
 export default contacts;

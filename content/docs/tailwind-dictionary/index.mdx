@@ -1,0 +1,145 @@
+---
+title: tailwind-dictionary
+description: Как собрать тему Tailwind CSS 3 или 4 из собственных дизайн-токенов с помощью tailwind-dictionary.
+---
+
+`tailwind-dictionary` превращает JSON-токены Style Dictionary в тему Tailwind. Пакет используется при сборке [pbstyles](/docs/pbstyles). Доступны два формата результата:
+
+Ресурсы: [npm](https://www.npmjs.com/package/tailwind-dictionary) · [GitHub](https://github.com/prosazhin/tailwind-dictionary).
+
+## Установка
+
+```bash
+npm install --save-dev tailwind-dictionary
+npx tailwind-dictionary
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json
+```
+
+CLI по умолчанию читает `./config.json`. Ключ `-c` позволяет указать другой JSON-файл.
+
+## Выбор формата
+
+В конфигурации задайте `version: 4` для CSS-темы или `version: 3` для JavaScript-темы. Значение по умолчанию — `4`. `source` принимает glob-пути к JSON-токенам Style Dictionary, `output` указывает каталог результата, а `themeAliases` связывает категории токенов с ключами Tailwind.
+
+## CLI и параметры
+
+`tailwind-dictionary` читает `./config.json`. Для другого JSON-файла используйте `--config <path>` или `-c <path>`.
+
+| Поле           | Тип         | Назначение                                                                      |
+| -------------- | ----------- | ------------------------------------------------------------------------------- |
+| `version`      | `3` или `4` | Версия целевого Tailwind CSS; по умолчанию `4`.                                 |
+| `source`       | `string[]`  | Шаблоны путей к токенам Style Dictionary.                                       |
+| `output`       | `string`    | Каталог выходных файлов.                                                        |
+| `themeAliases` | объект      | Соответствие ключей Tailwind категориям токенов.                                |
+| `themes`       | объект      | Необязательные `light` и `dark` для обеих версий; `prefix` — для переменных v4. |
+
+## Tailwind CSS 4
+
+### Конфигурация
+
+Создайте `config.json`. Значения справа в `themeAliases` — пути к категориям ваших токенов. Ключи слева становятся именами CSS-переменных Tailwind.
+
+```json
+{
+  "version": 4,
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "themeAliases": {
+    "font": "font/family",
+    "font-weight": "font/weight",
+    "leading": "font/leading",
+    "text": "font/size",
+    "color": "color",
+    "spacing": "1px",
+    "radius": "rounded",
+    "shadow": "shadow",
+    "breakpoint": "screen",
+    "animation": "animation",
+    "keyframes": "keyframes"
+  }
+}
+```
+
+Например, токен `color.background` попадает в `--color-background`, а `font.family.sans` — в `--font-sans`. Запустите `npx tailwind-dictionary`, затем подключите результат **после** Tailwind:
+
+```css
+@import 'tailwindcss';
+@import './styles/tailwind/theme.css';
+```
+
+### Светлая и тёмная тема
+
+Для семантических значений добавьте отдельные файлы тем. Не включайте их повторно в `source`.
+
+```json
+{
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+Генератор создаёт обычные переменные `--theme-color-*` и связывает их с утилитами через `@theme inline`. Поэтому `data-theme="dark"` работает и на `<html>`, и на вложенном контейнере. Без атрибута используется `prefers-color-scheme`; `data-theme="light"` принудительно включает светлую тему. В `themes.prefix` можно заменить префикс `theme` на свой. Работает и с префиксом утилит Tailwind.
+
+Реальная конфигурация: [pbstyles на GitHub](https://github.com/prosazhin/pbstyles/blob/main/config-tailwind-dictionary.json).
+
+## Tailwind CSS 3
+
+### Конфигурация
+
+Для версии 3 нужны имена ключей объекта Tailwind, например `fontFamily`, `colors` и `screens`. Они отличаются от алиасов CSS-темы версии 4.
+
+```json
+{
+  "version": 3,
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "themeAliases": {
+    "fontFamily": "font/family",
+    "fontWeight": "font/weight",
+    "lineHeight": "font/leading",
+    "fontSize": "font/size",
+    "colors": "color",
+    "screens": "screen",
+    "spacing": "size",
+    "borderRadius": "rounded",
+    "borderWidth": "stroke",
+    "extend": {
+      "opacity": "opacity",
+      "boxShadow": "shadow",
+      "spacing": "container"
+    }
+  }
+}
+```
+
+Запустите `npx tailwind-dictionary`, затем подключите сгенерированный объект темы:
+
+```js
+const theme = require('./styles/tailwind');
+
+module.exports = {
+  theme: {
+    ...theme,
+    extend: { ...theme.extend },
+  },
+};
+```
+
+### Темы во время работы приложения
+
+Если задать `themes.light` и `themes.dark`, генератор дополнительно создаёт `theme.css`. Семантические цвета в `theme.js` становятся ссылками вида `var(--color-background)`. Импортируйте `theme.css` в приложение: в нём находятся значения для `:root`, системной тёмной темы и `[data-theme]`.
+
+```json
+{
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+Как и в версии 4, `data-theme="dark"` или `data-theme="light"` можно поставить на корень страницы или вложенный блок. Примеры исходных токенов и результата есть в [README пакета](https://github.com/prosazhin/tailwind-dictionary#readme).
+
+Полные примеры JSON-токенов и вывода есть в [README пакета](https://github.com/prosazhin/tailwind-dictionary#readme).

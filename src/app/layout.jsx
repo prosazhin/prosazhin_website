@@ -5,8 +5,10 @@ import ScrollToTop from '@/components/ScrollToTop';
 import ToTop from '@/components/ToTop';
 import TranslationsProvider from '@/components/TranslationsProvider';
 import { initTranslations } from '@/i18n';
+import '@/styles/docs.css';
 import '@/styles/globals.css';
 import { getLocale } from '@/utils/get-locale';
+import { getTheme } from '@/utils/get-theme';
 import { PBCProvider } from '@prosazhin/pbcomponents';
 import { dir } from 'i18next';
 import { Inter } from 'next/font/google';
@@ -24,7 +26,7 @@ const inter = Inter({
 export const dynamic = 'force-dynamic';
 
 const RootLayout = async ({ children }) => {
-  const locale = await getLocale();
+  const [locale, theme] = await Promise.all([getLocale(), getTheme()]);
   const [{ resources: resourceStore }, { default: nav }] = await Promise.all([
     initTranslations(locale),
     import('@/data/nav'),
@@ -44,7 +46,8 @@ const RootLayout = async ({ children }) => {
     <html
       lang={locale}
       dir={dir(locale)}
-      className={`${inter.variable} scroll-smooth`}
+      data-theme={theme}
+      className={`${inter.variable} scroll-smooth${theme === 'dark' ? ' dark' : ''}`}
       data-scroll-behavior='smooth'
     >
       <body>
@@ -56,11 +59,10 @@ const RootLayout = async ({ children }) => {
           <PBCProvider notifications={{ top: 80 }}>
             <Header
               locale={locale}
+              theme={theme}
               nav={nav}
             />
-            <main className='desktop:min-h-[calc(100vh-107px-80px-(72px+40px))] mt-112 mb-80 min-h-[calc(100vh-299px-80px-(72px+40px))]'>
-              {children}
-            </main>
+            {children}
             <Footer locale={locale} />
             <CookieBanner />
           </PBCProvider>

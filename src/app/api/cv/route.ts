@@ -1,48 +1,20 @@
-import fs from 'fs';
-import path from 'path';
-
-import CVDocument from '@/components/cv/CVDocument';
-import { initTranslations } from '@/i18n';
+import { i18nConfig } from '@/i18n';
 import { getLocale } from '@/utils/get-locale';
-import { Font, renderToBuffer } from '@react-pdf/renderer';
-import { createElement } from 'react';
+import { isProfession } from '@/utils/resume';
 
-const toDataUrl = (filePath: string, mime = 'font/ttf'): string => {
-  const buffer = fs.readFileSync(filePath);
-  return `data:${mime};base64,${buffer.toString('base64')}`;
-};
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const role = url.searchParams.get('role');
+  const profession = isProfession(role) ? role : 'developer';
+  const lang = url.searchParams.get('lang');
+  const locale = lang && i18nConfig.locales.includes(lang) ? lang : await getLocale();
+  const destination = `/resume/cv-${locale}-${profession}.pdf`;
 
-const fontsDir = path.join(process.cwd(), 'public', 'fonts');
-
-Font.register({
-  family: 'Roboto',
-  fonts: [
-    {
-      src: toDataUrl(path.join(fontsDir, 'Roboto-Regular.ttf')),
-      fontWeight: 'normal',
-    },
-    {
-      src: toDataUrl(path.join(fontsDir, 'Roboto-Bold.ttf')),
-      fontWeight: 'bold',
-    },
-  ],
-});
-
-export const dynamic = 'force-dynamic';
-
-export async function GET() {
-  const locale = await getLocale();
-  const { t } = await initTranslations(locale);
-
-  const document = createElement(CVDocument, { t, locale });
-  // CVDocument returns <Document>; renderToBuffer expects Document root
-  const pdfBuffer = await renderToBuffer(document as Parameters<typeof renderToBuffer>[0]);
-
-  return new Response(new Uint8Array(pdfBuffer), {
-    status: 200,
+  return new Response(null, {
+    status: 307,
     headers: {
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="cv.pdf"',
+      Location: destination,
+      'Cache-Control': 'private, no-store',
     },
   });
 }

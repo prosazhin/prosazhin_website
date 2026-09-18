@@ -1,0 +1,30 @@
+---
+title: useMergeRefs
+description: 'Объединяет несколько React ref в один callback ref.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Объединяет несколько React ref в один callback ref.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useRef, type Ref } from 'react';
+import { useMergeRefs } from '@prosazhin/pbcomponents';
+
+function Example({ forwardedRef }: { forwardedRef: Ref<HTMLDivElement> }) {
+  const localRef = useRef<HTMLDivElement>(null);
+  const ref = useMergeRefs(localRef, forwardedRef);
+  return <div ref={ref} />;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useMergeRefs'
+  locale='ru'
+/>

@@ -1,0 +1,33 @@
+---
+title: useCountdown
+description: 'Возвращает прогресс таймера от 0 до 100 с поддержкой паузы.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Возвращает прогресс таймера от 0 до 100 с поддержкой паузы.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useCountdown } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const progress = useCountdown({ delay: 5000, paused: false });
+  return (
+    <progress
+      value={progress}
+      max={100}
+    />
+  );
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useCountdown'
+  locale='ru'
+/>

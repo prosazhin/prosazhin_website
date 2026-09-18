@@ -1,0 +1,36 @@
+---
+title: Text
+description: 'Текст с размером и весом, выбираемым через пропсы.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Полиморфный `as` меняет HTML-тег; `medium` усиливает начертание.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Text'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Text } from '@prosazhin/pbcomponents';
+
+<Text
+  as='span'
+  size='m'
+>
+  Label
+</Text>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Text'
+  locale='ru'
+/>

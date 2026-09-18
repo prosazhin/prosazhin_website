@@ -1,0 +1,31 @@
+---
+title: Collapse
+description: 'Раскрываемый блок с заголовком.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`summary` обязателен. Для начального состояния задайте `defaultOpen`, для управляемого — `open`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Collapse'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Collapse } from '@prosazhin/pbcomponents';
+
+<Collapse summary='Summary'>Collapse item content</Collapse>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Collapse'
+  locale='ru'
+/>

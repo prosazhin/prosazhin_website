@@ -1,0 +1,39 @@
+---
+title: Select
+description: 'Выбор одного или нескольких вариантов из списка.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`options` содержит объекты `{ display, value, disabled, badge }`. `multiple` включает множественный выбор; `search` добавляет поиск.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Select'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Select } from '@prosazhin/pbcomponents';
+
+const options = ['One', 'Two', 'Three', 'Four', 'Five'].map((display, index) => ({
+  display,
+  value: String(index),
+}));
+
+<Select
+  options={options}
+  placeholder='Placeholder'
+/>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Select'
+  locale='ru'
+/>

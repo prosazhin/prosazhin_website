@@ -1,0 +1,39 @@
+---
+title: Search
+description: 'Search and select options from a list.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Similar to `Select`, with searching as the primary interaction. Supports single and multiple selection.
+
+## Live example
+
+<ComponentShowcase
+  name='Search'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Search } from '@prosazhin/pbcomponents';
+
+const options = ['One', 'Two', 'Three', 'Four', 'Five'].map((display, index) => ({
+  display,
+  value: String(index),
+}));
+
+<Search
+  options={options}
+  placeholder='Placeholder'
+/>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Search'
+  locale='en'
+/>

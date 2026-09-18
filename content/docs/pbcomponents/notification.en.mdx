@@ -1,0 +1,48 @@
+---
+title: Notification
+description: 'A toast notification with timer and progress.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`headline` is required. `delay` sets the dismiss delay; `disableTimer` and `disableProgressBar` change behavior.
+
+## Live example
+
+<ComponentShowcase
+  name='Notification'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+'use client';
+
+import { Button, Notification } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Show notification</Button>
+      <Notification
+        headline='Saved'
+        open={open}
+        onOpenChange={setOpen}
+      >
+        Changes saved.
+      </Notification>
+    </>
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='Notification'
+  locale='en'
+/>

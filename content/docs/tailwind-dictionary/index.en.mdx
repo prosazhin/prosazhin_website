@@ -1,0 +1,145 @@
+---
+title: tailwind-dictionary
+description: Build a Tailwind CSS 3 or 4 theme from your own design tokens with tailwind-dictionary.
+---
+
+`tailwind-dictionary` turns Style Dictionary JSON tokens into a Tailwind theme. It is used to build [pbstyles](/docs/pbstyles). It supports two output formats:
+
+Resources: [npm](https://www.npmjs.com/package/tailwind-dictionary) · [GitHub](https://github.com/prosazhin/tailwind-dictionary).
+
+## Installation
+
+```bash
+npm install --save-dev tailwind-dictionary
+npx tailwind-dictionary
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json
+```
+
+The CLI reads `./config.json` by default. Use `-c` to select another JSON file.
+
+## Choose an output format
+
+Set `version: 4` for a CSS theme or `version: 3` for a JavaScript theme. The default is `4`. `source` accepts globs for Style Dictionary JSON tokens, `output` sets the destination directory, and `themeAliases` maps token categories to Tailwind keys.
+
+## CLI and options
+
+`tailwind-dictionary` reads `./config.json`. Use `--config <path>` or `-c <path>` for another JSON file.
+
+| Field          | Type       | Purpose                                                                          |
+| -------------- | ---------- | -------------------------------------------------------------------------------- |
+| `version`      | `3` or `4` | Target Tailwind CSS version; defaults to `4`.                                    |
+| `source`       | `string[]` | Style Dictionary token path patterns.                                            |
+| `output`       | `string`   | Output directory.                                                                |
+| `themeAliases` | object     | Maps Tailwind keys to token categories.                                          |
+| `themes`       | object     | Optional `light` and `dark` tokens for both versions; `prefix` for v4 variables. |
+
+## Tailwind CSS 4
+
+### Configuration
+
+Create `config.json`. Values on the right of `themeAliases` point to your token categories. Keys on the left become Tailwind CSS variable names.
+
+```json
+{
+  "version": 4,
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "themeAliases": {
+    "font": "font/family",
+    "font-weight": "font/weight",
+    "leading": "font/leading",
+    "text": "font/size",
+    "color": "color",
+    "spacing": "1px",
+    "radius": "rounded",
+    "shadow": "shadow",
+    "breakpoint": "screen",
+    "animation": "animation",
+    "keyframes": "keyframes"
+  }
+}
+```
+
+For example, `color.background` becomes `--color-background` and `font.family.sans` becomes `--font-sans`. Run `npx tailwind-dictionary`, then import the result **after** Tailwind:
+
+```css
+@import 'tailwindcss';
+@import './styles/tailwind/theme.css';
+```
+
+### Light and dark themes
+
+Add separate theme files for semantic values. Do not include them again in `source`.
+
+```json
+{
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+The generator creates plain `--theme-color-*` variables and maps utilities to them through `@theme inline`. Thus, `data-theme="dark"` works on `<html>` and on nested containers. Without an attribute, the theme follows `prefers-color-scheme`; `data-theme="light"` forces light mode. Set `themes.prefix` to replace the `theme` variable prefix. Tailwind utility prefixes also work.
+
+See the real [pbstyles configuration on GitHub](https://github.com/prosazhin/pbstyles/blob/main/config-tailwind-dictionary.json).
+
+## Tailwind CSS 3
+
+### Configuration
+
+Version 3 uses Tailwind object keys such as `fontFamily`, `colors`, and `screens`. They differ from version 4 CSS theme aliases.
+
+```json
+{
+  "version": 3,
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "themeAliases": {
+    "fontFamily": "font/family",
+    "fontWeight": "font/weight",
+    "lineHeight": "font/leading",
+    "fontSize": "font/size",
+    "colors": "color",
+    "screens": "screen",
+    "spacing": "size",
+    "borderRadius": "rounded",
+    "borderWidth": "stroke",
+    "extend": {
+      "opacity": "opacity",
+      "boxShadow": "shadow",
+      "spacing": "container"
+    }
+  }
+}
+```
+
+Run `npx tailwind-dictionary`, then import the generated theme object:
+
+```js
+const theme = require('./styles/tailwind');
+
+module.exports = {
+  theme: {
+    ...theme,
+    extend: { ...theme.extend },
+  },
+};
+```
+
+### Runtime themes
+
+With `themes.light` and `themes.dark`, the generator also creates `theme.css`. Semantic colors in `theme.js` become references such as `var(--color-background)`. Import `theme.css` into your app for the `:root`, system dark theme, and `[data-theme]` values.
+
+```json
+{
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+As in version 4, set `data-theme="dark"` or `data-theme="light"` on the page root or a nested element. See the [package README](https://github.com/prosazhin/tailwind-dictionary#readme) for source tokens and generated output.
+
+The [package README](https://github.com/prosazhin/tailwind-dictionary#readme) contains complete token and output examples.

@@ -5,9 +5,7 @@ import { Button } from '@prosazhin/pbcomponents';
 import { useEffect, useState } from 'react';
 
 const ToTop = () => {
-  const [show, setShow] = useState(
-    typeof window !== 'undefined' ? window.pageYOffset > 500 : false
-  );
+  const [show, setShow] = useState(false);
 
   const handleScroll = () => {
     const offsetTop = window.pageYOffset;
@@ -26,6 +24,7 @@ const ToTop = () => {
       }, 200);
     };
 
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {

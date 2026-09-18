@@ -1,0 +1,29 @@
+---
+title: useNotifications
+description: 'Читает уведомления и предоставляет методы показа и скрытия.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Читает уведомления и предоставляет методы показа и скрытия.
+Вызывайте внутри `NotificationsProvider` или `PBCProvider`.
+
+## Использование
+
+```tsx
+'use client';
+
+import { useNotifications } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { showNotification } = useNotifications();
+  return <button onClick={() => showNotification({ headline: 'Saved' })}>Show</button>;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useNotifications'
+  locale='ru'
+/>

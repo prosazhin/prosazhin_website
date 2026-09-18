@@ -1,0 +1,40 @@
+---
+title: CheckboxGroup
+description: 'A checkbox group with an array of selected values.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Children are `Checkbox` or `Switch`; `onChange` returns an array of values.
+
+## Live example
+
+<ComponentShowcase
+  name='CheckboxGroup'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Checkbox, CheckboxGroup } from '@prosazhin/pbcomponents';
+
+<CheckboxGroup defaultValue={['One']}>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <Checkbox
+      key={item}
+      value={item}
+    >
+      {item}
+    </Checkbox>
+  ))}
+</CheckboxGroup>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='CheckboxGroup'
+  locale='en'
+/>

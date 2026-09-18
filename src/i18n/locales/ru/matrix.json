@@ -1,4 +1,5 @@
 {
+  "about": "Что такое матрица компетенций",
   "headline": "Уровни оценки навыков",
   "levels": [
     {
@@ -34,6 +35,14 @@
         {
           "id": "communication-and-teamwork",
           "title": "Коммуникация и командное взаимодействие"
+        },
+        {
+          "id": "stakeholder-management-and-presenting-solutions",
+          "title": "Работа со стейкхолдерами и презентация решений"
+        },
+        {
+          "id": "mentoring",
+          "title": "Менторство и развитие коллег"
         }
       ]
     },
@@ -59,7 +68,7 @@
       ]
     },
     {
-      "title": "Пользовательские исследования и аналитика",
+      "title": "Пользовательские исследования",
       "competencies": [
         {
           "id": "understanding-and-describing-users-personas-scenarios-customer-journey-maps-etc",
@@ -93,6 +102,10 @@
         {
           "id": "description-of-interface-working-principles-and-patterns",
           "title": "Описание принципов работы интерфейса и паттернов"
+        },
+        {
+          "id": "accessibility-design",
+          "title": "Проектирование доступных интерфейсов (a11y, WCAG)"
         }
       ]
     },
@@ -112,6 +125,10 @@
           "title": "Анимация интерфейса и моушен-дизайн"
         },
         {
+          "id": "design-systems-and-tokens",
+          "title": "Дизайн-системы и токены: архитектура, поддержка, governance"
+        },
+        {
           "id": "creating-guidelines",
           "title": "Создание гайдлайнов"
         },
@@ -122,19 +139,23 @@
         {
           "id": "identity-and-branding",
           "title": "Айдентика и брендинг"
-        },
-        {
-          "id": "typography-design",
-          "title": "Шрифтовой дизайн"
         }
       ]
     },
     {
-      "title": "Фронтенд",
+      "title": "Design engineering",
       "competencies": [
         {
           "id": "layout-html-css-javascript-and-interface-animation",
           "title": "Вёрстка (HTML, CSS, JavaScript) и анимация интерфейса"
+        },
+        {
+          "id": "prototyping-in-code",
+          "title": "Прототипирование в коде"
+        },
+        {
+          "id": "developer-handoff-and-documentation",
+          "title": "Передача в разработку и документация (handoff)"
         },
         {
           "id": "working-with-data-sources",
@@ -181,15 +202,11 @@
       "competencies": [
         {
           "id": "publications-and-presentations",
-          "title": "Публикации и презентации"
+          "title": "Публикации и выступления"
         },
         {
           "id": "search-engine-optimization-seo",
           "title": "Поисковая оптимизация (SEO)"
-        },
-        {
-          "id": "mobile-app-promotion",
-          "title": "Продвижение мобильных приложений"
         }
       ]
     },
@@ -207,6 +224,43 @@
         {
           "id": "building-ux-strategy",
           "title": "Построение UX-стратегии"
+        },
+        {
+          "id": "product-thinking-and-business-models",
+          "title": "Продуктовое мышление и понимание бизнес-моделей"
+        },
+        {
+          "id": "prioritization-and-design-roi",
+          "title": "Приоритизация и оценка влияния дизайна (ROI)"
+        }
+      ]
+    },
+    {
+      "title": "ИИ в дизайне",
+      "competencies": [
+        {
+          "id": "ai-assisted-design-workflow",
+          "title": "AI-ассистированный рабочий процесс: генерация вариантов, синтез исследований, тексты"
+        },
+        {
+          "id": "prompt-engineering-and-prompt-to-prototype",
+          "title": "Промпт-инжиниринг и сборка прототипов по промпту (prompt-to-prototype)"
+        },
+        {
+          "id": "evaluating-and-curating-ai-output",
+          "title": "Оценка и доводка результатов ИИ до стандартов продукта и дизайн-системы"
+        },
+        {
+          "id": "designing-ai-products",
+          "title": "Проектирование AI-продуктов: conversational UX, агенты, неопределённость, доверие"
+        },
+        {
+          "id": "design-process-automation",
+          "title": "Автоматизация дизайн-процессов: плагины, скрипты, MCP"
+        },
+        {
+          "id": "ethical-and-responsible-ai",
+          "title": "Этика и ответственное использование ИИ"
         }
       ]
     }
@@ -221,7 +275,7 @@
         },
         {
           "id": "authorization-and-authentication",
-          "title": "Авторизация и Аутентификация"
+          "title": "Авторизация и аутентификация"
         },
         {
           "id": "algorithms",
@@ -236,16 +290,8 @@
           "title": "Docker"
         },
         {
-          "id": "ide",
-          "title": "IDE"
-        },
-        {
-          "id": "markdown",
-          "title": "Markdown"
-        },
-        {
           "id": "chrome-devtools",
-          "title": "Chrome Devtools"
+          "title": "Chrome DevTools"
         }
       ]
     },
@@ -278,7 +324,7 @@
       "title": "HTML",
       "competencies": [
         {
-          "id": "basics",
+          "id": "html-basics",
           "title": "Базовые знания"
         },
         {
@@ -303,7 +349,7 @@
       "title": "CSS",
       "competencies": [
         {
-          "id": "basics-2",
+          "id": "css-basics",
           "title": "Базовые знания"
         },
         {
@@ -336,7 +382,7 @@
         },
         {
           "id": "css-modules",
-          "title": "CSS modules"
+          "title": "CSS Modules"
         },
         {
           "id": "css-in-js",
@@ -348,7 +394,7 @@
       "title": "JavaScript",
       "competencies": [
         {
-          "id": "basics-3",
+          "id": "js-basics",
           "title": "Базовые знания"
         },
         {
@@ -356,8 +402,8 @@
           "title": "DOM"
         },
         {
-          "id": "fetch-api-ajax",
-          "title": "Fetch API / Ajax"
+          "id": "http-clients-and-error-handling",
+          "title": "HTTP-клиенты и обработка ошибок (fetch, axios)"
         },
         {
           "id": "typescript",
@@ -366,7 +412,7 @@
       ]
     },
     {
-      "title": "Frameworks",
+      "title": "Фреймворки",
       "competencies": [
         {
           "id": "react",
@@ -374,36 +420,153 @@
         },
         {
           "id": "next",
-          "title": "Next"
+          "title": "Next.js"
         },
         {
-          "id": "vue-2",
-          "title": "Vue 2"
+          "id": "vue",
+          "title": "Vue"
         },
         {
-          "id": "nuxt-2",
-          "title": "Nuxt 2"
+          "id": "nuxt",
+          "title": "Nuxt"
         },
         {
-          "id": "vue-3",
-          "title": "Vue 3"
+          "id": "svelte-sveltekit",
+          "title": "Svelte / SvelteKit"
         },
         {
-          "id": "nuxt-3",
-          "title": "Nuxt 3"
+          "id": "astro",
+          "title": "Astro"
         },
         {
           "id": "angular",
           "title": "Angular"
         },
         {
-          "id": "svelte",
-          "title": "Svelte"
+          "id": "web-components",
+          "title": "Web Components"
         }
       ]
     },
     {
-      "title": "Version Control Systems и VCS Hosting",
+      "title": "Архитектура приложений",
+      "competencies": [
+        {
+          "id": "state-management",
+          "title": "Управление состоянием (client / server state)"
+        },
+        {
+          "id": "data-fetching-and-caching",
+          "title": "Загрузка данных и кэширование (TanStack Query, SWR)"
+        },
+        {
+          "id": "routing-and-url-state",
+          "title": "Роутинг и состояние в URL"
+        },
+        {
+          "id": "ui-states-loading-error-empty",
+          "title": "Состояния интерфейса: loading, error, empty"
+        },
+        {
+          "id": "error-handling-and-monitoring",
+          "title": "Обработка ошибок и мониторинг (Sentry)"
+        },
+        {
+          "id": "i18n",
+          "title": "Интернационализация (i18n)"
+        },
+        {
+          "id": "tables-and-charts",
+          "title": "Таблицы и графики (TanStack Table, ECharts)"
+        }
+      ]
+    },
+    {
+      "title": "Рендеринг",
+      "competencies": [
+        {
+          "id": "ssr-ssg-isr",
+          "title": "SSR / SSG / ISR"
+        },
+        {
+          "id": "react-server-components",
+          "title": "React Server Components"
+        },
+        {
+          "id": "streaming-and-edge",
+          "title": "Streaming и edge runtime"
+        }
+      ]
+    },
+    {
+      "title": "Производительность",
+      "competencies": [
+        {
+          "id": "core-web-vitals",
+          "title": "Core Web Vitals (LCP, INP, CLS)"
+        },
+        {
+          "id": "code-splitting-and-lazy-loading",
+          "title": "Code splitting и ленивая загрузка"
+        },
+        {
+          "id": "assets-optimization",
+          "title": "Оптимизация изображений и шрифтов"
+        },
+        {
+          "id": "render-profiling",
+          "title": "Профилирование рендера"
+        },
+        {
+          "id": "caching-strategies",
+          "title": "Стратегии кэширования"
+        }
+      ]
+    },
+    {
+      "title": "Безопасность",
+      "competencies": [
+        {
+          "id": "xss-and-csrf",
+          "title": "XSS и CSRF"
+        },
+        {
+          "id": "csp",
+          "title": "Content Security Policy"
+        },
+        {
+          "id": "tokens-storage-and-sessions",
+          "title": "Хранение токенов и сессии"
+        },
+        {
+          "id": "dependencies-and-supply-chain",
+          "title": "Безопасность зависимостей (supply chain)"
+        }
+      ]
+    },
+    {
+      "title": "Дизайн-системы в коде",
+      "competencies": [
+        {
+          "id": "storybook",
+          "title": "Storybook"
+        },
+        {
+          "id": "component-api-design",
+          "title": "Проектирование API компонентов"
+        },
+        {
+          "id": "design-tokens-in-code",
+          "title": "Дизайн-токены в коде"
+        },
+        {
+          "id": "npm-packages-publishing",
+          "title": "Публикация npm-пакетов"
+        }
+      ]
+    },
+    {
+      "title": "Системы контроля версий",
       "competencies": [
         {
           "id": "git",
@@ -416,32 +579,32 @@
         {
           "id": "gitlab",
           "title": "GitLab"
-        },
-        {
-          "id": "bitbucket",
-          "title": "Bitbucket"
         }
       ]
     },
     {
-      "title": "Пакетные менеджеры",
+      "title": "Пакетные менеджеры и монорепо",
       "competencies": [
         {
           "id": "npm",
-          "title": "NPM"
+          "title": "npm"
         },
         {
-          "id": "yarn",
-          "title": "Yarn"
+          "id": "pnpm",
+          "title": "pnpm"
         },
         {
           "id": "bun",
           "title": "Bun"
+        },
+        {
+          "id": "monorepo-turborepo",
+          "title": "Монорепозитории (Turborepo, workspaces)"
         }
       ]
     },
     {
-      "title": "Инструменты сборки",
+      "title": "Инструменты сборки и качество кода",
       "competencies": [
         {
           "id": "eslint",
@@ -464,8 +627,12 @@
           "title": "Rollup"
         },
         {
-          "id": "parcel",
-          "title": "Parcel"
+          "id": "git-hooks-and-commit-conventions",
+          "title": "Git-хуки и конвенции коммитов"
+        },
+        {
+          "id": "ci-cd",
+          "title": "CI/CD"
         }
       ]
     },
@@ -473,21 +640,25 @@
       "title": "Тестирование",
       "competencies": [
         {
-          "id": "jest",
-          "title": "Jest"
+          "id": "unit-testing",
+          "title": "Unit-тесты (Jest, Vitest)"
         },
         {
-          "id": "vitest",
-          "title": "Vitest"
+          "id": "component-testing",
+          "title": "Тестирование компонентов (React Testing Library)"
         },
         {
-          "id": "playwright",
-          "title": "Playwright"
+          "id": "e2e-testing",
+          "title": "E2E-тесты (Playwright)"
+        },
+        {
+          "id": "visual-regression-testing",
+          "title": "Визуальное регрессионное тестирование"
         }
       ]
     },
     {
-      "title": "Wep API",
+      "title": "Web API",
       "competencies": [
         {
           "id": "service-workers",
@@ -498,24 +669,78 @@
           "title": "Web Workers"
         },
         {
-          "id": "shared-workers",
-          "title": "Shared Workers"
-        },
-        {
           "id": "local-session-storage",
           "title": "Local & Session Storage"
         },
         {
-          "id": "iframe",
-          "title": "IFrame"
+          "id": "indexeddb",
+          "title": "IndexedDB"
         },
         {
           "id": "pwa",
           "title": "PWA"
         },
         {
-          "id": "indexeddb",
-          "title": "IndexedDB"
+          "id": "websockets-and-sse",
+          "title": "WebSockets и SSE"
+        },
+        {
+          "id": "intersection-and-resize-observer",
+          "title": "Intersection / Resize Observer"
+        },
+        {
+          "id": "view-transitions",
+          "title": "View Transitions API"
+        },
+        {
+          "id": "browser-extensions",
+          "title": "Браузерные расширения"
+        }
+      ]
+    },
+    {
+      "title": "Бэкенд и интеграции",
+      "competencies": [
+        {
+          "id": "nodejs-api-routes-bff",
+          "title": "Node.js, API routes и BFF"
+        },
+        {
+          "id": "headless-cms",
+          "title": "Headless CMS (Strapi, Contentful, Sanity)"
+        },
+        {
+          "id": "databases-and-redis-basics",
+          "title": "Базы данных и Redis (основы)"
+        },
+        {
+          "id": "telegram-bots",
+          "title": "Telegram-боты"
+        }
+      ]
+    },
+    {
+      "title": "ИИ в разработке",
+      "competencies": [
+        {
+          "id": "ai-assisted-development",
+          "title": "AI-ассистированная разработка в агентных средах (Claude Code, Cursor, Codex)"
+        },
+        {
+          "id": "context-engineering",
+          "title": "Контекст-инжиниринг: AGENTS.md, правила, скиллы, MCP"
+        },
+        {
+          "id": "ai-code-review-and-verification",
+          "title": "Ревью и верификация кода, написанного ИИ"
+        },
+        {
+          "id": "building-ai-features",
+          "title": "Разработка AI-фич: LLM API, streaming UI, tool calling, RAG"
+        },
+        {
+          "id": "evaluating-ai-features",
+          "title": "Оценка качества AI-фич: evals, стоимость, латентность"
         }
       ]
     }

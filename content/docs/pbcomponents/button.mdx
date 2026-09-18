@@ -1,0 +1,37 @@
+---
+title: Button
+description: 'Действие или ссылка с размером, цветом, темой и состоянием загрузки.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Для действия используйте `onClick`, для перехода — `href`. `loading` показывает выполнение операции; `disabled` блокирует действие.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Button'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Button } from '@prosazhin/pbcomponents';
+
+<Button
+  size='m'
+  theme='filled'
+  color='primary'
+>
+  Button
+</Button>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Button'
+  locale='ru'
+/>

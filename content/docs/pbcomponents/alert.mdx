@@ -1,0 +1,37 @@
+---
+title: Alert
+description: 'Встроенное сообщение о состоянии с заголовком и действиями.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Соберите `Alert.Title`, `Alert.Description`, `Alert.Actions`. Закрытие контролируется через `open` и `onOpenChange`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Alert'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Alert } from '@prosazhin/pbcomponents';
+
+<Alert
+  color='success'
+  defaultOpen
+>
+  <Alert.Title>Saved</Alert.Title>
+  <Alert.Description>Changes saved.</Alert.Description>
+</Alert>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Alert'
+  locale='ru'
+/>

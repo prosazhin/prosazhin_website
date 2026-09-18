@@ -1,0 +1,44 @@
+---
+title: Dropdown
+description: 'Раскрывающееся меню с триггером и содержимым.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Соберите `Dropdown.Trigger`, `Dropdown.Content` и `Dropdown.Item`. Открытие можно контролировать через `open` и `onOpenChange`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Dropdown'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { Badge, Dropdown } from '@prosazhin/pbcomponents';
+
+<Dropdown>
+  <Dropdown.Trigger>Dropdown Button</Dropdown.Trigger>
+  <Dropdown.Content align='left'>
+    <Dropdown.Item
+      leftIcon={UserCircleIcon}
+      badge={<Badge color='secondary'>2</Badge>}
+    >
+      My orders
+    </Dropdown.Item>
+    <Dropdown.Item>Profile setting</Dropdown.Item>
+    <Dropdown.Item borderTop>Sign out</Dropdown.Item>
+  </Dropdown.Content>
+</Dropdown>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Dropdown'
+  locale='ru'
+/>

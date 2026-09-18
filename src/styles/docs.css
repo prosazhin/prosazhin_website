@@ -1,0 +1,212 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* pbstyles uses a 1px site unit; Fumadocs expects Tailwind's 4px unit. */
+:root {
+  --spacing: 1px;
+}
+
+.docs-shell {
+  --spacing: 4px;
+}
+
+.docs-component-preview.docs-showcase {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 216px;
+  margin: 24px 0 12px;
+  padding: 32px;
+  border: 1px solid var(--theme-color-secondary-200);
+  border-radius: 12px;
+  background: transparent;
+}
+
+.docs-showcase-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.docs-showcase[data-component='Container'] .docs-showcase-stage {
+  max-width: none;
+}
+
+.docs-showcase[data-component='Dropdown'] {
+  min-height: 280px;
+}
+
+.docs-showcase-field {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.docs-showcase-menu {
+  width: min(100%, 300px);
+  padding: 8px;
+  border: 1px solid var(--theme-color-secondary-200);
+  border-radius: 12px;
+  background: var(--theme-color-basic-0);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 6%);
+}
+
+.docs-showcase-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  border-bottom: 2px solid var(--theme-color-secondary-200);
+}
+
+.docs-showcase-tab-content {
+  padding: 24px 0;
+}
+
+.docs-showcase-block {
+  min-height: 96px;
+  padding: 20px;
+  border: 1px solid var(--theme-color-secondary-200);
+  border-radius: 8px;
+  background: var(--theme-color-basic-0);
+}
+
+.docs-showcase-controls {
+  margin: 0 0 32px;
+  padding: 16px 20px 20px;
+  border: 1px solid var(--theme-color-secondary-200);
+  border-radius: 12px;
+  color: var(--theme-color-text-secondary);
+  font-size: 13px;
+}
+
+.docs-showcase-controls > p {
+  margin: 0 0 16px;
+  color: var(--theme-color-text-primary);
+  font-weight: 600;
+}
+
+.docs-showcase-controls-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.docs-showcase-controls label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 240px);
+  align-items: center;
+  gap: 16px;
+}
+
+.docs-showcase-controls label > span:not(.docs-showcase-select) {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.docs-shell .prose .docs-showcase-controls label code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--theme-color-text-secondary);
+  font-size: 11px;
+}
+
+.docs-showcase-controls :is(select, input:not([type='checkbox'])) {
+  width: 100%;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--theme-color-secondary-200);
+  border-radius: 6px;
+  color: var(--theme-color-text-primary);
+  background: var(--theme-color-basic-0);
+}
+
+.docs-showcase-select {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.docs-showcase-select select {
+  appearance: none;
+  padding-right: 34px;
+}
+
+.docs-showcase-select::after {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 7px;
+  height: 7px;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+  content: '';
+}
+
+.docs-showcase-controls .docs-showcase-control-boolean {
+  min-height: 36px;
+}
+
+.docs-showcase-control-boolean input {
+  width: 18px;
+  height: 18px;
+  justify-self: end;
+  accent-color: var(--theme-color-primary-400);
+}
+
+.docs-component-api-scroll {
+  overflow-x: auto;
+}
+
+.docs-component-api table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.docs-component-api :is(th, td) {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--theme-color-secondary-200);
+  text-align: left;
+  vertical-align: top;
+}
+
+.docs-component-api th {
+  color: var(--theme-color-text-secondary);
+  font-weight: 600;
+}
+
+.docs-component-api td small {
+  display: block;
+  margin-top: 4px;
+  color: var(--theme-color-text-secondary);
+  font-size: 12px;
+}
+
+.docs-component-api-note {
+  color: var(--theme-color-text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 639px) {
+  .docs-component-preview.docs-showcase {
+    min-height: 180px;
+    padding: 20px;
+  }
+
+  .docs-showcase-controls label {
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 42%);
+    gap: 8px;
+  }
+}

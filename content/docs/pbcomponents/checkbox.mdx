@@ -1,0 +1,45 @@
+---
+title: Checkbox
+description: 'Независимый флажок с подписью.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`onChange` получает `checked`, `value` и исходное событие. `indeterminate` показывает частичный выбор.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Checkbox'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+'use client';
+
+import { Checkbox } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Checkbox
+      value='one'
+      checked={checked}
+      onChange={setChecked}
+    >
+      Label
+    </Checkbox>
+  );
+}
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Checkbox'
+  locale='ru'
+/>

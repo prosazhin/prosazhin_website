@@ -1,14 +1,9 @@
 {
   "entries": [
     {
-      "type": "about",
-      "title": "General",
-      "description": "I have been working in design since 2009, creating layouts for newspapers and books. Since 2011, I have been involved in commercial design, working in publishing houses and printing companies. Since 2014, I have been focusing on digital product design, layout, and frontend development. In teams, I represent two competencies: designer and frontend developer."
-    },
-    {
       "type": "design",
       "title": "Design",
-      "description": "Prototyping interfaces based on hypotheses and user experience analysis. Generating hypotheses based on user data from analytics services. Designing interaction scenarios between users and the product. Creating and maintaining a component library and design tokens as part of the design system. Writing interface texts in an informative style, aligned with the product's tone of voice.",
+      "description": "UX research: user interviews, usability testing, product metrics analysis, and A/B testing. Generating and validating hypotheses based on user data from analytics services. Designing interaction scenarios: CJM, user flows, interface prototyping. Creating and maintaining a component library and design tokens as part of the design system. Writing interface copy in an informative style, aligned with the product's tone of voice.",
       "matrix": {
         "title": "Designer competency matrix",
         "description": "Personal skills assessment"
@@ -17,21 +12,17 @@
     {
       "type": "frontend",
       "title": "Frontend",
-      "description": "Development and maintenance of: product interfaces, client-side logic, API interactions, component libraries, and npm packages.",
+      "description": "Development and maintenance of: product interfaces, client-side logic, API interactions, component libraries and design systems, npm packages, and product AI features. Performance optimization. Semantic, responsive, and cross-browser markup: BEM, Mobile-first, animation. Testing of components, APIs, and cross-browser checks.",
       "matrix": {
         "title": "Developer competency matrix",
         "description": "Personal skills assessment"
       }
     },
     {
-      "type": "html",
-      "title": "Markup development",
-      "description": "HTML5, semantic markup, CSS, Less, SCSS, PostCSS, TailwindCSS. BEM, Mobile-first, responsive and cross-browser layout. Basic animation."
-    },
-    {
       "type": "dev",
-      "title": "Development",
-      "description": "Working with Jamstack. Setting up and integrating a Headless CMS into the project. Configuring infrastructure for local development and deploying the project on a VPS in Docker. Setting up internal and external routing, including SSL. Configuring CI/CD and building the project. SEO analysis and project optimization."
+      "title": "Infrastructure & Tools",
+      "navTitle": "Tools",
+      "description": "Working with Jamstack. Setting up and integrating a Headless CMS into the project. Configuring infrastructure for local development and deploying the project on a VPS in Docker. Setting up internal and external routing, including SSL. Configuring CI/CD and building the project. Automating code quality control: git hooks, linting, and formatting. SEO analysis and project optimization. Working with AI tools: writing code, review, refactoring, debugging, and testing."
     }
   ]
 }

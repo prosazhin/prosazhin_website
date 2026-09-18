@@ -1,0 +1,138 @@
+---
+title: pbcomponents
+description: 'Установка, настройка и справочник компонентов React.'
+---
+
+`@prosazhin/pbcomponents` — библиотека компонентов для React 19. Справочник охватывает компоненты, хелперы, провайдеры и хуки с примерами и сигнатурами API.
+
+Ресурсы: [GitHub](https://github.com/prosazhin/pbcomponents) · [npm](https://www.npmjs.com/package/@prosazhin/pbcomponents) · [Figma Community](https://www.figma.com/community/file/1214486013859546496) · [Behance](https://www.behance.net/gallery/206064847/pbcomponents).
+
+## Установка
+
+```bash
+npm install @prosazhin/pbcomponents @prosazhin/pbstyles
+```
+
+Пакет компонентов использует React 19 как peer dependency и Tailwind CSS 4. Для фирменных токенов подключите `pbstyles` в глобальном CSS:
+
+```css
+@import 'tailwindcss';
+@import '@prosazhin/pbstyles/styles/tailwind/theme.css';
+```
+
+## Первая кнопка
+
+```tsx
+import { Button } from '@prosazhin/pbcomponents';
+
+export default function Example() {
+  return (
+    <Button
+      size='m'
+      color='primary'
+      theme='filled'
+    >
+      Сохранить
+    </Button>
+  );
+}
+```
+
+## Диалоги и уведомления
+
+Если используете `Dialog`, `Notification` или связанные хуки, оберните приложение в `PBCProvider` один раз:
+
+```tsx
+import { PBCProvider } from '@prosazhin/pbcomponents';
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <PBCProvider notifications={{ top: 80 }}>{children}</PBCProvider>;
+}
+```
+
+На этом сайте провайдер расположен в корневом layout. Для остальных компонентов дополнительный провайдер не нужен.
+
+## Тема и ссылки Next.js
+
+Цвета компонентов берутся из `pbstyles`. Без настройки они следуют `prefers-color-scheme`; `data-theme="dark"` или `data-theme="light"` на `<html>` либо контейнере задаёт режим вручную.
+
+Компоненты с `href` (`Button`, `Tab`, `DropdownItem`, `Tag`) принимают `linkComponent`, если вместо обычной ссылки нужен `next/link`:
+
+```tsx
+import NextLink from 'next/link';
+import { Button } from '@prosazhin/pbcomponents';
+
+<Button
+  href='/projects'
+  linkComponent={NextLink}
+>
+  Проекты
+</Button>;
+```
+
+## Справочник
+
+### Компоненты
+
+| Экспорт                                                   | Назначение                                                           |
+| --------------------------------------------------------- | -------------------------------------------------------------------- |
+| [Container](/docs/pbcomponents/container)                 | Контейнер страницы с основным содержимым и боковыми областями.       |
+| [Headline](/docs/pbcomponents/headline)                   | Заголовок с управляемым семантическим уровнем.                       |
+| [Button](/docs/pbcomponents/button)                       | Действие или ссылка с размером, цветом, темой и состоянием загрузки. |
+| [ButtonGroup](/docs/pbcomponents/button-group)            | Группа кнопок одного размера.                                        |
+| [Tag](/docs/pbcomponents/tag)                             | Интерактивная метка, ссылка или фильтр.                              |
+| [Badge](/docs/pbcomponents/badge)                         | Небольшая текстовая метка статуса или категории.                     |
+| [Field](/docs/pbcomponents/field)                         | Обёртка для подписи, контрола, подсказки и ошибки.                   |
+| [Input](/docs/pbcomponents/input)                         | Однострочное поле ввода с дополнениями.                              |
+| [Textarea](/docs/pbcomponents/textarea)                   | Многострочное поле ввода.                                            |
+| [Search](/docs/pbcomponents/search)                       | Поиск и выбор вариантов из списка.                                   |
+| [Select](/docs/pbcomponents/select)                       | Выбор одного или нескольких вариантов из списка.                     |
+| [Checkbox](/docs/pbcomponents/checkbox)                   | Независимый флажок с подписью.                                       |
+| [CheckboxGroup](/docs/pbcomponents/checkbox-group)        | Группа флажков с массивом выбранных значений.                        |
+| [Radio](/docs/pbcomponents/radio)                         | Один вариант в наборе взаимно исключающих ответов.                   |
+| [RadioGroup](/docs/pbcomponents/radio-group)              | Группа радиокнопок с одним выбранным значением.                      |
+| [InlineRadio](/docs/pbcomponents/inline-radio)            | Компактный вариант радио-кнопки.                                     |
+| [InlineRadioGroup](/docs/pbcomponents/inline-radio-group) | Группа компактных вариантов выбора.                                  |
+| [Switch](/docs/pbcomponents/switch)                       | Переключатель булевой настройки.                                     |
+| [Tabs](/docs/pbcomponents/tabs)                           | Набор вкладок с выбранным индексом.                                  |
+| [Tab](/docs/pbcomponents/tab)                             | Одна вкладка для Tabs или самостоятельной навигации.                 |
+| [Collapse](/docs/pbcomponents/collapse)                   | Раскрываемый блок с заголовком.                                      |
+| [CollapseGroup](/docs/pbcomponents/collapse-group)        | Группа раскрываемых блоков.                                          |
+| [Dropdown](/docs/pbcomponents/dropdown)                   | Раскрывающееся меню с триггером и содержимым.                        |
+| [DropdownItem](/docs/pbcomponents/dropdown-item)          | Отдельный пункт меню: действие или ссылка.                           |
+| [Dialog](/docs/pbcomponents/dialog)                       | Модальное окно с триггером, секциями и закрытием.                    |
+| [Alert](/docs/pbcomponents/alert)                         | Встроенное сообщение о состоянии с заголовком и действиями.          |
+| [Notification](/docs/pbcomponents/notification)           | Всплывающее сообщение с таймером и прогрессом.                       |
+
+### Хелперы
+
+| Экспорт                               | Назначение                                         |
+| ------------------------------------- | -------------------------------------------------- |
+| [Content](/docs/pbcomponents/content) | Текст с иконками слева и справа.                   |
+| [Icon](/docs/pbcomponents/icon)       | SVG-иконка с заданным размером.                    |
+| [Text](/docs/pbcomponents/text)       | Текст с размером и весом, выбираемым через пропсы. |
+
+### Провайдеры
+
+| Экспорт                                                            | Назначение                                                 |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- |
+| [DialogProvider](/docs/pbcomponents/dialog-provider)               | Контекст для управления диалогами из дочерних компонентов. |
+| [NotificationsProvider](/docs/pbcomponents/notifications-provider) | Контекст для вызова уведомлений из любой вложенной части.  |
+| [PBCProvider](/docs/pbcomponents/pbc-provider)                     | Общий провайдер диалогов и уведомлений.                    |
+
+### Хуки
+
+| Экспорт                                                           | Назначение                                                                          |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [useClickOutside](/docs/pbcomponents/use-click-outside)           | Вызывает callback при клике или касании вне переданных элементов.                   |
+| [useControllableState](/docs/pbcomponents/use-controllable-state) | Состояние, которое может управляться пропсом value или храниться внутри компонента. |
+| [useCountdown](/docs/pbcomponents/use-countdown)                  | Возвращает прогресс таймера от 0 до 100 с поддержкой паузы.                         |
+| [useDialog](/docs/pbcomponents/use-dialog)                        | Читает диалоги из DialogProvider и закрывает активный или указанный диалог.         |
+| [useHoverControllable](/docs/pbcomponents/use-hover-controllable) | Отслеживает наведение как управляемое или внутреннее состояние.                     |
+| [useKeydown](/docs/pbcomponents/use-keydown)                      | Вызывает callback при нажатии указанных клавиш.                                     |
+| [useMergeRefs](/docs/pbcomponents/use-merge-refs)                 | Объединяет несколько React ref в один callback ref.                                 |
+| [useNotifications](/docs/pbcomponents/use-notifications)          | Читает уведомления и предоставляет методы показа и скрытия.                         |
+| [useScreenSize](/docs/pbcomponents/use-screen-size)               | Возвращает ширину и высоту окна, обновляясь при resize.                             |
+| [useShowDialog](/docs/pbcomponents/use-show-dialog)               | Регистрирует диалог и возвращает функцию его открытия.                              |
+
+Типы доступны из корня пакета и `@prosazhin/pbcomponents/types`. На страницах экспортов приведены примеры и сигнатуры API.

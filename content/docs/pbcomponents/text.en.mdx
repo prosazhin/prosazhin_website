@@ -1,0 +1,36 @@
+---
+title: Text
+description: 'Text with prop-controlled size and weight.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Polymorphic `as` changes the HTML tag; `medium` increases font weight.
+
+## Live example
+
+<ComponentShowcase
+  name='Text'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Text } from '@prosazhin/pbcomponents';
+
+<Text
+  as='span'
+  size='m'
+>
+  Label
+</Text>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Text'
+  locale='en'
+/>

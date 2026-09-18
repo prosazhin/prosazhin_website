@@ -1,0 +1,39 @@
+---
+title: Search
+description: 'Поиск и выбор вариантов из списка.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Похоже на `Select`, но ввод поиска является основным сценарием. Поддерживает одиночный и множественный выбор.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Search'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Search } from '@prosazhin/pbcomponents';
+
+const options = ['One', 'Two', 'Three', 'Four', 'Five'].map((display, index) => ({
+  display,
+  value: String(index),
+}));
+
+<Search
+  options={options}
+  placeholder='Placeholder'
+/>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Search'
+  locale='ru'
+/>

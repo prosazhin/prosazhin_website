@@ -1,0 +1,40 @@
+---
+title: Dialog
+description: 'A modal with trigger, sections and close control.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+A unique `id` is required. Use `Dialog.Trigger`, `Content`, `Header`, `Body`, `Footer`, and `Close`.
+
+## Live example
+
+<ComponentShowcase
+  name='Dialog'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Dialog } from '@prosazhin/pbcomponents';
+
+<Dialog id='example'>
+  <Dialog.Trigger>Open</Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Header>Title</Dialog.Header>
+    <Dialog.Body>Content</Dialog.Body>
+    <Dialog.Footer>
+      <Dialog.Close>Close</Dialog.Close>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Dialog'
+  locale='en'
+/>

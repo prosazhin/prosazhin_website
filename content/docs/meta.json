@@ -1,0 +1,4 @@
+{
+  "title": "Документация",
+  "pages": ["pbcomponents", "pbstyles", "mixin-dictionary", "tailwind-dictionary"]
+}

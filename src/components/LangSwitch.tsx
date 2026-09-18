@@ -20,7 +20,7 @@ const LangSwitch = () => {
   };
 
   return (
-    <Dropdown className='max-xs:w-max! w-max!'>
+    <Dropdown className='max-xs:w-max! flex! w-max!'>
       <Dropdown.Trigger
         size='xs'
         color='secondary'
@@ -38,7 +38,7 @@ const LangSwitch = () => {
             key={item}
             onClick={() => switchLocale(item)}
             leftIcon={lang === item ? CheckIcon : undefined}
-            leftIconClassName='!text-primary-darker'
+            leftIconClassName='!text-primary-400'
           >
             {t(`locales.${item}`)}
           </Dropdown.Item>

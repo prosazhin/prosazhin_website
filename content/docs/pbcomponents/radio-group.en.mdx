@@ -1,0 +1,40 @@
+---
+title: RadioGroup
+description: 'A radio group with one selected value.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Pass `Radio` elements as children. `onChange` returns `checked`, `value`, and the event.
+
+## Live example
+
+<ComponentShowcase
+  name='RadioGroup'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Radio, RadioGroup } from '@prosazhin/pbcomponents';
+
+<RadioGroup defaultValue='One'>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <Radio
+      key={item}
+      value={item}
+    >
+      {item}
+    </Radio>
+  ))}
+</RadioGroup>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='RadioGroup'
+  locale='en'
+/>

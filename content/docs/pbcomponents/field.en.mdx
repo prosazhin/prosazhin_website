@@ -1,0 +1,51 @@
+---
+title: Field
+description: 'A wrapper for a label, control, description and error state.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Compose `Field.Label`, `Field.Control`, and `Field.Description`. `error` marks invalid input.
+
+## Live example
+
+<ComponentShowcase
+  name='Field'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+'use client';
+
+import { Field, Input } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [value, setValue] = useState('');
+  return (
+    <Field>
+      <Field.Label>Label</Field.Label>
+      <Field.Control>
+        <Input>
+          <Input.Control
+            value={value}
+            onChange={setValue}
+            placeholder='Placeholder'
+          />
+        </Input>
+      </Field.Control>
+      <Field.Description>Description</Field.Description>
+    </Field>
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='Field'
+  locale='en'
+/>

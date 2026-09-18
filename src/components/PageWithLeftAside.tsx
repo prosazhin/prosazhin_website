@@ -14,7 +14,8 @@ const PageWithLeftAside = ({
 }) => {
   return (
     <Container size={size}>
-      <Container.LeftAside>{aside}</Container.LeftAside>
+      {/* Ниже xl колонка схлопывается и aside встаёт над контентом — добавляем воздух к gap грида. */}
+      <Container.LeftAside className='max-xl:mb-24 print:mb-0'>{aside}</Container.LeftAside>
       <Container.Main>{children}</Container.Main>
     </Container>
   );

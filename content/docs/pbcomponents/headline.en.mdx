@@ -1,0 +1,31 @@
+---
+title: Headline
+description: 'A heading with a configurable semantic level.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`as` chooses an HTML element from `h1` to `h6`. Match the level to the page hierarchy.
+
+## Live example
+
+<ComponentShowcase
+  name='Headline'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Headline } from '@prosazhin/pbcomponents';
+
+<Headline as='h1'>Headline</Headline>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Headline'
+  locale='en'
+/>

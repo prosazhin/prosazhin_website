@@ -1,0 +1,45 @@
+---
+title: Input
+description: 'A single-line input with optional addons.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`Input.Control` receives a string `value` and `onChange(value, event)`; use `Input.LeftAddon` and `Input.RightAddon` for addons.
+
+## Live example
+
+<ComponentShowcase
+  name='Input'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+'use client';
+
+import { Input } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [value, setValue] = useState('');
+  return (
+    <Input>
+      <Input.Control
+        value={value}
+        onChange={setValue}
+        placeholder='Placeholder'
+      />
+    </Input>
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='Input'
+  locale='en'
+/>

@@ -1,0 +1,40 @@
+---
+title: InlineRadioGroup
+description: 'Группа компактных вариантов выбора.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Передайте `InlineRadio` дочерними элементами. Значение контролируется через `value` или `defaultValue`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='InlineRadioGroup'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { InlineRadio, InlineRadioGroup } from '@prosazhin/pbcomponents';
+
+<InlineRadioGroup defaultValue='One'>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <InlineRadio
+      key={item}
+      value={item}
+    >
+      {item}
+    </InlineRadio>
+  ))}
+</InlineRadioGroup>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='InlineRadioGroup'
+  locale='ru'
+/>

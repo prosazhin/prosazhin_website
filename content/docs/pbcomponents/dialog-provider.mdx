@@ -1,0 +1,49 @@
+---
+title: DialogProvider
+description: 'Контекст для управления диалогами из дочерних компонентов.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`useShowDialog` регистрирует и открывает диалог; `useDialog` предоставляет `dialogs`, `activeDialog`, `closeDialog`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='DialogProvider'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Button, Dialog, DialogProvider, useDialog, useShowDialog } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { closeDialog } = useDialog();
+  const open = useShowDialog(() => (
+    <Dialog id='example'>
+      <Dialog.Content>
+        <Dialog.Header>Title</Dialog.Header>
+        <Dialog.Body>Content</Dialog.Body>
+        <Dialog.Footer>
+          <Button onClick={() => closeDialog('example')}>Close</Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog>
+  ));
+  return <Button onClick={open}>Open</Button>;
+}
+
+<DialogProvider>
+  <Example />
+</DialogProvider>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='DialogProvider'
+  locale='ru'
+/>

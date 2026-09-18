@@ -1,0 +1,40 @@
+---
+title: Tabs
+description: 'A set of tabs with an active index.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Pass `Tab` elements as children. `onChange` receives the selected index.
+
+## Live example
+
+<ComponentShowcase
+  name='Tabs'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Tab, Tabs } from '@prosazhin/pbcomponents';
+
+<Tabs defaultIndex={0}>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((label) => (
+    <Tab
+      key={label}
+      label={label}
+    >
+      <div style={{ marginTop: 24 }}>{`Content for "${label}" tab`}</div>
+    </Tab>
+  ))}
+</Tabs>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Tabs'
+  locale='en'
+/>

@@ -11,10 +11,10 @@ const Footer = async ({ locale }: { locale: LangType }) => {
   ]);
 
   return (
-    <footer className='border-secondary-lighter block w-full border-t py-24 print:hidden'>
+    <footer className='border-secondary-200 block w-full border-t py-24 print:hidden'>
       <Container size='m'>
         <div className='flex w-full flex-col gap-y-16'>
-          <ul className='desktop:flex-row desktop:gap-x-32 flex flex-col gap-y-8'>
+          <ul className='desktop:flex-row desktop:flex-wrap desktop:gap-x-32 flex flex-col gap-y-8'>
             {contacts.map((contact) => (
               <li
                 className='link inline-block'
@@ -30,17 +30,17 @@ const Footer = async ({ locale }: { locale: LangType }) => {
                     {contact.title}
                   </a>
                 ) : (
-                  <span className='text-tm16 text-basic-main'>{contact.title}</span>
+                  <span className='text-tm16 text-basic-400'>{contact.title}</span>
                 )}
               </li>
             ))}
           </ul>
           <div className='desktop:flex-row desktop:items-center desktop:gap-x-16 flex flex-col gap-y-8'>
-            <span className='text-t12 text-basic-light'>
+            <span className='text-t12 text-basic-300'>
               © 2017 — {dayjs().format('YYYY')}, {t('name')}
             </span>
             <NextLink
-              className='text-t12 text-basic-light underline-offset-2 hover:underline'
+              className='text-t12 text-basic-300 underline-offset-2 hover:underline'
               href='/privacy'
             >
               {t('privacyPolicy')}

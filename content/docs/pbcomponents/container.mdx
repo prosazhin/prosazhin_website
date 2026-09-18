@@ -1,0 +1,35 @@
+---
+title: Container
+description: 'Контейнер страницы с основным содержимым и боковыми областями.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Соберите `Container.Main`, `Container.LeftAside`, `Container.RightAside`; `size` ограничивает ширину.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Container'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Container } from '@prosazhin/pbcomponents';
+
+<Container size='full'>
+  <Container.LeftAside>Left Aside</Container.LeftAside>
+  <Container.Main>Container</Container.Main>
+  <Container.RightAside>Right Aside</Container.RightAside>
+</Container>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Container'
+  locale='ru'
+/>

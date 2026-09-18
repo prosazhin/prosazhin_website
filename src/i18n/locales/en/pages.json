@@ -1,7 +1,10 @@
 {
   "index": {
-    "title": "Designer & Frontend developer. I design interfaces that I can implement myself. I program what I have designed.",
-    "description": "I collect <a href='/links' target='_self'>useful links</a> and create thematic compilations from them. Sometimes I write <a href='/posts' target='_self'>notes</a> and work on my <a href='/projects' target='_self'>projects</a>."
+    "professionDesigner": "Designer",
+    "titleConnector": " & ",
+    "professionDeveloper": "Frontend developer",
+    "titleTail": ". I design interfaces that I can implement myself. I program what I have designed.",
+    "description": "I collect <links>useful links</links> and create thematic compilations from them. Sometimes I write <posts>notes</posts> and work on my <projects>projects</projects>."
   },
   "career": {
     "title": "My career"

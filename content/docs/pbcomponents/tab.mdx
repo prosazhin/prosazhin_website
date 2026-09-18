@@ -1,0 +1,34 @@
+---
+title: Tab
+description: 'Одна вкладка для Tabs или самостоятельной навигации.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`label` задаёт подпись, `active` отмечает активную вкладку, `href` превращает её в ссылку.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Tab'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Tab } from '@prosazhin/pbcomponents';
+
+<Tab
+  label='Tab'
+  active={false}
+/>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Tab'
+  locale='ru'
+/>

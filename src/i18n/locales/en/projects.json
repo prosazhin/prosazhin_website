@@ -1,16 +1,16 @@
 {
+  "documentation": "Documentation",
   "entries": [
-    {
-      "slug": "get-offer-ru",
-      "title": "get-offer.ru",
-      "description": "A service for collaborative candidate skill assessment"
-    },
     {
       "slug": "pbcomponents",
       "title": "pbcomponents",
-      "description": "prosazhin basic components"
+      "description": "React component library for rapid interface prototyping"
     },
-    { "slug": "pbstyles", "title": "pbstyles", "description": "prosazhin basic styles" },
+    {
+      "slug": "pbstyles",
+      "title": "pbstyles",
+      "description": "Style and design token library for rapid interface prototyping"
+    },
     {
       "slug": "prosazhin_website",
       "title": "prosazhin.dev",
@@ -19,12 +19,12 @@
     {
       "slug": "mixin-dictionary",
       "title": "Mixin Dictionary",
-      "description": "Creating mixins from design tokens for LESS and SCSS"
+      "description": "Generating Less and SCSS mixins from design tokens"
     },
     {
       "slug": "tailwind-dictionary",
       "title": "Tailwind Dictionary",
-      "description": "Creating a Tailwind Theme from design tokens"
+      "description": "Generating a Tailwind CSS theme from design tokens"
     },
     {
       "slug": "bank-money-time",

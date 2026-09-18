@@ -1,16 +1,16 @@
 {
+  "documentation": "Документация",
   "entries": [
-    {
-      "slug": "get-offer-ru",
-      "title": "get-offer.ru",
-      "description": "Сервис для совместной проверки навыков кандидатов"
-    },
     {
       "slug": "pbcomponents",
       "title": "pbcomponents",
-      "description": "prosazhin basic components"
+      "description": "Библиотека React-компонентов для быстрого прототипирования интерфейсов"
     },
-    { "slug": "pbstyles", "title": "pbstyles", "description": "prosazhin basic styles" },
+    {
+      "slug": "pbstyles",
+      "title": "pbstyles",
+      "description": "Библиотека стилей и дизайн-токенов для быстрого прототипирования интерфейсов"
+    },
     {
       "slug": "prosazhin_website",
       "title": "prosazhin.dev",
@@ -19,12 +19,12 @@
     {
       "slug": "mixin-dictionary",
       "title": "Mixin Dictionary",
-      "description": "Creating mixins from design tokens for LESS and SCSS"
+      "description": "Генерация миксинов для Less и SCSS из дизайн-токенов"
     },
     {
       "slug": "tailwind-dictionary",
       "title": "Tailwind Dictionary",
-      "description": "Creating a Tailwind Theme from design tokens"
+      "description": "Генерация темы Tailwind CSS из дизайн-токенов"
     },
     {
       "slug": "bank-money-time",

@@ -1,0 +1,28 @@
+---
+title: useHoverControllable
+description: 'Tracks hover as controlled or internal state.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Tracks hover as controlled or internal state.
+
+## Usage
+
+```tsx
+'use client';
+
+import { useHoverControllable } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const [hovered, , hoverRef] = useHoverControllable<HTMLButtonElement>({ defaultValue: false });
+  return <button ref={hoverRef}>{hovered ? 'Hovered' : 'Idle'}</button>;
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useHoverControllable'
+  locale='en'
+/>

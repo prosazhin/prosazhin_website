@@ -1,0 +1,35 @@
+---
+title: useShowDialog
+description: 'Регистрирует диалог и возвращает функцию его открытия.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Регистрирует диалог и возвращает функцию его открытия.
+Вызывайте внутри `DialogProvider` или `PBCProvider`.
+
+## Использование
+
+```tsx
+'use client';
+
+import { Dialog, useShowDialog } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const open = useShowDialog(() => (
+    <Dialog id='example'>
+      <Dialog.Content>
+        <Dialog.Body>Content</Dialog.Body>
+      </Dialog.Content>
+    </Dialog>
+  ));
+  return <button onClick={open}>Open</button>;
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='useShowDialog'
+  locale='ru'
+/>

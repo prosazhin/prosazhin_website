@@ -1,0 +1,37 @@
+---
+title: Content
+description: 'Text with optional leading and trailing icons.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Combines text, size, and icons. `as` lets you choose the appropriate HTML tag.
+
+## Live example
+
+<ComponentShowcase
+  name='Content'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { CheckIcon } from '@heroicons/react/24/outline';
+import { Content } from '@prosazhin/pbcomponents';
+
+<Content
+  leftIcon={CheckIcon}
+  size='m'
+>
+  Done
+</Content>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Content'
+  locale='en'
+/>

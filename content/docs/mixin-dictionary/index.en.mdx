@@ -1,0 +1,87 @@
+---
+title: mixin-dictionary
+description: Turn JSON tokens into CSS variables and LESS/SCSS mixins with light and dark themes.
+---
+
+`mixin-dictionary` extends the Style Dictionary workflow: it creates variables, mixins, and light/dark themes for CSS, LESS, and SCSS from tokens. This CLI tool is used to build `pbstyles`.
+
+Resources: [npm](https://www.npmjs.com/package/mixin-dictionary) · [GitHub](https://github.com/prosazhin/mixin-dictionary).
+
+## Install and run
+
+```bash
+npm install --save-dev mixin-dictionary
+npx mixin-dictionary -c ./config-mixin-dictionary.json
+```
+
+Without `-c`, the tool reads `./config.json`. Specify another JSON path explicitly.
+
+## Minimal configuration
+
+```json
+{
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "mediaAliases": ["screen", "breakpoint"],
+  "keyframesAliases": ["keyframes"]
+}
+```
+
+`source` points to Style Dictionary-compatible design-token JSON files. The command generates CSS variables and LESS/SCSS variables and mixins in `output`.
+
+## Themes
+
+Add separate light and dark token files:
+
+```json
+{
+  "source": ["tokens/*.json"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  },
+  "output": "./styles"
+}
+```
+
+Do not include `tokens/themes/*` in `source` as well: those files are already listed in `themes`, and duplicate tokens would collide. See a working config in [pbstyles](https://github.com/prosazhin/pbstyles/blob/main/config-mixin-dictionary.json).
+
+## Configuration
+
+| Field              | Type       | Default                   | Purpose                               |
+| ------------------ | ---------- | ------------------------- | ------------------------------------- |
+| `platforms`        | `string[]` | `['css','less','scss']`   | Output formats.                       |
+| `source`           | `string[]` | `['tokens/**/*.json']`    | Shared token path patterns.           |
+| `output`           | `string`   | `./styles`                | Output directory.                     |
+| `mediaAliases`     | `string[]` | `['screen','breakpoint']` | Media-query categories.               |
+| `keyframesAliases` | `string[]` | `['keyframes']`           | Animation categories.                 |
+| `themes`           | object     | none                      | `light` and `dark` theme token paths. |
+
+## Output
+
+CSS receives variables in `:root`; LESS and SCSS receive variables and mixins. With `themes`, semantic values follow the OS mode or `data-theme="light"` / `data-theme="dark"` on `<html>` or a nested container. LESS/SCSS semantic variables reference CSS custom properties so the mode can change at runtime.
+
+## Mixin example
+
+Token properties marked with the same `mixin` value are grouped into a LESS or SCSS mixin:
+
+```json
+{
+  "font": {
+    "h64": {
+      "font-size": { "value": "64px", "mixin": "h64" },
+      "line-height": { "value": "1.25", "mixin": "h64" }
+    }
+  }
+}
+```
+
+```scss
+@mixin h64 {
+  font-size: $font-h64-font-size;
+  line-height: $font-h64-line-height;
+}
+```
+
+Likewise, `mediaAliases` selects media query categories, and `keyframesAliases` selects animation categories. See the [package README](https://github.com/prosazhin/mixin-dictionary#readme) for complete source token and output examples.

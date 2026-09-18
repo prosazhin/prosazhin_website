@@ -1,0 +1,40 @@
+---
+title: RadioGroup
+description: 'Группа радиокнопок с одним выбранным значением.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Передайте `Radio` дочерними элементами. `onChange` возвращает `checked`, `value` и событие.
+
+## Живой пример
+
+<ComponentShowcase
+  name='RadioGroup'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Radio, RadioGroup } from '@prosazhin/pbcomponents';
+
+<RadioGroup defaultValue='One'>
+  {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
+    <Radio
+      key={item}
+      value={item}
+    >
+      {item}
+    </Radio>
+  ))}
+</RadioGroup>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='RadioGroup'
+  locale='ru'
+/>

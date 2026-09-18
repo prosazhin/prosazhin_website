@@ -1,0 +1,35 @@
+---
+title: Icon
+description: 'SVG-иконка с заданным размером.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Передайте SVG-компонент в `tag`, например иконку Heroicons.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Icon'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { CheckIcon } from '@heroicons/react/24/outline';
+import { Icon } from '@prosazhin/pbcomponents';
+
+<Icon
+  tag={CheckIcon}
+  size='m'
+/>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Icon'
+  locale='ru'
+/>

@@ -1,0 +1,35 @@
+---
+title: Container
+description: 'A page container with main and aside regions.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Compose `Container.Main`, `Container.LeftAside`, and `Container.RightAside`; `size` controls width.
+
+## Live example
+
+<ComponentShowcase
+  name='Container'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Container } from '@prosazhin/pbcomponents';
+
+<Container size='full'>
+  <Container.LeftAside>Left Aside</Container.LeftAside>
+  <Container.Main>Container</Container.Main>
+  <Container.RightAside>Right Aside</Container.RightAside>
+</Container>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Container'
+  locale='en'
+/>

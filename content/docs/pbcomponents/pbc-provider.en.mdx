@@ -1,0 +1,37 @@
+---
+title: PBCProvider
+description: 'Combined dialog and notification provider.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Place it once above components that show dialogs and notifications. Pass settings through `dialog` and `notifications`.
+
+## Live example
+
+<ComponentShowcase
+  name='PBCProvider'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Button, PBCProvider } from '@prosazhin/pbcomponents';
+
+function App() {
+  return (
+    <PBCProvider notifications={{ top: 20 }}>
+      <Button>Ready</Button>
+    </PBCProvider>
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='PBCProvider'
+  locale='en'
+/>

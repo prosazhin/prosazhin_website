@@ -1,0 +1,33 @@
+---
+title: useCountdown
+description: 'Returns timer progress from 0 to 100 with pause support.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Returns timer progress from 0 to 100 with pause support.
+
+## Usage
+
+```tsx
+'use client';
+
+import { useCountdown } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const progress = useCountdown({ delay: 5000, paused: false });
+  return (
+    <progress
+      value={progress}
+      max={100}
+    />
+  );
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useCountdown'
+  locale='en'
+/>

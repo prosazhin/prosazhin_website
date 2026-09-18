@@ -1,0 +1,45 @@
+---
+title: Switch
+description: 'Переключатель булевой настройки.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`onChange` получает новое состояние, `value` и событие. Используйте для настройки, которая действует сразу.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Switch'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+'use client';
+
+import { Switch } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Switch
+      value='one'
+      checked={checked}
+      onChange={setChecked}
+    >
+      Label
+    </Switch>
+  );
+}
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Switch'
+  locale='ru'
+/>

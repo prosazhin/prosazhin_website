@@ -1,0 +1,87 @@
+---
+title: mixin-dictionary
+description: Превратите JSON-токены в CSS-переменные и миксины LESS/SCSS со светлой и тёмной темой.
+---
+
+`mixin-dictionary` расширяет подход Style Dictionary: из токенов он создаёт переменные, миксины и светлую/тёмную тему для CSS, LESS и SCSS. Это CLI-инструмент, который используется при сборке `pbstyles`.
+
+Ресурсы: [npm](https://www.npmjs.com/package/mixin-dictionary) · [GitHub](https://github.com/prosazhin/mixin-dictionary).
+
+## Установка и команда
+
+```bash
+npm install --save-dev mixin-dictionary
+npx mixin-dictionary -c ./config-mixin-dictionary.json
+```
+
+Без `-c` инструмент читает `./config.json`. Путь к другому JSON-файлу задавайте явно.
+
+## Минимальная конфигурация
+
+```json
+{
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "mediaAliases": ["screen", "breakpoint"],
+  "keyframesAliases": ["keyframes"]
+}
+```
+
+`source` указывает на JSON-файлы дизайн-токенов в формате Style Dictionary. Команда собирает CSS-переменные и переменные/миксины для LESS и SCSS в `output`.
+
+## Темы
+
+Добавьте отдельные файлы светлых и тёмных токенов:
+
+```json
+{
+  "source": ["tokens/*.json"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  },
+  "output": "./styles"
+}
+```
+
+Не включайте файлы `tokens/themes/*` одновременно в `source`: они уже перечислены в `themes`, иначе одноимённые токены столкнутся. Готовый пример конфигурации находится в [pbstyles](https://github.com/prosazhin/pbstyles/blob/main/config-mixin-dictionary.json).
+
+## Конфигурация
+
+| Поле               | Тип        | Значение по умолчанию     | Назначение                           |
+| ------------------ | ---------- | ------------------------- | ------------------------------------ |
+| `platforms`        | `string[]` | `['css','less','scss']`   | Форматы выходных файлов.             |
+| `source`           | `string[]` | `['tokens/**/*.json']`    | Шаблоны путей к общим токенам.       |
+| `output`           | `string`   | `./styles`                | Каталог результата.                  |
+| `mediaAliases`     | `string[]` | `['screen','breakpoint']` | Категории медиазапросов.             |
+| `keyframesAliases` | `string[]` | `['keyframes']`           | Категории анимации.                  |
+| `themes`           | объект     | нет                       | Пути `light` и `dark` к токенам тем. |
+
+## Результат
+
+CSS получает переменные в `:root`, LESS и SCSS — переменные и миксины. Если заданы `themes`, семантические значения переключаются по системному режиму или `data-theme="light"` / `data-theme="dark"` на `<html>` либо вложенном контейнере. В LESS/SCSS семантические переменные ссылаются на CSS custom properties, поэтому режим меняется в рантайме.
+
+## Пример миксина
+
+Если свойства токена помечены одинаковым `mixin`, они объединяются в миксин LESS и SCSS:
+
+```json
+{
+  "font": {
+    "h64": {
+      "font-size": { "value": "64px", "mixin": "h64" },
+      "line-height": { "value": "1.25", "mixin": "h64" }
+    }
+  }
+}
+```
+
+```scss
+@mixin h64 {
+  font-size: $font-h64-font-size;
+  line-height: $font-h64-line-height;
+}
+```
+
+Аналогично `mediaAliases` определяют категории медиазапросов, а `keyframesAliases` — категории анимаций. Для полного примера входных токенов и вывода используйте [README пакета](https://github.com/prosazhin/mixin-dictionary#readme).

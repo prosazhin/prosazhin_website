@@ -1,0 +1,37 @@
+---
+title: Alert
+description: 'An inline status message with title and actions.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Compose `Alert.Title`, `Alert.Description`, and `Alert.Actions`. Control dismissal with `open` and `onOpenChange`.
+
+## Live example
+
+<ComponentShowcase
+  name='Alert'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Alert } from '@prosazhin/pbcomponents';
+
+<Alert
+  color='success'
+  defaultOpen
+>
+  <Alert.Title>Saved</Alert.Title>
+  <Alert.Description>Changes saved.</Alert.Description>
+</Alert>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Alert'
+  locale='en'
+/>

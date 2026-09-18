@@ -8,17 +8,47 @@
     "more": "Learn more"
   },
   "location": "Sochi, Russia",
-  "age": "Age",
-  "experienceDesign": "In design",
-  "experienceDev": "In development",
+  "remote": "Remote",
+  "jobTitle": {
+    "developer": "Frontend Developer",
+    "designer": "Product Designer"
+  },
+  "jobTags": {
+    "developer": ["React", "Next.js", "TypeScript"],
+    "designer": ["UX", "UI", "Figma"]
+  },
+  "inDesign": "in design",
+  "inDevelopment": "in development",
   "dismissal": "Reason for leaving",
-  "metaTitle": "Evgenii Sazhin — Designer & Frontend developer",
-  "metaDescription": "Evgenii Sazhin — Designer & Frontend developer. I design interfaces that I can implement myself. I program what I have designed.",
+  "metaTitle": "Evgenii Sazhin — Frontend developer & Designer",
+  "metaDescription": "Evgenii Sazhin — Frontend developer & Designer. I design interfaces that I can implement myself. I program what I have designed.",
+  "resumeMeta": {
+    "developer": {
+      "title": "Evgenii Sazhin — Frontend Developer",
+      "description": "Evgenii Sazhin — Frontend Developer. I design interfaces that I can implement myself. I program what I have designed."
+    },
+    "designer": {
+      "title": "Evgenii Sazhin — Product Designer",
+      "description": "Evgenii Sazhin — Product Designer. I design interfaces that I can implement myself. I program what I have designed."
+    }
+  },
   "nav": [
-    { "type": "projects", "title": "Projects" },
-    { "type": "links", "title": "Useful links" },
-    { "type": "posts", "title": "Posts" },
-    { "type": "about", "title": "About myself" }
+    {
+      "type": "projects",
+      "title": "Projects"
+    },
+    {
+      "type": "links",
+      "title": "Useful links"
+    },
+    {
+      "type": "posts",
+      "title": "Posts"
+    },
+    {
+      "type": "about",
+      "title": "About myself"
+    }
   ],
   "goToHome": "Return to the homepage",
   "download": "Download CV",
@@ -26,30 +56,26 @@
     "ru": "Russian",
     "en": "English"
   },
+  "themes": {
+    "light": "Light",
+    "dark": "Dark"
+  },
   "langAlert": "Unfortunately, the content on this page may be partially in Russian.",
   "tabs": {
-    "about": [
+    "resume": [
       {
-        "title": "About myself",
+        "title": "Developer resume",
         "url": "/"
       },
       {
-        "title": "My career",
-        "url": "/career"
-      }
-    ],
-    "matrix": [
-      {
-        "title": "Designer",
+        "title": "Designer resume",
         "url": "/designer"
-      },
-      {
-        "title": "Developer",
-        "url": "/developer"
       }
     ]
   },
   "now": "Now",
+  "navCareer": "Career",
+  "navMatrix": "Competencies",
   "result": "Result",
   "search": {
     "placeholder": "Start entering your request"
@@ -61,7 +87,11 @@
   "compilation": "Compilation",
   "cv": {
     "contacts": "Contacts",
-    "skills": "Skills"
+    "skills": "Skills",
+    "filename": {
+      "developer": "Evgenii Sazhin - Frontend Developer Resume",
+      "designer": "Evgenii Sazhin - Product Designer Resume"
+    }
   },
   "plurals": {
     "links": {
@@ -79,6 +109,14 @@
       "year_few": "{{count}} years",
       "year_many": "{{count}} years",
       "year_other": "{{count}} years"
+    },
+    "month": {
+      "month_zero": "{{count}} months",
+      "month_one": "{{count}} month",
+      "month_two": "{{count}} months",
+      "month_few": "{{count}} months",
+      "month_many": "{{count}} months",
+      "month_other": "{{count}} months"
     }
   }
 }

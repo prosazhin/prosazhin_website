@@ -1,0 +1,33 @@
+---
+title: useScreenSize
+description: 'Returns window width and height, updating on resize.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Returns window width and height, updating on resize.
+During server rendering the initial values are `0 × 0`; after mounting the hook reads the window size.
+
+## Usage
+
+```tsx
+'use client';
+
+import { useScreenSize } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { width, height } = useScreenSize();
+  return (
+    <span>
+      {width} × {height}
+    </span>
+  );
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='useScreenSize'
+  locale='en'
+/>

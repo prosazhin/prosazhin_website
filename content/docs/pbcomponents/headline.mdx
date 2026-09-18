@@ -1,0 +1,31 @@
+---
+title: Headline
+description: 'Заголовок с управляемым семантическим уровнем.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`as` выбирает HTML-элемент от `h1` до `h6`. Уровень должен соответствовать структуре страницы.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Headline'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Headline } from '@prosazhin/pbcomponents';
+
+<Headline as='h1'>Headline</Headline>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Headline'
+  locale='ru'
+/>

@@ -1,0 +1,49 @@
+---
+title: DialogProvider
+description: 'Context for opening dialogs from descendants.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`useShowDialog` registers and opens a dialog; `useDialog` exposes `dialogs`, `activeDialog`, and `closeDialog`.
+
+## Live example
+
+<ComponentShowcase
+  name='DialogProvider'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Button, Dialog, DialogProvider, useDialog, useShowDialog } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { closeDialog } = useDialog();
+  const open = useShowDialog(() => (
+    <Dialog id='example'>
+      <Dialog.Content>
+        <Dialog.Header>Title</Dialog.Header>
+        <Dialog.Body>Content</Dialog.Body>
+        <Dialog.Footer>
+          <Button onClick={() => closeDialog('example')}>Close</Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog>
+  ));
+  return <Button onClick={open}>Open</Button>;
+}
+
+<DialogProvider>
+  <Example />
+</DialogProvider>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='DialogProvider'
+  locale='en'
+/>

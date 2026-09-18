@@ -1,0 +1,37 @@
+---
+title: Content
+description: 'Текст с иконками слева и справа.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Сочетает текст, размер и иконки. `as` позволяет выбрать подходящий HTML-тег.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Content'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { CheckIcon } from '@heroicons/react/24/outline';
+import { Content } from '@prosazhin/pbcomponents';
+
+<Content
+  leftIcon={CheckIcon}
+  size='m'
+>
+  Done
+</Content>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Content'
+  locale='ru'
+/>
