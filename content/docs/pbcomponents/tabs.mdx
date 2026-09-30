@@ -6,7 +6,7 @@ description: 'Набор вкладок с выбранным индексом.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Передайте массив `Tab` как дочерние элементы. `onChange` получает индекс выбранной вкладки.
+Передайте массив `Tab` как дочерние элементы. `theme` задаёт оформление: `line` (по умолчанию), `pill` или `pill-secondary`. `index` включает управляемый режим, `defaultIndex` — начальную вкладку. `onChange` получает индекс и событие; вызывается и при переключении с клавиатуры — стрелками, `Home` и `End`. Разметка использует роли `tablist`, `tab` и `tabpanel`.
 
 ## Живой пример
 
@@ -20,7 +20,10 @@ import ComponentAPI from '@/components/docs/ComponentAPI';
 ```tsx
 import { Tab, Tabs } from '@prosazhin/pbcomponents';
 
-<Tabs defaultIndex={0}>
+<Tabs
+  defaultIndex={0}
+  theme='pill'
+>
   {['One', 'Two', 'Three', 'Four', 'Five'].map((label) => (
     <Tab
       key={label}

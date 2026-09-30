@@ -6,7 +6,7 @@ description: 'A checkbox group with an array of selected values.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Children are `Checkbox` or `Switch`; `onChange` returns an array of values.
+Children are `Checkbox` or `Toggle`; `onChange` returns an array of values. `label`, `description`, and `errorMessage` add a group heading, a hint, and error text. Items keep their own `disabled`, `size`, and `name`.
 
 ## Live example
 
@@ -20,7 +20,10 @@ Children are `Checkbox` or `Switch`; `onChange` returns an array of values.
 ```tsx
 import { Checkbox, CheckboxGroup } from '@prosazhin/pbcomponents';
 
-<CheckboxGroup defaultValue={['One']}>
+<CheckboxGroup
+  label='Options'
+  defaultValue={['One']}
+>
   {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
     <Checkbox
       key={item}

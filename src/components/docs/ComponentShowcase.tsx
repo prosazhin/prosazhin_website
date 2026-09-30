@@ -7,6 +7,13 @@ import {
   MagnifyingGlassIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
+import type {
+  ContentProps,
+  IconProps,
+  PopoverPlacement,
+  TabTheme,
+  TextProps,
+} from '@prosazhin/pbcomponents';
 import {
   Alert,
   Badge,
@@ -16,12 +23,12 @@ import {
   CheckboxGroup,
   Collapse,
   CollapseGroup,
+  ConfirmDialog,
+  ConfirmPopover,
   Container,
   Content,
   Dialog,
   DialogProvider,
-  Dropdown,
-  DropdownItem,
   Field,
   Headline,
   Icon,
@@ -30,17 +37,22 @@ import {
   Input,
   Notification,
   NotificationsProvider,
+  Pagination,
   PBCProvider,
+  Popover,
+  PopoverItem,
+  Progress,
   Radio,
   RadioGroup,
   Search,
   Select,
-  Switch,
   Tab,
   Tabs,
   Tag,
   Text,
   Textarea,
+  Toggle,
+  Tooltip,
   useDialog,
   useNotifications,
   useShowDialog,
@@ -94,7 +106,18 @@ const controlLabels: Record<string, { ru: string; en: string }> = {
   itemType: { ru: 'Тип пунктов', en: 'Item type' },
   control: { ru: 'Контрол', en: 'Control' },
   addon: { ru: 'Дополнение', en: 'Addon' },
-  align: { ru: 'Выравнивание', en: 'Alignment' },
+  placement: { ru: 'Положение', en: 'Placement' },
+  arrow: { ru: 'Стрелка', en: 'Arrow' },
+  content: { ru: 'Текст подсказки', en: 'Content' },
+  confirmText: { ru: 'Кнопка подтверждения', en: 'Confirm text' },
+  cancelText: { ru: 'Кнопка отмены', en: 'Cancel text' },
+  errorMessage: { ru: 'Текст ошибки', en: 'Error message' },
+  errorText: { ru: 'Текст ошибки', en: 'Error text' },
+  rounded: { ru: 'Скруглённые', en: 'Rounded' },
+  total: { ru: 'Всего страниц', en: 'Total pages' },
+  siblings: { ru: 'Соседние страницы', en: 'Siblings' },
+  value: { ru: 'Значение', en: 'Value' },
+  background: { ru: 'Фон дорожки', en: 'Track background' },
   placeholder: { ru: 'Подсказка', en: 'Placeholder' },
   multiple: { ru: 'Множественный выбор', en: 'Multiple' },
   search: { ru: 'Поиск по вариантам', en: 'Search choices' },
@@ -109,7 +132,7 @@ const controlLabels: Record<string, { ru: string; en: string }> = {
   dialogDuration: { ru: 'Анимация диалога, мс', en: 'Dialog animation, ms' },
   notificationTop: { ru: 'Отступ уведомления, px', en: 'Notification offset, px' },
   top: { ru: 'Отступ сверху, px', en: 'Top offset, px' },
-  delay: { ru: 'Время показа, мс', en: 'Duration, ms' },
+  delay: { ru: 'Задержка, мс', en: 'Delay, ms' },
   estimatedNotificationHeight: { ru: 'Высота уведомления, px', en: 'Estimated height, px' },
   disableTimer: { ru: 'Без таймера', en: 'Disable timer' },
   disableProgressBar: { ru: 'Без индикатора времени', en: 'Hide progress bar' },
@@ -138,6 +161,7 @@ export default function ComponentShowcase({
   const [value, setValue] = useState('');
   const [selected, setSelected] = useState('One');
   const [items, setItems] = useState<string[]>(['One']);
+  const [query, setQuery] = useState('');
   const [controlValues, setControlValues] = useState<Record<string, string | number | boolean>>({});
   const reference = componentReference[name];
   const controls = Object.fromEntries(
@@ -146,7 +170,9 @@ export default function ComponentShowcase({
       .map((prop) => [prop.name, controlValues[prop.name] ?? prop.initial ?? prop.default])
   );
   const size = controls.size as 'xs' | 's' | 'm' | 'l';
-  const color = controls.color as 'primary' | 'secondary' | 'success' | 'danger';
+  const color = controls.color as 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
+  const placement = controls.placement as PopoverPlacement;
+  const description = String(controls.description ?? '') || undefined;
   const theme = controls.theme as 'filled' | 'light' | 'border' | 'ghost';
   const disabled = Boolean(controls.disabled);
   const loading = Boolean(controls.loading);
@@ -161,7 +187,7 @@ export default function ComponentShowcase({
       preview = (
         <Button
           size={size}
-          color={color}
+          color={color as Exclude<typeof color, 'warning'>}
           theme={theme}
           disabled={disabled}
           loading={loading}
@@ -180,21 +206,23 @@ export default function ComponentShowcase({
         <ButtonGroup size={size}>
           <Button theme='border'>One</Button>
           <Button theme='border'>Two</Button>
-          <Dropdown>
-            <Dropdown.Trigger theme='border'>Three</Dropdown.Trigger>
-            <Dropdown.Content>
-              <Dropdown.Item>One</Dropdown.Item>
-              <Dropdown.Item>Two</Dropdown.Item>
-              <Dropdown.Item>Three</Dropdown.Item>
-            </Dropdown.Content>
-          </Dropdown>
+          <Popover>
+            <Popover.Trigger>
+              <Button theme='border'>Three</Button>
+            </Popover.Trigger>
+            <Popover.Content>
+              <Popover.Item>One</Popover.Item>
+              <Popover.Item>Two</Popover.Item>
+              <Popover.Item>Three</Popover.Item>
+            </Popover.Content>
+          </Popover>
         </ButtonGroup>
       );
       break;
     case 'Badge':
       preview = (
         <Badge
-          size={size as 's' | 'm'}
+          size={size as 'xs' | 's' | 'm'}
           color={color}
           theme={theme as 'filled' | 'light' | 'border'}
           leftIcon={leftIcon}
@@ -233,6 +261,7 @@ export default function ComponentShowcase({
           labelPlace={controls.labelPlace as 'left' | 'right'}
           disabled={disabled}
           indeterminate={Boolean(controls.indeterminate)}
+          description={description}
         >
           {String(controls.children)}
         </Checkbox>
@@ -245,15 +274,18 @@ export default function ComponentShowcase({
           onChange={setItems}
           size={size as 's' | 'm'}
           disabled={disabled}
+          label={String(controls.label) || undefined}
+          description={description}
+          errorMessage={String(controls.errorMessage) || undefined}
         >
           {['One', 'Two', 'Three', 'Four', 'Five'].map((item) =>
-            controls.itemType === 'Switch' ? (
-              <Switch
+            controls.itemType === 'Toggle' ? (
+              <Toggle
                 key={item}
                 value={item}
               >
                 {item}
-              </Switch>
+              </Toggle>
             ) : (
               <Checkbox
                 key={item}
@@ -266,18 +298,19 @@ export default function ComponentShowcase({
         </CheckboxGroup>
       );
       break;
-    case 'Switch':
+    case 'Toggle':
       preview = (
-        <Switch
+        <Toggle
           checked={checked}
           onChange={(next) => setControlValues({ ...controlValues, checked: next })}
           value='notifications'
           size={size as 's' | 'm'}
           labelPlace={controls.labelPlace as 'left' | 'right'}
           disabled={disabled}
+          description={description}
         >
           {String(controls.children)}
-        </Switch>
+        </Toggle>
       );
       break;
     case 'Radio':
@@ -290,6 +323,7 @@ export default function ComponentShowcase({
           size={size as 's' | 'm'}
           labelPlace={controls.labelPlace as 'left' | 'right'}
           disabled={disabled}
+          description={description}
         >
           {String(controls.children)}
         </Radio>
@@ -299,9 +333,12 @@ export default function ComponentShowcase({
       preview = (
         <RadioGroup
           value={selected}
-          onChange={(_, next) => setSelected(next)}
+          onChange={setSelected}
           size={size as 's' | 'm'}
           disabled={disabled}
+          label={String(controls.label) || undefined}
+          description={description}
+          errorMessage={String(controls.errorMessage) || undefined}
         >
           {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
             <Radio
@@ -322,6 +359,10 @@ export default function ComponentShowcase({
           value='One'
           size={size as 's' | 'm'}
           disabled={disabled}
+          rounded={Boolean(controls.rounded)}
+          leftIcon={leftIcon}
+          rightIcon={rightIcon}
+          badge={controls.badge ? <Badge size='xs'>2</Badge> : undefined}
         >
           {String(controls.children)}
         </InlineRadio>
@@ -331,9 +372,10 @@ export default function ComponentShowcase({
       preview = (
         <InlineRadioGroup
           value={selected}
-          onChange={(_, next) => setSelected(next)}
+          onChange={setSelected}
           size={size as 's' | 'm'}
           disabled={disabled}
+          rounded={Boolean(controls.rounded)}
         >
           {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
             <InlineRadio
@@ -470,38 +512,54 @@ export default function ComponentShowcase({
               )}
             </Field.Control>
             <Field.Description>{String(controls.description)}</Field.Description>
+            {Boolean(controls.error) && <Field.Error>{String(controls.errorText)}</Field.Error>}
           </Field>
         </div>
       );
       break;
-    case 'Dropdown':
+    case 'Popover':
       preview = (
-        <Dropdown>
-          <Dropdown.Trigger>{locale === 'ru' ? 'Открыть меню' : 'Open menu'}</Dropdown.Trigger>
-          <Dropdown.Content align={controls.align as 'left' | 'right'}>
-            <Dropdown.Item
+        <Popover
+          key={placement}
+          placement={placement}
+        >
+          <Popover.Trigger>
+            <Button>{locale === 'ru' ? 'Открыть меню' : 'Open menu'}</Button>
+          </Popover.Trigger>
+          <Popover.Content
+            search={
+              controls.search
+                ? {
+                    value: query,
+                    onChange: setQuery,
+                    placeholder: locale === 'ru' ? 'Поиск' : 'Search',
+                  }
+                : undefined
+            }
+          >
+            <Popover.Item
               leftIcon={UserCircleIcon}
               badge={<Badge color='secondary'>2</Badge>}
             >
               {locale === 'ru' ? 'Мои заказы' : 'My orders'}
-            </Dropdown.Item>
-            <Dropdown.Item leftIcon={Cog6ToothIcon}>
+            </Popover.Item>
+            <Popover.Item leftIcon={Cog6ToothIcon}>
               {locale === 'ru' ? 'Настройки профиля' : 'Profile settings'}
-            </Dropdown.Item>
-            <Dropdown.Item
+            </Popover.Item>
+            <Popover.Item
               borderTop
               leftIcon={ArrowRightStartOnRectangleIcon}
             >
               {locale === 'ru' ? 'Выйти' : 'Sign out'}
-            </Dropdown.Item>
-          </Dropdown.Content>
-        </Dropdown>
+            </Popover.Item>
+          </Popover.Content>
+        </Popover>
       );
       break;
-    case 'DropdownItem':
+    case 'PopoverItem':
       preview = (
         <div className='docs-showcase-menu'>
-          <DropdownItem
+          <PopoverItem
             leftIcon={leftIcon}
             rightIcon={rightIcon}
             href={String(controls.href) || undefined}
@@ -513,7 +571,79 @@ export default function ComponentShowcase({
             badge={controls.badge ? <Badge color='secondary'>2</Badge> : undefined}
           >
             {String(controls.children)}
-          </DropdownItem>
+          </PopoverItem>
+        </div>
+      );
+      break;
+    case 'ConfirmPopover':
+      preview = (
+        <ConfirmPopover
+          key={placement}
+          title={String(controls.title)}
+          description={description}
+          color={controls.color as 'primary' | 'danger'}
+          confirmText={String(controls.confirmText)}
+          cancelText={String(controls.cancelText)}
+          placement={placement}
+        >
+          <Button
+            color={controls.color as 'primary' | 'danger'}
+            theme='border'
+          >
+            {locale === 'ru' ? 'Удалить' : 'Delete'}
+          </Button>
+        </ConfirmPopover>
+      );
+      break;
+    case 'ConfirmDialog':
+      preview = (
+        <ConfirmDialog
+          id='docs-confirm-dialog'
+          title={String(controls.title)}
+          description={description}
+          color={controls.color as 'primary' | 'danger'}
+          confirmText={String(controls.confirmText)}
+          cancelText={String(controls.cancelText)}
+          trigger={{
+            color: controls.color as 'primary' | 'danger',
+            theme: 'border',
+            children: locale === 'ru' ? 'Удалить' : 'Delete',
+          }}
+        />
+      );
+      break;
+    case 'Tooltip':
+      preview = (
+        <Tooltip
+          key={placement}
+          content={String(controls.content)}
+          placement={placement}
+          arrow={Boolean(controls.arrow)}
+          delay={Number(controls.delay)}
+          disabled={disabled}
+        >
+          <Button theme='border'>{locale === 'ru' ? 'Наведите курсор' : 'Hover me'}</Button>
+        </Tooltip>
+      );
+      break;
+    case 'Pagination':
+      preview = (
+        <Pagination
+          key={Number(controls.total)}
+          total={Math.max(1, Number(controls.total))}
+          siblings={Number(controls.siblings)}
+          size={size as 'xs' | 's'}
+        />
+      );
+      break;
+    case 'Progress':
+      preview = (
+        <div className='docs-showcase-field'>
+          <Progress
+            value={Number(controls.value)}
+            size={size}
+            background={Boolean(controls.background)}
+          />
         </div>
       );
       break;
@@ -522,6 +652,7 @@ export default function ComponentShowcase({
         <Tabs
           key={String(controls.defaultIndex)}
           defaultIndex={Number(controls.defaultIndex)}
+          theme={controls.theme as TabTheme}
         >
           {['One', 'Two', 'Three', 'Four', 'Five'].map((label) => (
             <Tab
@@ -540,6 +671,8 @@ export default function ComponentShowcase({
           <Tab
             active={Boolean(controls.active)}
             indicator={Boolean(controls.indicator)}
+            theme={controls.theme as TabTheme}
+            badge={controls.badge ? <Badge size='xs'>2</Badge> : undefined}
             disabled={disabled}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
@@ -557,9 +690,7 @@ export default function ComponentShowcase({
           <Collapse
             summary={String(controls.summary)}
             open={Boolean(controls.open)}
-            onToggle={(event) =>
-              setControlValues({ ...controlValues, open: event.currentTarget.open })
-            }
+            onOpenChange={(next) => setControlValues({ ...controlValues, open: next })}
           >
             <p>{locale === 'ru' ? 'Содержимое раздела' : 'Collapse item content'}</p>
           </Collapse>
@@ -747,7 +878,7 @@ export default function ComponentShowcase({
       preview = (
         <div className='docs-showcase-field'>
           <Text
-            size={size as 's' | 'm' | 'l'}
+            size={Number(size) as TextProps['size']}
             medium={Boolean(controls.medium)}
             as={controls.as as 'span' | 'p' | 'div'}
           >
@@ -760,14 +891,14 @@ export default function ComponentShowcase({
       preview = (
         <Icon
           tag={icons[controls.tag as keyof typeof icons]}
-          size={size as 's' | 'm' | 'l'}
+          size={Number(size) as IconProps['size']}
         />
       );
       break;
     case 'Content':
       preview = (
         <Content
-          size={size as 's' | 'm' | 'l'}
+          size={Number(size) as ContentProps['size']}
           medium={Boolean(controls.medium)}
           as={controls.as as 'div' | 'span'}
           leftIcon={leftIcon}

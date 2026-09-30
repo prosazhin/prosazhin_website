@@ -6,7 +6,7 @@ description: 'Группа кнопок одного размера.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Передайте несколько `Button` дочерними элементами; общий размер задавайте на группе.
+Передайте дочерними элементами `Button` и `Popover` с кнопкой в `Popover.Trigger`. Общий размер задавайте на группе — он применяется ко всем кнопкам, включая триггер меню.
 
 ## Живой пример
 
@@ -18,19 +18,21 @@ import ComponentAPI from '@/components/docs/ComponentAPI';
 ## Использование
 
 ```tsx
-import { Button, ButtonGroup, Dropdown } from '@prosazhin/pbcomponents';
+import { Button, ButtonGroup, Popover } from '@prosazhin/pbcomponents';
 
 <ButtonGroup size='m'>
   <Button theme='border'>One</Button>
   <Button theme='border'>Two</Button>
-  <Dropdown>
-    <Dropdown.Trigger theme='border'>Three</Dropdown.Trigger>
-    <Dropdown.Content>
-      <Dropdown.Item>One</Dropdown.Item>
-      <Dropdown.Item>Two</Dropdown.Item>
-      <Dropdown.Item>Three</Dropdown.Item>
-    </Dropdown.Content>
-  </Dropdown>
+  <Popover>
+    <Popover.Trigger>
+      <Button theme='border'>Three</Button>
+    </Popover.Trigger>
+    <Popover.Content>
+      <Popover.Item>One</Popover.Item>
+      <Popover.Item>Two</Popover.Item>
+      <Popover.Item>Three</Popover.Item>
+    </Popover.Content>
+  </Popover>
 </ButtonGroup>;
 ```
 

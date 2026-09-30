@@ -37,7 +37,8 @@
   max-width: none;
 }
 
-.docs-showcase[data-component='Dropdown'] {
+.docs-showcase[data-component='Popover'],
+.docs-showcase[data-component='ConfirmPopover'] {
   min-height: 280px;
 }
 

@@ -65,10 +65,10 @@ const RootLayout = async ({ children }) => {
             {children}
             <Footer locale={locale} />
             <CookieBanner />
+            <ToTop />
           </PBCProvider>
         </TranslationsProvider>
         <ScrollToTop />
-        <ToTop />
       </body>
     </html>
   );

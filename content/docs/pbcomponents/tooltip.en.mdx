@@ -1,0 +1,41 @@
+---
+title: Tooltip
+description: 'A hint shown on hover and focus.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Wrap a single trigger element in `Tooltip` — it must accept a `ref` and event handlers (`Button`, a link, an SVG element). The tooltip appears on hover after `delay` and immediately on keyboard focus. `placement` sets the side (`top` by default); the tooltip flips when space runs out. `arrow` shows an arrow. Inside `<svg>` or a container with `overflow: hidden`, turn on `portal`. A tooltip does not replace an accessible name: keep `aria-label` on icon-only buttons.
+
+## Live example
+
+<ComponentShowcase
+  name='Tooltip'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { ArrowUpIcon } from '@heroicons/react/24/outline';
+import { Button, Tooltip } from '@prosazhin/pbcomponents';
+
+<Tooltip
+  content='Back to top'
+  placement='left'
+>
+  <Button
+    theme='ghost'
+    leftIcon={ArrowUpIcon}
+    aria-label='Back to top'
+  />
+</Tooltip>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Tooltip'
+  locale='en'
+/>

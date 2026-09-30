@@ -6,7 +6,7 @@ description: 'A radio group with one selected value.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Pass `Radio` elements as children. `onChange` returns `checked`, `value`, and the event.
+Pass `Radio` elements as children. `onChange` returns the selected `value`. `label`, `description`, and `errorMessage` add a group heading, a hint, and error text. Items keep their own `disabled`, `size`, and `name`.
 
 ## Live example
 
@@ -20,7 +20,11 @@ Pass `Radio` elements as children. `onChange` returns `checked`, `value`, and th
 ```tsx
 import { Radio, RadioGroup } from '@prosazhin/pbcomponents';
 
-<RadioGroup defaultValue='One'>
+<RadioGroup
+  label='Options'
+  defaultValue='One'
+  onChange={(value) => console.log(value)}
+>
   {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
     <Radio
       key={item}

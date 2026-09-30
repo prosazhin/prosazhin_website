@@ -25,7 +25,7 @@ const MatrixBanner = ({ title, description, href, className }: MatrixBannerType)
         </div>
         <Icon
           tag={ArrowRightIcon}
-          size='l'
+          size={24}
           className='text-basic-300! group-hover:text-primary-400!'
         />
       </div>

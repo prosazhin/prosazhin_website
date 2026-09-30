@@ -56,7 +56,7 @@ This site places the provider in its root layout. Other components do not requir
 
 Component colors come from `pbstyles`. Without setup, they follow `prefers-color-scheme`; set `data-theme="dark"` or `data-theme="light"` on `<html>` or a container to override it.
 
-Components with `href` (`Button`, `Tab`, `DropdownItem`, `Tag`) accept `linkComponent` when you need `next/link` instead of a plain anchor:
+Components with `href` (`Button`, `Tab`, `PopoverItem`, `Tag`) accept `linkComponent` when you need `next/link` instead of a plain anchor:
 
 ```tsx
 import NextLink from 'next/link';
@@ -69,6 +69,22 @@ import { Button } from '@prosazhin/pbcomponents';
   Projects
 </Button>;
 ```
+
+## Migrating from 1.x to 2.0
+
+| Before                                                               | After                                                                                   |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `Dropdown`, `Dropdown.Trigger`, `Dropdown.Content`, `Dropdown.Item`  | `Popover`, `Popover.Trigger` (put the button inside), `Popover.Content`, `Popover.Item` |
+| `DropdownItem`                                                       | `PopoverItem`                                                                           |
+| `Dropdown.Content align='left' \| 'right'`                           | `Popover placement='bottom-start' \| 'bottom-end'` and other floating-ui values         |
+| `Switch`                                                             | `Toggle`                                                                                |
+| `Select` / `Search`: `dropdownClassName`, `dropdownItemClassName`    | `popoverClassName`, `popoverItemClassName`                                              |
+| `RadioGroup` / `InlineRadioGroup`: `onChange(checked, value, event)` | `onChange(value)`                                                                       |
+| `Text` / `Content`: `size='s' \| 'm' \| 'l'`                         | `size={12 \| 16 \| 20}` — size in pixels, `10`–`32` available                           |
+| `Icon`: `size='s' \| 'm' \| 'l'`                                     | `size={16 \| 20 \| 24}` — size in pixels, `12`–`32` available                           |
+| `SMLSizeType`, `SelectDropdownOptionType` types                      | removed; use `OptionType` instead of `SelectDropdownOptionType`                         |
+
+New in 2.0: [Popover](/docs/pbcomponents/popover), [ConfirmPopover](/docs/pbcomponents/confirm-popover), [ConfirmDialog](/docs/pbcomponents/confirm-dialog), [Tooltip](/docs/pbcomponents/tooltip), [Pagination](/docs/pbcomponents/pagination), [Progress](/docs/pbcomponents/progress), and the [usePopover](/docs/pbcomponents/use-popover) hook. Existing components gained the `xs` size and `warning` color on `Badge`, `warning` on `Alert`, `description` on `Checkbox`, `Toggle`, and `Radio`, a heading and error for groups, `Field.Error`, themes and keyboard navigation for `Tabs`, an accordion mode in `CollapseGroup`, and a mobile bottom sheet for `Dialog`. All popups share one look and stay on screen.
 
 ## Reference
 
@@ -93,16 +109,21 @@ import { Button } from '@prosazhin/pbcomponents';
 | [RadioGroup](/docs/pbcomponents/radio-group)              | A radio group with one selected value.                       |
 | [InlineRadio](/docs/pbcomponents/inline-radio)            | A compact radio option.                                      |
 | [InlineRadioGroup](/docs/pbcomponents/inline-radio-group) | A group of compact radio options.                            |
-| [Switch](/docs/pbcomponents/switch)                       | A switch for a boolean setting.                              |
+| [Toggle](/docs/pbcomponents/toggle)                       | A switch for a boolean setting.                              |
 | [Tabs](/docs/pbcomponents/tabs)                           | A set of tabs with an active index.                          |
 | [Tab](/docs/pbcomponents/tab)                             | A tab inside Tabs or a standalone navigation item.           |
 | [Collapse](/docs/pbcomponents/collapse)                   | An expandable disclosure with a summary.                     |
 | [CollapseGroup](/docs/pbcomponents/collapse-group)        | A group of disclosures.                                      |
-| [Dropdown](/docs/pbcomponents/dropdown)                   | A menu with a trigger and content.                           |
-| [DropdownItem](/docs/pbcomponents/dropdown-item)          | A standalone menu item: action or link.                      |
+| [Popover](/docs/pbcomponents/popover)                     | A popup with arbitrary content; menus are built from it.     |
+| [PopoverItem](/docs/pbcomponents/popover-item)            | A menu item: action or link.                                 |
+| [ConfirmPopover](/docs/pbcomponents/confirm-popover)      | Confirm an action in a popup next to the button.             |
+| [Tooltip](/docs/pbcomponents/tooltip)                     | A hint shown on hover and focus.                             |
 | [Dialog](/docs/pbcomponents/dialog)                       | A modal with trigger, sections and close control.            |
+| [ConfirmDialog](/docs/pbcomponents/confirm-dialog)        | Confirm an action in a modal dialog.                         |
 | [Alert](/docs/pbcomponents/alert)                         | An inline status message with title and actions.             |
 | [Notification](/docs/pbcomponents/notification)           | A toast notification with timer and progress.                |
+| [Pagination](/docs/pbcomponents/pagination)               | Page-by-page navigation.                                     |
+| [Progress](/docs/pbcomponents/progress)                   | A progress bar.                                              |
 
 ### Helpers
 
@@ -132,6 +153,7 @@ import { Button } from '@prosazhin/pbcomponents';
 | [useKeydown](/docs/pbcomponents/use-keydown)                      | Calls a callback when one of the specified keys is pressed.                    |
 | [useMergeRefs](/docs/pbcomponents/use-merge-refs)                 | Combines multiple React refs into one callback ref.                            |
 | [useNotifications](/docs/pbcomponents/use-notifications)          | Reads notifications and exposes show and hide methods.                         |
+| [usePopover](/docs/pbcomponents/use-popover)                      | Popup positioning and behaviour built on floating-ui.                          |
 | [useScreenSize](/docs/pbcomponents/use-screen-size)               | Returns window width and height, updating on resize.                           |
 | [useShowDialog](/docs/pbcomponents/use-show-dialog)               | Registers a dialog and returns a function to open it.                          |
 

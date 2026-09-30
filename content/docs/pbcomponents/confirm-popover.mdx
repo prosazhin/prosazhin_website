@@ -1,0 +1,45 @@
+---
+title: ConfirmPopover
+description: 'Подтверждение действия в попапе рядом с кнопкой.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Оберните кнопку действия в `ConfirmPopover` — по нажатию рядом откроется попап с вопросом и кнопками подтверждения и отмены. `onConfirm` вызывается при подтверждении, после чего попап закрывается. `color='danger'` подходит для необратимых действий. Подходит для лёгких подтверждений; если нужно больше внимания — используйте [ConfirmDialog](/docs/pbcomponents/confirm-dialog).
+
+## Живой пример
+
+<ComponentShowcase
+  name='ConfirmPopover'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { Button, ConfirmPopover } from '@prosazhin/pbcomponents';
+
+<ConfirmPopover
+  title='Delete the file?'
+  description='This action cannot be undone.'
+  color='danger'
+  confirmText='Delete'
+  cancelText='Cancel'
+  onConfirm={() => deleteFile()}
+>
+  <Button
+    color='danger'
+    theme='border'
+  >
+    Delete
+  </Button>
+</ConfirmPopover>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='ConfirmPopover'
+  locale='ru'
+/>

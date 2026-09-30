@@ -56,7 +56,10 @@
     "ru": "Russian",
     "en": "English"
   },
+  "toTop": "Наверх",
+  "menu": "Меню",
   "themes": {
+    "label": "Тема оформления",
     "light": "Светлая",
     "dark": "Тёмная"
   },

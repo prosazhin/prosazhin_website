@@ -6,7 +6,7 @@ description: 'SVG-иконка с заданным размером.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Передайте SVG-компонент в `tag`, например иконку Heroicons.
+Передайте SVG-компонент в `tag`, например иконку Heroicons. `size` — размер в пикселях: `12`, `14`, `16`, `18` (по умолчанию), `20`, `22`, `24`, `26` или `32`. Прежние `s`, `m` и `l` соответствуют `16`, `20` и `24`.
 
 ## Живой пример
 
@@ -23,7 +23,7 @@ import { Icon } from '@prosazhin/pbcomponents';
 
 <Icon
   tag={CheckIcon}
-  size='m'
+  size={20}
 />;
 ```
 

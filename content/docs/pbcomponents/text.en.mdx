@@ -6,7 +6,7 @@ description: 'Text with prop-controlled size and weight.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Polymorphic `as` changes the HTML tag; `medium` increases font weight.
+Polymorphic `as` changes the HTML tag; `medium` increases font weight. `size` is the font size in pixels: `10`, `12`, `14`, `16` (default), `20`, `24`, or `32`. The former `s`, `m`, and `l` map to `12`, `16`, and `20`.
 
 ## Live example
 
@@ -22,7 +22,7 @@ import { Text } from '@prosazhin/pbcomponents';
 
 <Text
   as='span'
-  size='m'
+  size={16}
 >
   Label
 </Text>;

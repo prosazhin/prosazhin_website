@@ -1,0 +1,46 @@
+---
+title: Popover
+description: 'A popup with arbitrary content; menus are built from it.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Compose `Popover.Trigger` with a single trigger element (usually a `Button`) and `Popover.Content`. Put `Popover.Item` elements inside to get a menu — it closes itself after an item is chosen — or any other markup. `placement` sets the side and alignment (`bottom-start` by default, `bottom-end`, `top`, etc.); when space runs out the popup flips and shifts so it stays on screen. Control visibility with `open` and `onOpenChange`, move the popup to the end of `body` with `portal`, and add a search field with `search` on `Popover.Content`.
+
+## Live example
+
+<ComponentShowcase
+  name='Popover'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { Badge, Button, Popover } from '@prosazhin/pbcomponents';
+
+<Popover placement='bottom-end'>
+  <Popover.Trigger>
+    <Button>Open menu</Button>
+  </Popover.Trigger>
+  <Popover.Content>
+    <Popover.Item
+      leftIcon={UserCircleIcon}
+      badge={<Badge color='secondary'>2</Badge>}
+    >
+      My orders
+    </Popover.Item>
+    <Popover.Item>Profile settings</Popover.Item>
+    <Popover.Item borderTop>Sign out</Popover.Item>
+  </Popover.Content>
+</Popover>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='Popover'
+  locale='en'
+/>

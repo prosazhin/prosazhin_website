@@ -6,7 +6,7 @@ description: 'A group of buttons with a shared size.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Pass several `Button` elements as children; set their shared size on the group.
+Pass `Button` elements and `Popover` with a `Button` in `Popover.Trigger` as children. Set the shared size on the group — it applies to every button, including the menu trigger.
 
 ## Live example
 
@@ -18,19 +18,21 @@ Pass several `Button` elements as children; set their shared size on the group.
 ## Usage
 
 ```tsx
-import { Button, ButtonGroup, Dropdown } from '@prosazhin/pbcomponents';
+import { Button, ButtonGroup, Popover } from '@prosazhin/pbcomponents';
 
 <ButtonGroup size='m'>
   <Button theme='border'>One</Button>
   <Button theme='border'>Two</Button>
-  <Dropdown>
-    <Dropdown.Trigger theme='border'>Three</Dropdown.Trigger>
-    <Dropdown.Content>
-      <Dropdown.Item>One</Dropdown.Item>
-      <Dropdown.Item>Two</Dropdown.Item>
-      <Dropdown.Item>Three</Dropdown.Item>
-    </Dropdown.Content>
-  </Dropdown>
+  <Popover>
+    <Popover.Trigger>
+      <Button theme='border'>Three</Button>
+    </Popover.Trigger>
+    <Popover.Content>
+      <Popover.Item>One</Popover.Item>
+      <Popover.Item>Two</Popover.Item>
+      <Popover.Item>Three</Popover.Item>
+    </Popover.Content>
+  </Popover>
 </ButtonGroup>;
 ```
 

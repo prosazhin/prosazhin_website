@@ -1,0 +1,43 @@
+---
+title: Pagination
+description: 'Page-by-page navigation.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`total` is the number of pages. Use `defaultPage` when uncontrolled, or `page` with `onChange` for controlled mode. `siblings` sets how many neighbouring pages are visible around the current one; the rest collapse into an ellipsis. Set `prevAriaLabel` and `nextAriaLabel` for the previous and next buttons in the interface language.
+
+## Live example
+
+<ComponentShowcase
+  name='Pagination'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+'use client';
+
+import { Pagination } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [page, setPage] = useState(1);
+  return (
+    <Pagination
+      total={20}
+      page={page}
+      onChange={setPage}
+    />
+  );
+}
+```
+
+## Component API
+
+<ComponentAPI
+  name='Pagination'
+  locale='en'
+/>

@@ -1,0 +1,31 @@
+---
+title: PopoverItem
+description: 'Отдельный пункт меню: действие или ссылка.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Тот же компонент, что `Popover.Item`. Для перехода передайте `href`; разделители задаются через `borderTop` и `borderBottom`, бейдж — через `badge`. Внутри `Popover` после нажатия попап закрывается.
+
+## Живой пример
+
+<ComponentShowcase
+  name='PopoverItem'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { PopoverItem } from '@prosazhin/pbcomponents';
+
+<PopoverItem href='/projects'>Projects</PopoverItem>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='PopoverItem'
+  locale='ru'
+/>
