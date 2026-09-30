@@ -1,0 +1,46 @@
+---
+title: Popover
+description: 'Попап с произвольным содержимым; из него собирается меню.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Соберите `Popover.Trigger` с одним элементом-триггером (обычно `Button`) и `Popover.Content`. Внутрь можно положить `Popover.Item` — получится меню, после выбора пункта оно закрывается само, — или любую разметку. `placement` задаёт сторону и выравнивание (`bottom-start` по умолчанию, `bottom-end`, `top` и т. д.); при нехватке места попап переворачивается и сдвигается, не уходя за край экрана. Открытие можно контролировать через `open` и `onOpenChange`, `portal` выносит попап в конец `body`, `search` у `Popover.Content` добавляет строку поиска.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Popover'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { Badge, Button, Popover } from '@prosazhin/pbcomponents';
+
+<Popover placement='bottom-end'>
+  <Popover.Trigger>
+    <Button>Open menu</Button>
+  </Popover.Trigger>
+  <Popover.Content>
+    <Popover.Item
+      leftIcon={UserCircleIcon}
+      badge={<Badge color='secondary'>2</Badge>}
+    >
+      My orders
+    </Popover.Item>
+    <Popover.Item>Profile settings</Popover.Item>
+    <Popover.Item borderTop>Sign out</Popover.Item>
+  </Popover.Content>
+</Popover>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Popover'
+  locale='ru'
+/>

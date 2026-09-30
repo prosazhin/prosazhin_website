@@ -32,6 +32,14 @@ html[data-theme='dark'] #nd-sidebar {
   --color-fd-muted-foreground: var(--theme-color-text-secondary);
 }
 
+/* В pbcomponents 2 у контента Button/Badge/Tag стоит min-w размером со строку — чтобы
+   кнопка с одной иконкой была квадратной. С текстом это лишнее: короткие подписи ("AI",
+   "3", "ru") растягиваются до этой ширины и прижимаются влево. Если внутри есть текст
+   (он всегда рендерится с pbc:flex-1), снимаем ограничение. */
+.pbc[class*='pbc:min-w-']:has(> .pbc\:flex-1) {
+  min-width: 0;
+}
+
 @layer base {
   * {
     box-sizing: border-box;

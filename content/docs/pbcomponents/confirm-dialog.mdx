@@ -1,0 +1,40 @@
+---
+title: ConfirmDialog
+description: 'Подтверждение действия в модальном окне.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Готовый `Dialog` с заголовком, описанием и кнопками подтверждения и отмены. Нужен уникальный `id` и `PBCProvider` (или `DialogProvider`) выше по дереву. `trigger` принимает пропсы кнопки-триггера, как у `Button`; без него откройте окно через `open` и `onOpenChange`. `onConfirm` вызывается при подтверждении, после чего окно закрывается.
+
+## Живой пример
+
+<ComponentShowcase
+  name='ConfirmDialog'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { ConfirmDialog } from '@prosazhin/pbcomponents';
+
+<ConfirmDialog
+  id='delete-project'
+  title='Delete the project?'
+  description='All files will be removed permanently.'
+  color='danger'
+  confirmText='Delete'
+  cancelText='Cancel'
+  onConfirm={() => deleteProject()}
+  trigger={{ color: 'danger', theme: 'border', children: 'Delete project' }}
+/>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='ConfirmDialog'
+  locale='ru'
+/>

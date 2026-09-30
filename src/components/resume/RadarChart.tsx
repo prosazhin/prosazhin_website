@@ -1,15 +1,15 @@
 'use client';
 
 import { LangType } from '@/types';
-import clsx from 'clsx';
+import { Tooltip } from '@prosazhin/pbcomponents';
 import { useState } from 'react';
 
 type RadarDatum = { title: string; value: number };
 
 // Круговой (радарный) график: сплошная закрашенная область показывает силу по
 // каждой категории. Направляющие — только спицы от центра к точкам. При наведении
-// на точку показывается тултип с названием и оценкой. Чистый SVG без зависимостей,
-// темизация через CSS-переменные дизайн-токенов.
+// на точку показывается тултип (Tooltip из pbcomponents) с названием и оценкой.
+// График — чистый SVG, темизация через CSS-переменные дизайн-токенов.
 const RadarChart = ({
   data,
   max = 4,
@@ -57,7 +57,7 @@ const RadarChart = ({
     new Intl.NumberFormat(locale ?? 'ru', { maximumFractionDigits: 1 }).format(value);
 
   return (
-    <div className='relative mx-auto mt-32 w-full max-w-[448px]'>
+    <div className='mx-auto mt-32 w-full max-w-[448px]'>
       <svg
         viewBox={`0 0 ${width} ${height}`}
         className='block h-auto w-full overflow-visible'
@@ -130,43 +130,31 @@ const RadarChart = ({
               strokeWidth={2}
               className='transition-all duration-150'
             />
-            <circle
-              cx={p.x}
-              cy={p.y}
-              r={16}
-              fill='transparent'
-              tabIndex={0}
-              className='cursor-pointer outline-none'
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              onFocus={() => setHovered(i)}
-              onBlur={() => setHovered(null)}
-            />
+            {/* Тултип рендерится в портал: внутри <svg> div-обёртка попапа невалидна */}
+            <Tooltip
+              portal
+              content={
+                <span className='flex items-center gap-x-8'>
+                  <span>{data[i].title}</span>
+                  <span className='text-secondary-200 whitespace-nowrap'>
+                    {formatRating(data[i].value)}
+                  </span>
+                </span>
+              }
+              onOpenChange={(open) => setHovered(open ? i : null)}
+            >
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={16}
+                fill='transparent'
+                tabIndex={0}
+                className='cursor-pointer outline-none'
+              />
+            </Tooltip>
           </g>
         ))}
       </svg>
-
-      {/* Тултип */}
-      {hovered !== null && (
-        <div
-          className={clsx(
-            'text-t12 pointer-events-none absolute z-10 flex items-center gap-x-8',
-            'rounded-8 px-12 py-8 whitespace-nowrap shadow-lg'
-          )}
-          style={{
-            left: `${(vertices[hovered].x / width) * 100}%`,
-            top: `${(vertices[hovered].y / height) * 100}%`,
-            transform: 'translate(-50%, calc(-100% - 12px))',
-            background: 'var(--color-secondary-400)',
-            color: 'var(--color-basic-0)',
-          }}
-        >
-          <span>{data[hovered].title}</span>
-          <span style={{ color: 'var(--color-secondary-200)' }}>
-            {formatRating(data[hovered].value)}
-          </span>
-        </div>
-      )}
     </div>
   );
 };

@@ -56,7 +56,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 Цвета компонентов берутся из `pbstyles`. Без настройки они следуют `prefers-color-scheme`; `data-theme="dark"` или `data-theme="light"` на `<html>` либо контейнере задаёт режим вручную.
 
-Компоненты с `href` (`Button`, `Tab`, `DropdownItem`, `Tag`) принимают `linkComponent`, если вместо обычной ссылки нужен `next/link`:
+Компоненты с `href` (`Button`, `Tab`, `PopoverItem`, `Tag`) принимают `linkComponent`, если вместо обычной ссылки нужен `next/link`:
 
 ```tsx
 import NextLink from 'next/link';
@@ -69,6 +69,22 @@ import { Button } from '@prosazhin/pbcomponents';
   Проекты
 </Button>;
 ```
+
+## Переход с 1.x на 2.0
+
+| Было                                                                 | Стало                                                                                     |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `Dropdown`, `Dropdown.Trigger`, `Dropdown.Content`, `Dropdown.Item`  | `Popover`, `Popover.Trigger` (кнопку передайте внутрь), `Popover.Content`, `Popover.Item` |
+| `DropdownItem`                                                       | `PopoverItem`                                                                             |
+| `Dropdown.Content align='left' \| 'right'`                           | `Popover placement='bottom-start' \| 'bottom-end'` и другие значения floating-ui          |
+| `Switch`                                                             | `Toggle`                                                                                  |
+| `Select` / `Search`: `dropdownClassName`, `dropdownItemClassName`    | `popoverClassName`, `popoverItemClassName`                                                |
+| `RadioGroup` / `InlineRadioGroup`: `onChange(checked, value, event)` | `onChange(value)`                                                                         |
+| `Text` / `Content`: `size='s' \| 'm' \| 'l'`                         | `size={12 \| 16 \| 20}` — размер в пикселях, доступны `10`–`32`                           |
+| `Icon`: `size='s' \| 'm' \| 'l'`                                     | `size={16 \| 20 \| 24}` — размер в пикселях, доступны `12`–`32`                           |
+| Типы `SMLSizeType`, `SelectDropdownOptionType`                       | удалены; вместо `SelectDropdownOptionType` — `OptionType`                                 |
+
+Новое во 2.0: [Popover](/docs/pbcomponents/popover), [ConfirmPopover](/docs/pbcomponents/confirm-popover), [ConfirmDialog](/docs/pbcomponents/confirm-dialog), [Tooltip](/docs/pbcomponents/tooltip), [Pagination](/docs/pbcomponents/pagination), [Progress](/docs/pbcomponents/progress) и хук [usePopover](/docs/pbcomponents/use-popover). У существующих компонентов появились размер `xs` и цвет `warning` у `Badge`, цвет `warning` у `Alert`, `description` у `Checkbox`, `Toggle` и `Radio`, заголовок и ошибка у групп, `Field.Error`, темы и клавиатурная навигация у `Tabs`, аккордеон в `CollapseGroup`, мобильная шторка у `Dialog`. Все попапы используют единый вид и не уходят за край экрана.
 
 ## Справочник
 
@@ -93,16 +109,21 @@ import { Button } from '@prosazhin/pbcomponents';
 | [RadioGroup](/docs/pbcomponents/radio-group)              | Группа радиокнопок с одним выбранным значением.                      |
 | [InlineRadio](/docs/pbcomponents/inline-radio)            | Компактный вариант радио-кнопки.                                     |
 | [InlineRadioGroup](/docs/pbcomponents/inline-radio-group) | Группа компактных вариантов выбора.                                  |
-| [Switch](/docs/pbcomponents/switch)                       | Переключатель булевой настройки.                                     |
+| [Toggle](/docs/pbcomponents/toggle)                       | Переключатель булевой настройки.                                     |
 | [Tabs](/docs/pbcomponents/tabs)                           | Набор вкладок с выбранным индексом.                                  |
 | [Tab](/docs/pbcomponents/tab)                             | Одна вкладка для Tabs или самостоятельной навигации.                 |
 | [Collapse](/docs/pbcomponents/collapse)                   | Раскрываемый блок с заголовком.                                      |
 | [CollapseGroup](/docs/pbcomponents/collapse-group)        | Группа раскрываемых блоков.                                          |
-| [Dropdown](/docs/pbcomponents/dropdown)                   | Раскрывающееся меню с триггером и содержимым.                        |
-| [DropdownItem](/docs/pbcomponents/dropdown-item)          | Отдельный пункт меню: действие или ссылка.                           |
+| [Popover](/docs/pbcomponents/popover)                     | Попап с произвольным содержимым; из него собирается меню.            |
+| [PopoverItem](/docs/pbcomponents/popover-item)            | Пункт меню: действие или ссылка.                                     |
+| [ConfirmPopover](/docs/pbcomponents/confirm-popover)      | Подтверждение действия в попапе рядом с кнопкой.                     |
+| [Tooltip](/docs/pbcomponents/tooltip)                     | Подсказка при наведении и фокусе.                                    |
 | [Dialog](/docs/pbcomponents/dialog)                       | Модальное окно с триггером, секциями и закрытием.                    |
+| [ConfirmDialog](/docs/pbcomponents/confirm-dialog)        | Подтверждение действия в модальном окне.                             |
 | [Alert](/docs/pbcomponents/alert)                         | Встроенное сообщение о состоянии с заголовком и действиями.          |
 | [Notification](/docs/pbcomponents/notification)           | Всплывающее сообщение с таймером и прогрессом.                       |
+| [Pagination](/docs/pbcomponents/pagination)               | Постраничная навигация.                                              |
+| [Progress](/docs/pbcomponents/progress)                   | Полоса прогресса.                                                    |
 
 ### Хелперы
 
@@ -132,6 +153,7 @@ import { Button } from '@prosazhin/pbcomponents';
 | [useKeydown](/docs/pbcomponents/use-keydown)                      | Вызывает callback при нажатии указанных клавиш.                                     |
 | [useMergeRefs](/docs/pbcomponents/use-merge-refs)                 | Объединяет несколько React ref в один callback ref.                                 |
 | [useNotifications](/docs/pbcomponents/use-notifications)          | Читает уведомления и предоставляет методы показа и скрытия.                         |
+| [usePopover](/docs/pbcomponents/use-popover)                      | Позиционирование и поведение попапов на floating-ui.                                |
 | [useScreenSize](/docs/pbcomponents/use-screen-size)               | Возвращает ширину и высоту окна, обновляясь при resize.                             |
 | [useShowDialog](/docs/pbcomponents/use-show-dialog)               | Регистрирует диалог и возвращает функцию его открытия.                              |
 

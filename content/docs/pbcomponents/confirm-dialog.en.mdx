@@ -1,0 +1,40 @@
+---
+title: ConfirmDialog
+description: 'Confirm an action in a modal dialog.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+A ready-made `Dialog` with a title, description, and confirm and cancel buttons. It needs a unique `id` and a `PBCProvider` (or `DialogProvider`) higher in the tree. `trigger` takes the trigger button props, same as `Button`; without it, open the dialog via `open` and `onOpenChange`. `onConfirm` runs on confirmation, then the dialog closes.
+
+## Live example
+
+<ComponentShowcase
+  name='ConfirmDialog'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { ConfirmDialog } from '@prosazhin/pbcomponents';
+
+<ConfirmDialog
+  id='delete-project'
+  title='Delete the project?'
+  description='All files will be removed permanently.'
+  color='danger'
+  confirmText='Delete'
+  cancelText='Cancel'
+  onConfirm={() => deleteProject()}
+  trigger={{ color: 'danger', theme: 'border', children: 'Delete project' }}
+/>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='ConfirmDialog'
+  locale='en'
+/>

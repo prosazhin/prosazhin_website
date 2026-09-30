@@ -6,7 +6,7 @@ description: 'Группа радиокнопок с одним выбранны
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Передайте `Radio` дочерними элементами. `onChange` возвращает `checked`, `value` и событие.
+Передайте `Radio` дочерними элементами. `onChange` возвращает выбранное `value`. `label`, `description` и `errorMessage` добавляют заголовок группы, пояснение и текст ошибки. Собственные `disabled`, `size` и `name` пунктов сохраняются.
 
 ## Живой пример
 
@@ -20,7 +20,11 @@ import ComponentAPI from '@/components/docs/ComponentAPI';
 ```tsx
 import { Radio, RadioGroup } from '@prosazhin/pbcomponents';
 
-<RadioGroup defaultValue='One'>
+<RadioGroup
+  label='Options'
+  defaultValue='One'
+  onChange={(value) => console.log(value)}
+>
   {['One', 'Two', 'Three', 'Four', 'Five'].map((item) => (
     <Radio
       key={item}

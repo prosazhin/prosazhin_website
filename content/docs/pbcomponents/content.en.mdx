@@ -6,7 +6,7 @@ description: 'Text with optional leading and trailing icons.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Combines text, size, and icons. `as` lets you choose the appropriate HTML tag.
+Combines text, size, and icons. `as` lets you choose the appropriate HTML tag. `size` is the text size in pixels (`10`–`32`, default `16`); icons and the gap follow it, like `.content` in Figma. The former `s`, `m`, and `l` map to `12`, `16`, and `20`.
 
 ## Live example
 
@@ -23,7 +23,7 @@ import { Content } from '@prosazhin/pbcomponents';
 
 <Content
   leftIcon={CheckIcon}
-  size='m'
+  size={16}
 >
   Done
 </Content>;

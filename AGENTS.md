@@ -10,7 +10,8 @@
 - **Language:** TypeScript 5.9 + JavaScript (`.jsx` для страниц и data-файлов)
 - **React:** 19
 - **Styling:** Tailwind CSS 4 + @prosazhin/pbstyles (кастомная тема)
-- **UI:** @prosazhin/pbcomponents, @heroicons/react, clsx
+- **UI:** @prosazhin/pbcomponents 2.x (Popover, Tooltip, Toggle и др.), @heroicons/react, clsx
+- **Docs:** fumadocs (MDX в `content/docs/`)
 - **i18n:** i18next + react-i18next (локаль в cookie)
 - **Deploy:** Vercel (standalone output)
 - **Node.js:** 24.x
@@ -83,6 +84,11 @@ src/
 ## Работа с данными
 
 - `src/data/` — статические данные в JS-файлах: `nav.js`, `skills.js`, `career.js`, `contacts.js`, `posts.js`, `projects.js`, `links.js`, `compilations.js`, `tags.js`, `matrix.js`
+
+## Документация библиотек
+
+- MDX-страницы: `content/docs/<библиотека>/*.mdx` (ru) и `*.en.mdx` (en) — каждую правку делать в обоих языках; навигация в `meta.json` / `meta.en.json`
+- pbcomponents: справочник API — `src/components/docs/component-reference.ts`, живые примеры — `src/components/docs/ComponentShowcase.tsx`
 
 ## Интернационализация
 

@@ -1,0 +1,51 @@
+---
+title: usePopover
+description: 'Позиционирование и поведение попапов на floating-ui.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Хук, на котором построены `Popover`, `Tooltip`, `ConfirmPopover`, `Select` и `Search`. Он вычисляет положение попапа относительно триггера (с переворотом и сдвигом у края экрана), закрывает его по клику снаружи и `Escape` и выдаёт пропсы с обработчиками и ARIA-атрибутами. Используйте его, когда нужен собственный попап, которого нет среди готовых компонентов. `openOn` выбирает способ открытия: `click`, `hover` (с учётом фокуса) или `manual`.
+
+## Использование
+
+```tsx
+'use client';
+
+import { usePopover } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { open, refs, floatingStyles, getReferenceProps, getFloatingProps } = usePopover({
+    placement: 'bottom-start',
+    openOn: 'click',
+    role: 'dialog',
+  });
+
+  return (
+    <>
+      <button
+        ref={refs.setReference}
+        {...getReferenceProps()}
+      >
+        Filters
+      </button>
+      {open && (
+        <div
+          ref={refs.setFloating}
+          style={floatingStyles}
+          {...getFloatingProps()}
+        >
+          Popup content
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+## API хука
+
+<ComponentAPI
+  name='usePopover'
+  locale='ru'
+/>

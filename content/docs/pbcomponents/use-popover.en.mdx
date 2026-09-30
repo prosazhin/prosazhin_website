@@ -1,0 +1,51 @@
+---
+title: usePopover
+description: 'Popup positioning and behaviour built on floating-ui.'
+---
+
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+The hook behind `Popover`, `Tooltip`, `ConfirmPopover`, `Select`, and `Search`. It positions the popup relative to the trigger (flipping and shifting near the screen edge), closes it on an outside click and `Escape`, and returns props with handlers and ARIA attributes. Use it when you need a custom popup that the ready-made components do not cover. `openOn` picks how it opens: `click`, `hover` (including focus), or `manual`.
+
+## Usage
+
+```tsx
+'use client';
+
+import { usePopover } from '@prosazhin/pbcomponents';
+
+function Example() {
+  const { open, refs, floatingStyles, getReferenceProps, getFloatingProps } = usePopover({
+    placement: 'bottom-start',
+    openOn: 'click',
+    role: 'dialog',
+  });
+
+  return (
+    <>
+      <button
+        ref={refs.setReference}
+        {...getReferenceProps()}
+      >
+        Filters
+      </button>
+      {open && (
+        <div
+          ref={refs.setFloating}
+          style={floatingStyles}
+          {...getFloatingProps()}
+        >
+          Popup content
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+## Hook API
+
+<ComponentAPI
+  name='usePopover'
+  locale='en'
+/>

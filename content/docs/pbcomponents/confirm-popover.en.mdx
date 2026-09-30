@@ -1,0 +1,45 @@
+---
+title: ConfirmPopover
+description: 'Confirm an action in a popup next to the button.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Wrap the action button in `ConfirmPopover` — clicking it opens a popup with a question and confirm and cancel buttons next to it. `onConfirm` runs on confirmation, then the popup closes. `color='danger'` suits irreversible actions. Use it for lightweight confirmations; when the action needs more attention, use [ConfirmDialog](/docs/pbcomponents/confirm-dialog).
+
+## Live example
+
+<ComponentShowcase
+  name='ConfirmPopover'
+  locale='en'
+/>
+
+## Usage
+
+```tsx
+import { Button, ConfirmPopover } from '@prosazhin/pbcomponents';
+
+<ConfirmPopover
+  title='Delete the file?'
+  description='This action cannot be undone.'
+  color='danger'
+  confirmText='Delete'
+  cancelText='Cancel'
+  onConfirm={() => deleteFile()}
+>
+  <Button
+    color='danger'
+    theme='border'
+  >
+    Delete
+  </Button>
+</ConfirmPopover>;
+```
+
+## Component API
+
+<ComponentAPI
+  name='ConfirmPopover'
+  locale='en'
+/>

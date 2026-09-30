@@ -6,7 +6,7 @@ description: 'Обёртка для подписи, контрола, подск
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Соберите `Field.Label`, `Field.Control`, `Field.Description`. `error` отмечает ошибочное состояние.
+Соберите `Field.Label`, `Field.Control`, `Field.Description` и `Field.Error`. `error` отмечает ошибочное состояние. Тексты `Field.Description` и `Field.Error` связываются с контролом через `aria-describedby`; собственный `error` контрола не затирается.
 
 ## Живой пример
 
@@ -26,7 +26,7 @@ import { useState } from 'react';
 function Example() {
   const [value, setValue] = useState('');
   return (
-    <Field>
+    <Field error={!value}>
       <Field.Label>Label</Field.Label>
       <Field.Control>
         <Input>
@@ -38,6 +38,7 @@ function Example() {
         </Input>
       </Field.Control>
       <Field.Description>Description</Field.Description>
+      {!value && <Field.Error>Fill in the field</Field.Error>}
     </Field>
   );
 }

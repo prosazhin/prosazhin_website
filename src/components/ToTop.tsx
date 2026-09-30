@@ -1,10 +1,12 @@
 'use client';
 
 import { ArrowUpIcon } from '@heroicons/react/24/outline';
-import { Button } from '@prosazhin/pbcomponents';
+import { Button, Tooltip } from '@prosazhin/pbcomponents';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ToTop = () => {
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
   const handleScroll = () => {
@@ -37,14 +39,20 @@ const ToTop = () => {
     <>
       {show && (
         <div className='desktop:bottom-24 desktop:right-24 pointer-events-none fixed right-16 bottom-16 z-50 w-64'>
-          <Button
-            size='l'
-            color='secondary'
-            theme='ghost'
-            className='pointer-events-auto! w-max!'
-            leftIcon={ArrowUpIcon}
-            onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
-          />
+          <Tooltip
+            content={t('toTop')}
+            placement='left'
+          >
+            <Button
+              size='l'
+              color='secondary'
+              theme='ghost'
+              className='pointer-events-auto! w-max!'
+              leftIcon={ArrowUpIcon}
+              aria-label={t('toTop')}
+              onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })}
+            />
+          </Tooltip>
         </div>
       )}
     </>

@@ -1,0 +1,43 @@
+---
+title: Pagination
+description: 'Постраничная навигация.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+`total` — количество страниц. Без внешнего управления задайте `defaultPage`, для управляемого режима — `page` и `onChange`. `siblings` определяет, сколько соседних страниц видно вокруг текущей; остальные сворачиваются в многоточие. Для кнопок «назад» и «вперёд» задайте `prevAriaLabel` и `nextAriaLabel` на языке интерфейса.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Pagination'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+'use client';
+
+import { Pagination } from '@prosazhin/pbcomponents';
+import { useState } from 'react';
+
+function Example() {
+  const [page, setPage] = useState(1);
+  return (
+    <Pagination
+      total={20}
+      page={page}
+      onChange={setPage}
+    />
+  );
+}
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Pagination'
+  locale='ru'
+/>

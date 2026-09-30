@@ -6,7 +6,7 @@ description: 'Текст с иконками слева и справа.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Сочетает текст, размер и иконки. `as` позволяет выбрать подходящий HTML-тег.
+Сочетает текст, размер и иконки. `as` позволяет выбрать подходящий HTML-тег. `size` — размер текста в пикселях (`10`–`32`, по умолчанию `16`); иконки и отступ между ними подбираются под него, как в `.content` из Figma. Прежние `s`, `m` и `l` соответствуют `12`, `16` и `20`.
 
 ## Живой пример
 
@@ -23,7 +23,7 @@ import { Content } from '@prosazhin/pbcomponents';
 
 <Content
   leftIcon={CheckIcon}
-  size='m'
+  size={16}
 >
   Done
 </Content>;

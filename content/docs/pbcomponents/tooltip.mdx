@@ -1,0 +1,41 @@
+---
+title: Tooltip
+description: 'Подсказка при наведении и фокусе.'
+---
+
+import ComponentShowcase from '@/components/docs/ComponentShowcase';
+import ComponentAPI from '@/components/docs/ComponentAPI';
+
+Оберните в `Tooltip` один элемент-триггер — он должен принимать `ref` и обработчики событий (`Button`, ссылка, SVG-элемент). Подсказка появляется при наведении с задержкой `delay` и сразу при фокусе с клавиатуры. `placement` задаёт сторону (`top` по умолчанию), при нехватке места подсказка переворачивается. `arrow` показывает стрелку. Внутри `<svg>` или контейнера с `overflow: hidden` включите `portal`. Подсказка не заменяет доступное имя: у кнопки только с иконкой оставьте `aria-label`.
+
+## Живой пример
+
+<ComponentShowcase
+  name='Tooltip'
+  locale='ru'
+/>
+
+## Использование
+
+```tsx
+import { ArrowUpIcon } from '@heroicons/react/24/outline';
+import { Button, Tooltip } from '@prosazhin/pbcomponents';
+
+<Tooltip
+  content='Back to top'
+  placement='left'
+>
+  <Button
+    theme='ghost'
+    leftIcon={ArrowUpIcon}
+    aria-label='Back to top'
+  />
+</Tooltip>;
+```
+
+## API компонента
+
+<ComponentAPI
+  name='Tooltip'
+  locale='ru'
+/>

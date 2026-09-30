@@ -1,17 +1,17 @@
 ---
-title: Switch
+title: Toggle
 description: 'A switch for a boolean setting.'
 ---
 
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-`onChange` receives the next state, `value`, and the event. Use it for settings that take effect immediately.
+`onChange` receives the next state, `value`, and the event. Use it for settings that take effect immediately. `description` adds text below the label.
 
 ## Live example
 
 <ComponentShowcase
-  name='Switch'
+  name='Toggle'
   locale='en'
 />
 
@@ -20,19 +20,19 @@ import ComponentAPI from '@/components/docs/ComponentAPI';
 ```tsx
 'use client';
 
-import { Switch } from '@prosazhin/pbcomponents';
+import { Toggle } from '@prosazhin/pbcomponents';
 import { useState } from 'react';
 
 function Example() {
   const [checked, setChecked] = useState(false);
   return (
-    <Switch
+    <Toggle
       value='one'
       checked={checked}
       onChange={setChecked}
     >
       Label
-    </Switch>
+    </Toggle>
   );
 }
 ```
@@ -40,6 +40,6 @@ function Example() {
 ## Component API
 
 <ComponentAPI
-  name='Switch'
+  name='Toggle'
   locale='en'
 />

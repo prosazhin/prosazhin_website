@@ -6,7 +6,7 @@ description: 'A wrapper for a label, control, description and error state.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Compose `Field.Label`, `Field.Control`, and `Field.Description`. `error` marks invalid input.
+Compose `Field.Label`, `Field.Control`, `Field.Description`, and `Field.Error`. `error` marks invalid input. `Field.Description` and `Field.Error` texts are linked to the control via `aria-describedby`; the control's own `error` is kept.
 
 ## Live example
 
@@ -26,7 +26,7 @@ import { useState } from 'react';
 function Example() {
   const [value, setValue] = useState('');
   return (
-    <Field>
+    <Field error={!value}>
       <Field.Label>Label</Field.Label>
       <Field.Control>
         <Input>
@@ -38,6 +38,7 @@ function Example() {
         </Input>
       </Field.Control>
       <Field.Description>Description</Field.Description>
+      {!value && <Field.Error>Fill in the field</Field.Error>}
     </Field>
   );
 }

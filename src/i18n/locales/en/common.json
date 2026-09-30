@@ -56,7 +56,10 @@
     "ru": "Russian",
     "en": "English"
   },
+  "toTop": "Back to top",
+  "menu": "Menu",
   "themes": {
+    "label": "Theme",
     "light": "Light",
     "dark": "Dark"
   },
