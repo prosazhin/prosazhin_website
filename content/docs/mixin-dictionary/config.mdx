@@ -1,0 +1,98 @@
+---
+title: Конфигурация и CLI
+description: Поля config.json, платформы CSS, LESS и SCSS, флаги командной строки и состав результата.
+---
+
+## Командная строка
+
+```bash
+npx mixin-dictionary
+npx mixin-dictionary -c ./config-mixin-dictionary.json
+npx mixin-dictionary -c ./config-mixin-dictionary.json --watch
+```
+
+| Флаг              | Коротко | Назначение                                                                      |
+| ----------------- | ------- | ------------------------------------------------------------------------------- |
+| `--config <path>` | `-c`    | Путь к JSON-конфигу. По умолчанию `./config.json`.                              |
+| `--watch`         | `-w`    | Пересобирать стили при изменении файлов токенов (`source`, `themes`) и конфига. |
+| `--version`       | `-v`    | Показать версию пакета.                                                         |
+
+Ошибки конфига и токенов выводятся одной строкой с именем файла и путём токена, без стектрейса. Код выхода — `1`.
+
+## Поля конфига
+
+```json
+{
+  "$schema": "./node_modules/mixin-dictionary/schema/config.schema.json",
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "mediaAliases": ["screen", "breakpoint"],
+  "keyframesAliases": ["keyframes"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+| Поле               | Тип                         | По умолчанию                       | Назначение                                                                                                                                                                              |
+| ------------------ | --------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `$schema`          | `string`                    | —                                  | Путь к JSON Schema из пакета: автодополнение и проверка конфига в редакторе.                                                                                                            |
+| `platforms`        | `string[]`                  | `["css", "less", "scss"]`          | Какие файлы собирать.                                                                                                                                                                   |
+| `source`           | `string[]`                  | `["tokens/**/*.json"]`             | Glob-шаблоны или пути к файлам токенов: `tokens/*.json` или `tokens/base.json`. Поддерживаются JSON, JSON5 и JS.                                                                        |
+| `output`           | `string`                    | `./styles`                         | Каталог результата. Создаётся, если его нет.                                                                                                                                            |
+| `mediaAliases`     | `string[]`                  | `["screen", "breakpoint"]`         | Категории токенов брейкпоинтов: из них собираются миксины медиазапросов.                                                                                                                |
+| `keyframesAliases` | `string[]`                  | `["keyframes"]`                    | Категории токенов анимаций: из них собираются keyframes.                                                                                                                                |
+| `numberUnit`       | `"px"`, `"rem"` или `false` | `"px"`                             | Единица для голых чисел (`"$type": "number"`) в размерных категориях: `4` → `4px`. `"rem"` делит на 16, `false` оставляет число как есть. См. [Из Figma](/docs/mixin-dictionary/figma). |
+| `dimensionAliases` | `string[]`                  | `["spacing", "radius", "size", …]` | Категории (первый сегмент пути), числа в которых — размеры. Категории из `mediaAliases` входят всегда.                                                                                  |
+| `themes`           | объект                      | —                                  | Файлы токенов тем и тема по умолчанию. См. [Темы](/docs/mixin-dictionary/themes).                                                                                                       |
+
+<Callout type='warn'>
+  Если используете `themes`, не включайте файлы тем в `source`. Пишите `tokens/*.json`, а не
+  `tokens/**/*.json`, иначе одноимённые токены столкнутся.
+</Callout>
+
+## Что попадает в файлы
+
+| Файл              | Переменные                | Текстовые стили | Медиазапросы  | Keyframes                        |
+| ----------------- | ------------------------- | --------------- | ------------- | -------------------------------- |
+| `css/index.css`   | `--color-white` в `:root` | —               | —             | —                                |
+| `less/index.less` | `@color-white`            | `.h64()`        | `.lg(@rules)` | `.keyframes(show, { … })`        |
+| `scss/index.scss` | `$color-white`            | `@mixin h64`    | `@mixin lg`   | `@include keyframes(show) { … }` |
+
+Имя переменной — путь токена через дефис: `font.h64.font-size` → `$font-h64-font-size`. Пути в camelCase тоже переводятся в kebab-case: `screen.tabletUp.min` → `$screen-tablet-up-min`, и миксины ссылаются на те же имена переменных. Имя самого миксина — это имя группы как есть: `@mixin tabletUp`.
+
+В CSS миксинов нет: у CSS нет механизма миксинов, поэтому там только переменные.
+
+## Использование
+
+```less
+@import './styles/less/index.less';
+
+.title {
+  .h64();
+}
+
+.lg({
+  .sidebar { display: none; }
+});
+```
+
+```scss
+@import './styles/scss/index.scss';
+
+.title {
+  @include h64;
+}
+
+@include lg {
+  .sidebar {
+    display: none;
+  }
+}
+```
+
+## Пример целиком
+
+Реальный конфиг библиотеки pbstyles: [config-mixin-dictionary.json](https://github.com/prosazhin/pbstyles/blob/main/config-mixin-dictionary.json).

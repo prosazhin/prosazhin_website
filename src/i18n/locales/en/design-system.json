@@ -1,0 +1,168 @@
+{
+  "metaTitle": "The pbstyles and pbcomponents design system",
+  "metaDescription": "Open-source style and React component libraries with matching Figma files: why a small team needs a design system and how this one works, from tokens to components.",
+  "hero": {
+    "titleStart": "The design system ",
+    "titleAccent": "this site is built on",
+    "description": "pbstyles and pbcomponents are style and React component libraries. Each comes with a Figma file that has the same colors, fonts and components as the code.",
+    "copy": "Copy command",
+    "copied": "Copied"
+  },
+  "flow": {
+    "title": "The path of one color",
+    "text": "The primary-300 token keeps its name at every stage — from a Figma style to a component. When the theme changes, it changes everywhere.",
+    "button": "Button",
+    "items": ["Figma style", "JSON token", "CSS variable", "Tailwind class", "Component"]
+  },
+  "why": {
+    "title": "Why a small team needs a design system",
+    "description": "The smaller the team, the more each component rebuilt from scratch costs.",
+    "accent": {
+      "title": "A button is designed, built and tested once",
+      "text": "In a small team, every new project starts with buttons, inputs and modals that have to be built again and checked across browsers. A design system solves this once — after that, you assemble screens."
+    },
+    "ai": {
+      "title": "What if AI builds everything?",
+      "text": "An AI model will build a button in a minute, but it still has to be checked: states, focus, dark theme, rendering across browsers — and so on for every component. Generation also costs money. Here all of that is already done, tested and free, so the AI can go straight to pages and the product."
+    },
+    "items": [
+      {
+        "icon": "shield",
+        "title": "Less testing",
+        "text": "Focus, keyboard navigation, disabled and loading states are tested in the library. In the project, only the screen logic remains to be checked."
+      },
+      {
+        "icon": "squares",
+        "title": "A consistent interface",
+        "text": "Spacing, colors and radii come from tokens, so the interface does not drift apart in the details over time."
+      },
+      {
+        "icon": "swatch",
+        "title": "The mockup matches the code",
+        "text": "A Figma color and a code class follow one naming scheme: primary/300 and bg-primary-300. There is no need to compare values by hand."
+      },
+      {
+        "icon": "moon",
+        "title": "Dark theme is ready",
+        "text": "Both themes are defined in tokens and switch with a data-theme attribute. No separate work on dark versions of components is needed."
+      },
+      {
+        "icon": "rocket",
+        "title": "Quick start",
+        "text": "Two packages and one line of CSS — and the project already has typography, a palette and components."
+      },
+      {
+        "icon": "user",
+        "title": "Easier onboarding",
+        "text": "A new team member only needs the docs: they describe every component, its props and how it looks."
+      }
+    ]
+  },
+  "libraries": {
+    "title": "Four libraries",
+    "description": "I develop all four myself — from Figma mockups to npm releases. The main ones are pbstyles and pbcomponents; the other two generate styles from tokens and work for other design systems too.",
+    "docs": "Documentation",
+    "items": {
+      "pbstyles": {
+        "role": "Foundation",
+        "description": "Tokens and ready-made styles: palette, typography, radii, shadows, breakpoints and animations. Light and dark themes are already set up.",
+        "features": [
+          "Tailwind CSS 4 theme",
+          "CSS variables, LESS and SCSS",
+          "Tokens in the DTCG format",
+          "Style file in Figma Community"
+        ]
+      },
+      "pbcomponents": {
+        "role": "Components",
+        "description": "React components built on pbstyles: buttons, inputs, selects, tabs, dialogs, notifications, popovers and their hooks.",
+        "features": [
+          "React 19 and TypeScript",
+          "Components, providers and hooks",
+          "Tests with Vitest and Testing Library",
+          "The same components in Figma Community"
+        ]
+      },
+      "tailwind-dictionary": {
+        "role": "Tool",
+        "description": "Builds a Tailwind CSS 3 or 4 theme from JSON tokens, so you don't write it by hand: utilities, light and dark themes.",
+        "features": [
+          "Reads Figma variables export, DTCG and Style Dictionary",
+          "Any number of themes",
+          "CLI, programmatic API and an in-browser playground"
+        ]
+      },
+      "mixin-dictionary": {
+        "role": "Tool",
+        "description": "The same for projects without Tailwind: builds CSS variables plus LESS and SCSS variables and mixins from tokens.",
+        "features": [
+          "Reads Figma variables export, DTCG and Style Dictionary",
+          "Mixins for typography, breakpoints and animations",
+          "CLI, programmatic API and an in-browser playground"
+        ]
+      }
+    }
+  },
+  "cycle": {
+    "title": "How it works",
+    "description": "Colors, sizes and fonts are stored in one place, as JSON tokens. Everything else is generated from them.",
+    "links": {
+      "figmaStyles": "pbstyles in Figma",
+      "figmaComponents": "pbcomponents in Figma",
+      "tailwindDictionary": "tailwind-dictionary",
+      "mixinDictionary": "mixin-dictionary",
+      "playground": "Try it in the browser",
+      "pbstyles": "pbstyles docs",
+      "pbcomponents": "pbcomponents docs",
+      "site": "Site code on GitHub"
+    },
+    "steps": [
+      {
+        "title": "Figma",
+        "text": "Two files are published in Figma Community: pbstyles styles and pbcomponents components with every state. New screens are designed from them."
+      },
+      {
+        "title": "Tokens",
+        "text": "The same values are stored in JSON. Light and dark themes are two files that reference a shared palette."
+      },
+      {
+        "title": "Generation",
+        "text": "tailwind-dictionary builds a Tailwind 4 theme from the tokens, mixin-dictionary builds CSS variables, LESS and SCSS. Styles are not written by hand, so the code stays in sync with the mockup."
+      },
+      {
+        "title": "pbstyles on npm",
+        "text": "The generated styles are published as a package. Once installed, the project gets classes such as bg-primary-300, text-h48 and rounded-16."
+      },
+      {
+        "title": "pbcomponents",
+        "text": "Components are built on the same classes: they look the same as in Figma and switch theme together with the page."
+      },
+      {
+        "title": "The project",
+        "text": "What remains is building the interface. This site and the library docs are made this way — the theme can be switched in the header."
+      }
+    ]
+  },
+  "fit": {
+    "title": "Who it is for",
+    "yesTitle": "A good fit if",
+    "yes": [
+      "the product is built by one person or a small team",
+      "you need a prototype, MVP or side project fast",
+      "the team has no dedicated designer or layout developer",
+      "you need light and dark themes"
+    ],
+    "noTitle": "Not a fit if",
+    "no": [
+      "the company has a large team and its own brand — a custom system is better then",
+      "you need the flexibility of headless libraries such as Radix or shadcn/ui",
+      "the project is not React — although pbstyles works without it"
+    ]
+  },
+  "contact": {
+    "title": "Found this interesting?",
+    "text": "If you need help with a design system, interface design or frontend, or have questions about the libraries — get in touch.",
+    "email": "Email",
+    "telegram": "Telegram"
+  }
+}

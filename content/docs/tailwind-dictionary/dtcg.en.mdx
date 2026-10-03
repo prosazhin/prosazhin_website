@@ -1,0 +1,226 @@
+---
+title: DTCG tokens
+description: The new W3C Design Tokens 2025.10 format — $value, $type, composite typography and shadow, groups without the mixin field.
+---
+
+[DTCG](https://www.designtokens.org/tr/2025.10/format/) is the design token format standard by the W3C Design Tokens Community Group. Service fields start with `$`: `$value`, `$type`, `$description`, `$extensions`. Figma, Tokens Studio and Terrazzo export this format. Since 2.5 `tailwind-dictionary` reads it with no extra setup.
+
+The format is detected automatically: if the tokens contain `$value`, the build runs in DTCG mode. One build uses one format — mixing `value` and `$value` in the same set of files (theme files included) is an error.
+
+## Simple tokens
+
+`$type` can be set once on a group — nested tokens inherit it. References are written as in the legacy format: `{group.token}`.
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "white": { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } },
+    "text": { "$value": "{color.white}" }
+  },
+  "size": {
+    "$type": "dimension",
+    "16": { "$value": { "value": 16, "unit": "px" } }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": { "$value": ["Inter", "sans-serif"] }
+    }
+  }
+}
+```
+
+A reference must point to an existing token. Otherwise the build stops with a clear error:
+
+```text
+✘ Token "color.text" (tokens/color.json) references {color.nope}, which is not defined
+```
+
+## How values become CSS
+
+| DTCG value                                                         | Output                                                                                 |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `dimension` `{ "value": 16, "unit": "px" }`                        | `16px`                                                                                 |
+| `color` `{ "colorSpace": "srgb", "components": […], "hex": "#…" }` | `#…`; with `alpha` — `rgba(…)`; other color spaces — `oklch(…)`, `color(display-p3 …)` |
+| `fontFamily` `["Inter", "sans-serif"]`                             | `'Inter', sans-serif`                                                                  |
+| `shadow` (object or array of layers)                               | `0px 1px 2px 0px #000000, inset …`                                                     |
+| `duration`, `cubicBezier`, `border`, `transition`                  | `150ms`, `cubic-bezier(…)`, `1px solid #…`, …                                          |
+| string                                                             | as is                                                                                  |
+
+An unknown `$type` does not stop the build: the package prints a warning with the token path.
+
+## Typography
+
+A composite `typography` token becomes a text style named after the token: `font.h64` → `h64`. No `mixin` field needed.
+
+```json
+{
+  "font": {
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  }
+}
+```
+
+The references point to the tokens `font.size.64`, `font.leading.tight` and `font.weight.bold`, which are defined in other token files.
+
+Tailwind 4 (alias `"text": "font/size"`):
+
+```css
+@theme {
+  --text-h64: 64px;
+  --text-h64--line-height: 1.25;
+  --text-h64--font-weight: 700;
+}
+```
+
+Tailwind 3 (alias `"fontSize": "font/size"`):
+
+```js
+module.exports = {
+  fontSize: {
+    h64: ['64px', { lineHeight: 1.25, fontWeight: 700 }],
+  },
+};
+```
+
+`fontSize` is required. In Tailwind 4 `--text-*` has paired properties only for `line-height`, `letter-spacing` and `font-weight`. Other properties (for example `fontFamily`) are skipped with a warning that names the token.
+
+## Shadow
+
+`shadow` can be an object or an array of layers, `inset` included.
+
+```json
+{
+  "shadow": {
+    "$type": "shadow",
+    "card": {
+      "$value": [
+        {
+          "color": "#0000001a",
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0px"
+        },
+        {
+          "color": "#0000001a",
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "8px",
+          "spread": "-2px",
+          "inset": true
+        }
+      ]
+    }
+  }
+}
+```
+
+```css
+--shadow-card: 0px 1px 2px 0px #0000001a, inset 0px 4px 8px -2px #0000001a;
+```
+
+## Breakpoints and animations
+
+DTCG has no type for breakpoints and keyframes, so groups are built from the token structure:
+
+- tokens under the `breakpoint` (v4) or `screens` (v3) alias: `screen.lg.{min,max}` → breakpoint `lg`, `screen.sm` → breakpoint `sm`;
+- tokens under the `keyframes` alias: `keyframes.<name>.<frame>.<property>` → `@keyframes <name>`.
+
+```json
+{
+  "screen": {
+    "$type": "dimension",
+    "lg": {
+      "min": { "$value": { "value": 921, "unit": "px" } },
+      "max": { "$value": { "value": 1440, "unit": "px" } }
+    },
+    "sm": { "$value": { "value": 480, "unit": "px" } }
+  },
+  "keyframes": {
+    "$type": "number",
+    "show": {
+      "from": { "opacity": { "$value": 0 } },
+      "to": { "opacity": { "$value": 1 } }
+    }
+  },
+  "animation": {
+    "show": { "$value": "show 300ms ease-in forwards" }
+  }
+}
+```
+
+Tailwind 4:
+
+```css
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-lg-min: 921px;
+  --breakpoint-lg-max: 1440px;
+  --breakpoint-sm: 480px;
+
+  --animation-show: show 300ms ease-in forwards;
+
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+```
+
+Tailwind 3:
+
+```js
+module.exports = {
+  screens: {
+    lg: { min: '921px', max: '1440px' },
+    sm: '480px',
+  },
+  extend: {
+    animation: { show: 'show 300ms ease-in forwards' },
+    keyframes: { show: { from: { opacity: 0 }, to: { opacity: 1 } } },
+  },
+};
+```
+
+## Group name via `$extensions`
+
+The name of a text style, breakpoint or animation can be set explicitly:
+
+```json
+{
+  "font": {
+    "body": {
+      "$type": "typography",
+      "$extensions": { "dev.prosazhin.mixin": "body-lg" },
+      "$value": { "fontSize": "16px", "lineHeight": 1.5 }
+    }
+  }
+}
+```
+
+## Moving from the legacy format
+
+| Before (`value`)                                     | After (DTCG)                                                           |
+| ---------------------------------------------------- | ---------------------------------------------------------------------- |
+| `{ "value": "#ffffff" }`                             | `{ "$value": "#ffffff" }` + `"$type": "color"` on the group            |
+| `{ "value": "16px" }`                                | `{ "$value": { "value": 16, "unit": "px" } }` + `"$type": "dimension"` |
+| `"font-size"`, `"line-height"` with `"mixin": "h64"` | one `"$type": "typography"` token with an object in `$value`           |
+| `screen.lg.min` with `"mixin": "lg"`                 | `screen.lg.min` without `mixin` — the group comes from the structure   |
+| `"mixin": "body-lg"` for a custom name               | `"$extensions": { "dev.prosazhin.mixin": "body-lg" }`                  |
+
+Simple tokens can be converted automatically with `convertToDTCG` from `style-dictionary/utils`; add composite types and group `$type` by hand. A complete migration example is the [pbstyles](/docs/pbstyles/tokens) tokens: after moving to DTCG the generated styles did not change.
+
+Migration is optional: the [legacy format](/docs/tailwind-dictionary/legacy) keeps working.

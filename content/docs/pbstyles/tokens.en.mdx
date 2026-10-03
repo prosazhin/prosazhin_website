@@ -1,0 +1,151 @@
+---
+title: DTCG tokens
+description: How the pbstyles source tokens are structured in the DTCG 2025.10 standard and what changed when moving from the legacy format.
+---
+
+The pbstyles source tokens live in the [repository](https://github.com/prosazhin/pbstyles/tree/main/tokens) and use the [W3C Design Tokens (DTCG 2025.10)](https://www.designtokens.org/tr/2025.10/format/) standard. You can use them as a base for your own design system or as an example of DTCG tokens for [tailwind-dictionary](/docs/tailwind-dictionary/dtcg) and [mixin-dictionary](/docs/mixin-dictionary/dtcg).
+
+CI in the repository checks that the committed `styles/` match the build output of the tokens.
+
+## Structure
+
+```text
+tokens/
+├── palette.json      # color — palette
+├── size.json         # size — base sizes
+├── font.json         # font — family, sizes, line heights, weights, text styles
+├── rounded.json      # rounded — border radii
+├── stroke.json       # stroke — border widths
+├── shadow.json       # shadow — shadows
+├── opacity.json      # opacity — opacity
+├── screen.json       # screen — breakpoints
+├── container.json    # container — container widths
+├── column.json       # column — columns
+├── animation.json    # animation, keyframes — animations
+└── themes/
+    ├── light.json    # semantic colors of the light theme
+    └── dark.json     # semantic colors of the dark theme
+```
+
+| Group                                              | `$type`      | Example value                                                               |
+| -------------------------------------------------- | ------------ | --------------------------------------------------------------------------- |
+| `color`                                            | `color`      | `{ "colorSpace": "srgb", "components": [0, 0, 0], "hex": "#000000" }`       |
+| `size`, `rounded`, `stroke`, `container`, `screen` | `dimension`  | `{ "value": 16, "unit": "px" }` or a reference `{size.16}`                  |
+| `font.family`                                      | `fontFamily` | `["Inter", "sans-serif"]`                                                   |
+| `font.weight`                                      | `fontWeight` | `400`, `600`, `700`                                                         |
+| `font.leading`, `opacity`, `column`, `keyframes`   | `number`     | `1.25`                                                                      |
+| `font.h64`, `font.t16`, …                          | `typography` | `{ "fontSize": "{font.size.64}", "lineHeight": "{font.leading.tight}", … }` |
+| `shadow`                                           | `shadow`     | an array of layers with `color`, `offsetX`, `offsetY`, `blur`, `spread`     |
+
+`container.full` (`100%`), `animation` and `font.decoration` are string tokens without `$type`: DTCG has no matching type for them.
+
+## Text styles
+
+Each text style is a composite `typography` token. The font family and letter spacing are inherited from the page.
+
+```json
+{
+  "font": {
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  }
+}
+```
+
+| Styles          | Line height    | Weight    |
+| --------------- | -------------- | --------- |
+| `h64` … `h16`   | `tight` (1.25) | `bold`    |
+| `t32` … `t10`   | `normal` (1.5) | `regular` |
+| `tm32` … `tm10` | `normal` (1.5) | `medium`  |
+
+In Tailwind 4 a style becomes the `text-h64` utility with size, line height and weight; in LESS and SCSS it becomes the `h64` mixin.
+
+## Breakpoints and animations
+
+Breakpoints and animations become mixins by their structure, without service fields:
+
+```json
+{
+  "screen": {
+    "$type": "dimension",
+    "md": {
+      "max": { "$value": { "value": 920, "unit": "px" } },
+      "min": { "$value": { "value": 769, "unit": "px" } }
+    },
+    "desktop": {
+      "min": { "$value": "{screen.md.min}" }
+    }
+  },
+  "keyframes": {
+    "$type": "number",
+    "show": {
+      "from": { "opacity": { "$value": 0 } },
+      "to": { "opacity": { "$value": 1 } }
+    }
+  }
+}
+```
+
+## What changed in 1.4
+
+Before 1.4 the tokens used the legacy Style Dictionary format. The generated CSS, LESS, SCSS and Tailwind theme **stayed the same**, only the sources changed.
+
+| Before (1.3)                                                                               | After (1.4)                                                                                  |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `"white": { "value": "#ffffff" }`                                                          | `"white": { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } }` |
+| `"16": { "value": "16px" }`                                                                | `"16": { "$value": { "value": 16, "unit": "px" } }`                                          |
+| `"sans": { "value": "'Inter', sans-serif" }`                                               | `"sans": { "$value": ["Inter", "sans-serif"] }`                                              |
+| shadow as a string `"0px 1px 1px 0px rgba(15, 23, 42, 0.05), …"`                           | shadow as an array of layers with `color`, `offsetX`, `offsetY`, `blur`, `spread` objects    |
+| `font.h64.font-size`, `line-height`, `font-weight` with `"mixin": "h64"`                   | one `font.h64` token with `"$type": "typography"`                                            |
+| `screen.lg.min` with `"mixin": "lg"`, `keyframes.show.from.opacity` with `"mixin": "show"` | the same paths without the `mixin` field                                                     |
+| no type                                                                                    | `$type` on every group                                                                       |
+
+Before:
+
+```json
+{
+  "font": {
+    "h64": {
+      "font-size": { "value": "{font.size.64}", "mixin": "h64" },
+      "line-height": { "value": "{font.leading.tight}", "mixin": "h64" },
+      "font-weight": { "value": "{font.weight.bold}", "mixin": "h64" }
+    }
+  }
+}
+```
+
+After:
+
+```json
+{
+  "font": {
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  }
+}
+```
+
+Variable names did not change: both before and now you get `--font-h64-font-size`, `$font-h64-line-height`, `--text-h64--font-weight`.
+
+## Your own design system based on pbstyles
+
+1. Copy the `tokens/` folder and the `config-mixin-dictionary.json` and `config-tailwind-dictionary.json` configs from the repository.
+2. Change the token values: palette, semantic colors in `themes/`, fonts.
+3. Build the styles:
+
+```bash
+npx mixin-dictionary -c ./config-mixin-dictionary.json
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json
+```

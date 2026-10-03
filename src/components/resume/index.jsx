@@ -11,6 +11,7 @@ import {
   PROFESSIONS,
   RESUME_PROJECT_SLUGS,
   buildCareerBlocks,
+  buildProjectsBlock,
   getTools,
   isSkillForProfession,
 } from '@/utils/resume';
@@ -52,10 +53,18 @@ const Resume = async ({ profession, locale }) => {
       };
     });
 
+  const careerEntries = t('career:entries', { returnObjects: true });
   const careerBlocks = buildCareerBlocks({
-    entries: t('career:entries', { returnObjects: true }),
+    entries: careerEntries,
     careerByType,
     careerGroups,
+    profession,
+  });
+
+  // Шапка блока «Проекты»: текст и стек своих проектов — отдельно от карьеры.
+  const projectsBlock = buildProjectsBlock({
+    entries: careerEntries,
+    careerByType,
     profession,
   });
 
@@ -288,14 +297,35 @@ const Resume = async ({ profession, locale }) => {
         })}
       </article>
 
-      {/* Проекты */}
+      {/* Проекты: заголовок, текст и стек, под ними — карточки проектов. */}
       <h2
         className='text-h24 text-basic-400 mt-80 w-full scroll-mt-96'
         id='projects'
       >
         {t('pages:projects.title')}
       </h2>
-      <ul className='mt-16 flex w-full flex-col gap-16'>
+      {projectsBlock && (
+        <div className='mt-12 flex w-full flex-col gap-y-12'>
+          <p className='text-t20 text-basic-400 w-full'>{projectsBlock.summary}</p>
+          {projectsBlock.stack.length > 0 && (
+            <ul className='flex w-full flex-row flex-wrap gap-4'>
+              {projectsBlock.stack.map((tool) => (
+                <li key={tool}>
+                  <Badge
+                    size='s'
+                    color='secondary'
+                    theme='light'
+                    className='print:border-secondary-200 print:border'
+                  >
+                    {tool}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+      <ul className='mt-32 flex w-full flex-col gap-16'>
         {resumeProjects.map(({ slug, title, description, resourceLinks }) => (
           <li key={slug}>
             <ProjectCard

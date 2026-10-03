@@ -1,87 +1,94 @@
 ---
 title: mixin-dictionary
-description: Turn JSON tokens into CSS variables and LESS/SCSS mixins with light and dark themes.
+description: CSS variables, LESS/SCSS variables and mixins from design tokens in the DTCG or Style Dictionary format, with light, dark and other themes.
 ---
 
-`mixin-dictionary` extends the Style Dictionary workflow: it creates variables, mixins, and light/dark themes for CSS, LESS, and SCSS from tokens. This CLI tool is used to build `pbstyles`.
+`mixin-dictionary` builds CSS variables, LESS and SCSS variables and mixins from design tokens: text styles, media queries and keyframes. It is based on [Style Dictionary](https://styledictionary.com) and is used to build [pbstyles](/docs/pbstyles).
 
-Resources: [npm](https://www.npmjs.com/package/mixin-dictionary) · [GitHub](https://github.com/prosazhin/mixin-dictionary).
+Resources: [npm](https://www.npmjs.com/package/mixin-dictionary) · [GitHub](https://github.com/prosazhin/mixin-dictionary) · [Changelog](https://github.com/prosazhin/mixin-dictionary/blob/main/CHANGELOG.md) · [Playground](/docs/mixin-dictionary/playground).
 
-## Install and run
+## Why this package
+
+- **JSON config, no code.** One `config.json`, no JS/TS build script.
+- **DTCG and the legacy format.** Reads [W3C Design Tokens (DTCG 2025.10)](https://www.designtokens.org/tr/2025.10/format/) (`$value`, `$type`, composite `typography` and `shadow`) as exported by [Figma](/docs/mixin-dictionary/figma), Tokens Studio and Terrazzo, and the legacy Style Dictionary format (`value`) with the same output.
+- **Themes on any DOM level.** Light, dark and other themes switch with the `data-theme` attribute on `<html>` or on a nested container. LESS and SCSS variables of semantic tokens point to CSS variables, so the theme switches without a rebuild.
+
+## Quick start
 
 ```bash
 npm install --save-dev mixin-dictionary
-npx mixin-dictionary -c ./config-mixin-dictionary.json
 ```
-
-Without `-c`, the tool reads `./config.json`. Specify another JSON path explicitly.
-
-## Minimal configuration
 
 ```json
 {
+  "$schema": "./node_modules/mixin-dictionary/schema/config.schema.json",
   "platforms": ["css", "less", "scss"],
   "source": ["tokens/*.json"],
-  "output": "./styles",
-  "mediaAliases": ["screen", "breakpoint"],
-  "keyframesAliases": ["keyframes"]
-}
-```
-
-`source` points to Style Dictionary-compatible design-token JSON files. The command generates CSS variables and LESS/SCSS variables and mixins in `output`.
-
-## Themes
-
-Add separate light and dark token files:
-
-```json
-{
-  "source": ["tokens/*.json"],
-  "themes": {
-    "light": ["tokens/themes/light.json"],
-    "dark": ["tokens/themes/dark.json"]
-  },
   "output": "./styles"
 }
 ```
 
-Do not include `tokens/themes/*` in `source` as well: those files are already listed in `themes`, and duplicate tokens would collide. See a working config in [pbstyles](https://github.com/prosazhin/pbstyles/blob/main/config-mixin-dictionary.json).
+```bash
+npx mixin-dictionary
+```
 
-## Configuration
+The result goes to `styles/css/index.css`, `styles/less/index.less` and `styles/scss/index.scss`:
 
-| Field              | Type       | Default                   | Purpose                               |
-| ------------------ | ---------- | ------------------------- | ------------------------------------- |
-| `platforms`        | `string[]` | `['css','less','scss']`   | Output formats.                       |
-| `source`           | `string[]` | `['tokens/**/*.json']`    | Shared token path patterns.           |
-| `output`           | `string`   | `./styles`                | Output directory.                     |
-| `mediaAliases`     | `string[]` | `['screen','breakpoint']` | Media-query categories.               |
-| `keyframesAliases` | `string[]` | `['keyframes']`           | Animation categories.                 |
-| `themes`           | object     | none                      | `light` and `dark` theme token paths. |
+```scss
+@import './styles/scss/index.scss';
 
-## Output
+.title {
+  @include h64;
+}
 
-CSS receives variables in `:root`; LESS and SCSS receive variables and mixins. With `themes`, semantic values follow the OS mode or `data-theme="light"` / `data-theme="dark"` on `<html>` or a nested container. LESS/SCSS semantic variables reference CSS custom properties so the mode can change at runtime.
-
-## Mixin example
-
-Token properties marked with the same `mixin` value are grouped into a LESS or SCSS mixin:
-
-```json
-{
-  "font": {
-    "h64": {
-      "font-size": { "value": "64px", "mixin": "h64" },
-      "line-height": { "value": "1.25", "mixin": "h64" }
-    }
+@include lg {
+  .sidebar {
+    display: none;
   }
 }
 ```
 
-```scss
-@mixin h64 {
-  font-size: $font-h64-font-size;
-  line-height: $font-h64-line-height;
-}
-```
+## Sections
 
-Likewise, `mediaAliases` selects media query categories, and `keyframesAliases` selects animation categories. See the [package README](https://github.com/prosazhin/mixin-dictionary#readme) for complete source token and output examples.
+<Cards>
+  <Card
+    title='Config and CLI'
+    href='/docs/mixin-dictionary/config'
+    description='config.json fields, platforms, command-line flags, what goes into each file.'
+  />
+  <Card
+    title='DTCG tokens'
+    href='/docs/mixin-dictionary/dtcg'
+    description='The new format: $value, $type, mixins from typography, breakpoints and keyframes without the mixin field.'
+  />
+  <Card
+    title='Legacy format'
+    href='/docs/mixin-dictionary/legacy'
+    description='Style Dictionary tokens with the value field and mixins via the mixin field.'
+  />
+  <Card
+    title='Themes'
+    href='/docs/mixin-dictionary/themes'
+    description='Light, dark and other themes for CSS, LESS and SCSS, data-theme on any element.'
+  />
+  <Card
+    title='API and watch mode'
+    href='/docs/mixin-dictionary/api'
+    description='build() and generate() from code, TypeScript types, rebuild on token changes.'
+  />
+  <Card
+    title='Playground'
+    href='/docs/mixin-dictionary/playground'
+    description='Build the result from your own tokens right in the browser, with nothing to install.'
+  />
+</Cards>
+
+## What's new in 1.6
+
+- DTCG 2025.10 input and composite `typography` and `shadow` tokens.
+- Mixins of text styles, breakpoints and animations are built without the `mixin` field.
+- Any number of themes and `themes.default`.
+- Programmatic API, TypeScript types, JSON Schema of the config and `--watch`.
+- Clear one-line errors with the token path and the file name.
+
+Configs and tokens of version 1.4 work without changes. The output differs only for token paths in camelCase or with `_`: before, the variable and the mixin got different names, now the names match. The full list of changes and fixes is in the [CHANGELOG](https://github.com/prosazhin/mixin-dictionary/blob/main/CHANGELOG.md).

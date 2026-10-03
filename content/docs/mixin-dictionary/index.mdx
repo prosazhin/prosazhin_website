@@ -1,87 +1,94 @@
 ---
 title: mixin-dictionary
-description: Превратите JSON-токены в CSS-переменные и миксины LESS/SCSS со светлой и тёмной темой.
+description: CSS-переменные, переменные и миксины LESS/SCSS из дизайн-токенов в формате DTCG или Style Dictionary, со светлой, тёмной и другими темами.
 ---
 
-`mixin-dictionary` расширяет подход Style Dictionary: из токенов он создаёт переменные, миксины и светлую/тёмную тему для CSS, LESS и SCSS. Это CLI-инструмент, который используется при сборке `pbstyles`.
+`mixin-dictionary` собирает из дизайн-токенов CSS-переменные, переменные LESS и SCSS и миксины: текстовые стили, медиазапросы и keyframes. Пакет работает на основе [Style Dictionary](https://styledictionary.com) и используется при сборке [pbstyles](/docs/pbstyles).
 
-Ресурсы: [npm](https://www.npmjs.com/package/mixin-dictionary) · [GitHub](https://github.com/prosazhin/mixin-dictionary).
+Ресурсы: [npm](https://www.npmjs.com/package/mixin-dictionary) · [GitHub](https://github.com/prosazhin/mixin-dictionary) · [Changelog](https://github.com/prosazhin/mixin-dictionary/blob/main/CHANGELOG.md) · [Плейграунд](/docs/mixin-dictionary/playground).
 
-## Установка и команда
+## Почему этот пакет
+
+- **JSON-конфиг без кода.** Один `config.json`, без JS/TS-скрипта сборки.
+- **DTCG и старый формат.** Пакет читает [W3C Design Tokens (DTCG 2025.10)](https://www.designtokens.org/tr/2025.10/format/) (`$value`, `$type`, составные `typography` и `shadow`) из [Figma](/docs/mixin-dictionary/figma), Tokens Studio и Terrazzo, и старый формат Style Dictionary (`value`) с одинаковым результатом.
+- **Темы на любом уровне DOM.** Светлая, тёмная и другие темы переключаются атрибутом `data-theme` на `<html>` или на вложенном контейнере. Переменные LESS и SCSS семантических токенов ссылаются на CSS-переменные, поэтому тема меняется без пересборки.
+
+## Быстрый старт
 
 ```bash
 npm install --save-dev mixin-dictionary
-npx mixin-dictionary -c ./config-mixin-dictionary.json
 ```
-
-Без `-c` инструмент читает `./config.json`. Путь к другому JSON-файлу задавайте явно.
-
-## Минимальная конфигурация
 
 ```json
 {
+  "$schema": "./node_modules/mixin-dictionary/schema/config.schema.json",
   "platforms": ["css", "less", "scss"],
   "source": ["tokens/*.json"],
-  "output": "./styles",
-  "mediaAliases": ["screen", "breakpoint"],
-  "keyframesAliases": ["keyframes"]
-}
-```
-
-`source` указывает на JSON-файлы дизайн-токенов в формате Style Dictionary. Команда собирает CSS-переменные и переменные/миксины для LESS и SCSS в `output`.
-
-## Темы
-
-Добавьте отдельные файлы светлых и тёмных токенов:
-
-```json
-{
-  "source": ["tokens/*.json"],
-  "themes": {
-    "light": ["tokens/themes/light.json"],
-    "dark": ["tokens/themes/dark.json"]
-  },
   "output": "./styles"
 }
 ```
 
-Не включайте файлы `tokens/themes/*` одновременно в `source`: они уже перечислены в `themes`, иначе одноимённые токены столкнутся. Готовый пример конфигурации находится в [pbstyles](https://github.com/prosazhin/pbstyles/blob/main/config-mixin-dictionary.json).
+```bash
+npx mixin-dictionary
+```
 
-## Конфигурация
+Результат появится в `styles/css/index.css`, `styles/less/index.less` и `styles/scss/index.scss`:
 
-| Поле               | Тип        | Значение по умолчанию     | Назначение                           |
-| ------------------ | ---------- | ------------------------- | ------------------------------------ |
-| `platforms`        | `string[]` | `['css','less','scss']`   | Форматы выходных файлов.             |
-| `source`           | `string[]` | `['tokens/**/*.json']`    | Шаблоны путей к общим токенам.       |
-| `output`           | `string`   | `./styles`                | Каталог результата.                  |
-| `mediaAliases`     | `string[]` | `['screen','breakpoint']` | Категории медиазапросов.             |
-| `keyframesAliases` | `string[]` | `['keyframes']`           | Категории анимации.                  |
-| `themes`           | объект     | нет                       | Пути `light` и `dark` к токенам тем. |
+```scss
+@import './styles/scss/index.scss';
 
-## Результат
+.title {
+  @include h64;
+}
 
-CSS получает переменные в `:root`, LESS и SCSS — переменные и миксины. Если заданы `themes`, семантические значения переключаются по системному режиму или `data-theme="light"` / `data-theme="dark"` на `<html>` либо вложенном контейнере. В LESS/SCSS семантические переменные ссылаются на CSS custom properties, поэтому режим меняется в рантайме.
-
-## Пример миксина
-
-Если свойства токена помечены одинаковым `mixin`, они объединяются в миксин LESS и SCSS:
-
-```json
-{
-  "font": {
-    "h64": {
-      "font-size": { "value": "64px", "mixin": "h64" },
-      "line-height": { "value": "1.25", "mixin": "h64" }
-    }
+@include lg {
+  .sidebar {
+    display: none;
   }
 }
 ```
 
-```scss
-@mixin h64 {
-  font-size: $font-h64-font-size;
-  line-height: $font-h64-line-height;
-}
-```
+## Разделы
 
-Аналогично `mediaAliases` определяют категории медиазапросов, а `keyframesAliases` — категории анимаций. Для полного примера входных токенов и вывода используйте [README пакета](https://github.com/prosazhin/mixin-dictionary#readme).
+<Cards>
+  <Card
+    title='Конфигурация и CLI'
+    href='/docs/mixin-dictionary/config'
+    description='Поля config.json, платформы, флаги командной строки, что попадает в каждый файл.'
+  />
+  <Card
+    title='Токены DTCG'
+    href='/docs/mixin-dictionary/dtcg'
+    description='Новый формат: $value, $type, миксины из typography, брейкпоинтов и keyframes без поля mixin.'
+  />
+  <Card
+    title='Старый формат'
+    href='/docs/mixin-dictionary/legacy'
+    description='Токены Style Dictionary с полем value и миксины через поле mixin.'
+  />
+  <Card
+    title='Темы'
+    href='/docs/mixin-dictionary/themes'
+    description='Светлая, тёмная и другие темы для CSS, LESS и SCSS, data-theme на любом элементе.'
+  />
+  <Card
+    title='API и режим watch'
+    href='/docs/mixin-dictionary/api'
+    description='build() и generate() из кода, TypeScript-типы, пересборка при изменении токенов.'
+  />
+  <Card
+    title='Плейграунд'
+    href='/docs/mixin-dictionary/playground'
+    description='Соберите результат из своих токенов прямо в браузере, без установки.'
+  />
+</Cards>
+
+## Что нового в 1.6
+
+- Вход в формате DTCG 2025.10 и составные токены `typography` и `shadow`.
+- Миксины текстовых стилей, брейкпоинтов и анимаций собираются без поля `mixin`.
+- Любое число тем и `themes.default`.
+- Программный API, TypeScript-типы, JSON Schema конфига и `--watch`.
+- Понятные ошибки в одну строку с путём токена и именем файла.
+
+Конфиги и токены версии 1.4 работают без изменений. Результат отличается только для путей токенов в camelCase или с `_`: раньше переменная и миксин получали разные имена, теперь имена совпадают. Полный список изменений и исправлений — в [CHANGELOG](https://github.com/prosazhin/mixin-dictionary/blob/main/CHANGELOG.md).

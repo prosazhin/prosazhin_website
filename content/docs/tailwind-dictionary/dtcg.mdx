@@ -1,0 +1,226 @@
+---
+title: Токены DTCG
+description: Новый формат токенов W3C Design Tokens 2025.10 — $value, $type, составные typography и shadow, группы без поля mixin.
+---
+
+[DTCG](https://www.designtokens.org/tr/2025.10/format/) — стандарт формата дизайн-токенов от W3C Design Tokens Community Group. В нём служебные поля пишутся с `$`: `$value`, `$type`, `$description`, `$extensions`. Этот формат выдают Figma, Tokens Studio и Terrazzo. С версии 2.5 `tailwind-dictionary` читает его без дополнительной настройки.
+
+Формат определяется автоматически: если в токенах есть `$value`, сборка идёт в режиме DTCG. В одной сборке используется один формат — смешивать `value` и `$value` в одном наборе файлов (включая файлы тем) нельзя, это ошибка.
+
+## Простые токены
+
+`$type` можно задать один раз на группу — вложенные токены его наследуют. Ссылки пишутся так же, как в старом формате: `{group.token}`.
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "white": { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } },
+    "text": { "$value": "{color.white}" }
+  },
+  "size": {
+    "$type": "dimension",
+    "16": { "$value": { "value": 16, "unit": "px" } }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": { "$value": ["Inter", "sans-serif"] }
+    }
+  }
+}
+```
+
+Ссылка обязана вести на существующий токен. Иначе сборка остановится с понятной ошибкой:
+
+```text
+✘ Token "color.text" (tokens/color.json) references {color.nope}, which is not defined
+```
+
+## Как значения попадают в CSS
+
+| Значение DTCG                                                      | Результат                                                                                     |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `dimension` `{ "value": 16, "unit": "px" }`                        | `16px`                                                                                        |
+| `color` `{ "colorSpace": "srgb", "components": […], "hex": "#…" }` | `#…`; с `alpha` — `rgba(…)`; другие цветовые пространства — `oklch(…)`, `color(display-p3 …)` |
+| `fontFamily` `["Inter", "sans-serif"]`                             | `'Inter', sans-serif`                                                                         |
+| `shadow` (объект или массив слоёв)                                 | `0px 1px 2px 0px #000000, inset …`                                                            |
+| `duration`, `cubicBezier`, `border`, `transition`                  | `150ms`, `cubic-bezier(…)`, `1px solid #…`, …                                                 |
+| строка                                                             | как есть                                                                                      |
+
+Неизвестный `$type` не останавливает сборку: пакет выведет предупреждение с путём токена.
+
+## Типографика
+
+Составной токен `typography` становится текстовым стилем с именем токена: `font.h64` → `h64`. Поле `mixin` не нужно.
+
+```json
+{
+  "font": {
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  }
+}
+```
+
+Ссылки ведут на токены `font.size.64`, `font.leading.tight` и `font.weight.bold`, которые заданы в других файлах токенов.
+
+Tailwind 4 (алиас `"text": "font/size"`):
+
+```css
+@theme {
+  --text-h64: 64px;
+  --text-h64--line-height: 1.25;
+  --text-h64--font-weight: 700;
+}
+```
+
+Tailwind 3 (алиас `"fontSize": "font/size"`):
+
+```js
+module.exports = {
+  fontSize: {
+    h64: ['64px', { lineHeight: 1.25, fontWeight: 700 }],
+  },
+};
+```
+
+`fontSize` обязателен. В Tailwind 4 у `--text-*` есть парные свойства только для `line-height`, `letter-spacing` и `font-weight`. Остальные (например, `fontFamily`) пропускаются с предупреждением, в котором указан токен.
+
+## Тени
+
+`shadow` может быть объектом или массивом слоёв, в том числе с `inset`.
+
+```json
+{
+  "shadow": {
+    "$type": "shadow",
+    "card": {
+      "$value": [
+        {
+          "color": "#0000001a",
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0px"
+        },
+        {
+          "color": "#0000001a",
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "8px",
+          "spread": "-2px",
+          "inset": true
+        }
+      ]
+    }
+  }
+}
+```
+
+```css
+--shadow-card: 0px 1px 2px 0px #0000001a, inset 0px 4px 8px -2px #0000001a;
+```
+
+## Брейкпоинты и анимации
+
+Для брейкпоинтов и keyframes в DTCG нет отдельного типа, поэтому группы собираются по структуре токенов:
+
+- токены под алиасом `breakpoint` (v4) или `screens` (v3): `screen.lg.{min,max}` → брейкпоинт `lg`, `screen.sm` → брейкпоинт `sm`;
+- токены под алиасом `keyframes`: `keyframes.<имя>.<кадр>.<свойство>` → `@keyframes <имя>`.
+
+```json
+{
+  "screen": {
+    "$type": "dimension",
+    "lg": {
+      "min": { "$value": { "value": 921, "unit": "px" } },
+      "max": { "$value": { "value": 1440, "unit": "px" } }
+    },
+    "sm": { "$value": { "value": 480, "unit": "px" } }
+  },
+  "keyframes": {
+    "$type": "number",
+    "show": {
+      "from": { "opacity": { "$value": 0 } },
+      "to": { "opacity": { "$value": 1 } }
+    }
+  },
+  "animation": {
+    "show": { "$value": "show 300ms ease-in forwards" }
+  }
+}
+```
+
+Tailwind 4:
+
+```css
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-lg-min: 921px;
+  --breakpoint-lg-max: 1440px;
+  --breakpoint-sm: 480px;
+
+  --animation-show: show 300ms ease-in forwards;
+
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+```
+
+Tailwind 3:
+
+```js
+module.exports = {
+  screens: {
+    lg: { min: '921px', max: '1440px' },
+    sm: '480px',
+  },
+  extend: {
+    animation: { show: 'show 300ms ease-in forwards' },
+    keyframes: { show: { from: { opacity: 0 }, to: { opacity: 1 } } },
+  },
+};
+```
+
+## Имя группы через `$extensions`
+
+Имя текстового стиля, брейкпоинта или анимации можно задать явно:
+
+```json
+{
+  "font": {
+    "body": {
+      "$type": "typography",
+      "$extensions": { "dev.prosazhin.mixin": "body-lg" },
+      "$value": { "fontSize": "16px", "lineHeight": 1.5 }
+    }
+  }
+}
+```
+
+## Переход со старого формата
+
+| Было (`value`)                                    | Стало (DTCG)                                                           |
+| ------------------------------------------------- | ---------------------------------------------------------------------- |
+| `{ "value": "#ffffff" }`                          | `{ "$value": "#ffffff" }` + `"$type": "color"` на группе               |
+| `{ "value": "16px" }`                             | `{ "$value": { "value": 16, "unit": "px" } }` + `"$type": "dimension"` |
+| `"font-size"`, `"line-height"` с `"mixin": "h64"` | один токен `"$type": "typography"` с объектом в `$value`               |
+| `screen.lg.min` с `"mixin": "lg"`                 | `screen.lg.min` без `mixin` — группа берётся из структуры              |
+| `"mixin": "body-lg"` для особого имени            | `"$extensions": { "dev.prosazhin.mixin": "body-lg" }`                  |
+
+Простые токены можно перевести автоматически утилитой `convertToDTCG` из `style-dictionary/utils`, а составные типы и `$type` у групп дописать вручную. Готовый пример миграции — токены [pbstyles](/docs/pbstyles/tokens): после перехода на DTCG сгенерированные стили не изменились.
+
+Перевод не обязателен: [старый формат](/docs/tailwind-dictionary/legacy) продолжает работать.

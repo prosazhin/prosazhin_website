@@ -6,7 +6,7 @@ description: 'A hint shown on hover and focus.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Wrap a single trigger element in `Tooltip` — it must accept a `ref` and event handlers (`Button`, a link, an SVG element). The tooltip appears on hover after `delay` and immediately on keyboard focus. `placement` sets the side (`top` by default); the tooltip flips when space runs out. `arrow` shows an arrow. Inside `<svg>` or a container with `overflow: hidden`, turn on `portal`. A tooltip does not replace an accessible name: keep `aria-label` on icon-only buttons.
+Wrap a single trigger element in `Tooltip` — it must accept a `ref` and event handlers (`Button`, a link, an SVG element). The tooltip appears on hover after `delay` and immediately on keyboard focus. `placement` sets the side (`top` by default); the tooltip flips when space runs out. `arrow` shows an arrow. `maxWidth` limits the tooltip width (320px by default; a number is pixels, a string is any CSS value). Inside `<svg>` or a container with `overflow: hidden`, turn on `portal`. A tooltip does not replace an accessible name: keep `aria-label` on icon-only buttons.
 
 ## Live example
 

@@ -1,0 +1,171 @@
+---
+title: DTCG tokens
+description: The new W3C Design Tokens 2025.10 format — $value, $type, mixins from typography, breakpoints and keyframes without the mixin field.
+---
+
+[DTCG](https://www.designtokens.org/tr/2025.10/format/) is the design token format standard by the W3C Design Tokens Community Group. Service fields start with `$`: `$value`, `$type`, `$description`, `$extensions`. Since 1.6 `mixin-dictionary` reads it with no extra setup.
+
+The format is detected automatically: if the tokens contain `$value`, the build runs in DTCG mode. One build uses one format — mixing `value` and `$value` in the same set of files (theme files included) is an error.
+
+## Simple tokens
+
+`$type` can be set once on a group — nested tokens inherit it. References are written as `{group.token}` and must point to an existing token.
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "white": { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } },
+    "black": { "$value": "#000000" }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": { "$value": ["Inter", "sans-serif"] }
+    }
+  }
+}
+```
+
+```scss
+$color-white: #ffffff;
+$color-black: #000000;
+$font-family-sans: 'Inter', sans-serif;
+```
+
+| DTCG value                                                         | Output                                                                                 |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `dimension` `{ "value": 16, "unit": "px" }`                        | `16px`                                                                                 |
+| `color` `{ "colorSpace": "srgb", "components": […], "hex": "#…" }` | `#…`; with `alpha` — `rgba(…)`; other color spaces — `oklch(…)`, `color(display-p3 …)` |
+| `fontFamily` `["Inter", "sans-serif"]`                             | `'Inter', sans-serif`                                                                  |
+| `shadow` (object or array of layers)                               | `0px 1px 2px 0px #000000, inset …`                                                     |
+| `duration`, `cubicBezier`, `border`, `transition`                  | `150ms`, `cubic-bezier(…)`, `1px solid #…`, …                                          |
+| string                                                             | as is                                                                                  |
+
+An unknown `$type` does not stop the build: the package prints a warning with the token path.
+
+## Mixins without the `mixin` field
+
+Mixins are built from the token structure:
+
+- **a composite `typography` token** → a mixin named after the token: `font.h64` → `h64`, variables `<path>-font-size`, `<path>-line-height` and so on;
+- **`mediaAliases` categories**: `screen.lg.{min,max}` → media query mixin `lg`. Child tokens `min` and/or `max` are required: a single `screen.sm` stays a variable;
+- **`keyframesAliases` categories**: `keyframes.<name>.<frame>.<property>` → keyframes `<name>`.
+
+```json
+{
+  "font": {
+    "size": { "$type": "dimension", "64": { "$value": { "value": 64, "unit": "px" } } },
+    "leading": { "$type": "number", "tight": { "$value": 1.25 } },
+    "weight": { "$type": "fontWeight", "bold": { "$value": 700 } },
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  },
+  "screen": {
+    "$type": "dimension",
+    "lg": {
+      "min": { "$value": { "value": 921, "unit": "px" } },
+      "max": { "$value": { "value": 1440, "unit": "px" } }
+    }
+  },
+  "keyframes": {
+    "$type": "number",
+    "show": {
+      "from": { "opacity": { "$value": 0 } },
+      "to": { "opacity": { "$value": 1 } }
+    }
+  }
+}
+```
+
+SCSS:
+
+```scss
+$font-h64-font-size: 64px;
+$font-h64-line-height: 1.25;
+$font-h64-font-weight: 700;
+$screen-lg-min: 921px;
+$screen-lg-max: 1440px;
+$keyframes-show-from-opacity: 0;
+$keyframes-show-to-opacity: 1;
+
+@mixin h64 {
+  font-size: $font-h64-font-size;
+  line-height: $font-h64-line-height;
+  font-weight: $font-h64-font-weight;
+}
+@mixin lg {
+  @media all and (min-width: $screen-lg-min) and (max-width: $screen-lg-max) {
+    @content;
+  }
+}
+@include keyframes(show) {
+  from {
+    opacity: $keyframes-show-from-opacity;
+  }
+  to {
+    opacity: $keyframes-show-to-opacity;
+  }
+}
+```
+
+LESS:
+
+```less
+@font-h64-font-size: 64px;
+@font-h64-line-height: 1.25;
+@font-h64-font-weight: 700;
+@screen-lg-min: 921px;
+@screen-lg-max: 1440px;
+
+.h64() {
+  font-size: @font-h64-font-size;
+  line-height: @font-h64-line-height;
+  font-weight: @font-h64-font-weight;
+}
+.lg(@rules) {
+  @media all and (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
+    @rules();
+  }
+}
+.keyframes(show, { from { opacity: @keyframes-show-from-opacity; } to { opacity: @keyframes-show-to-opacity; } });
+```
+
+In CSS a text style is split into separate variables: `--font-h64-font-size`, `--font-h64-line-height`, `--font-h64-font-weight`.
+
+## Mixin name via `$extensions`
+
+```json
+{
+  "font": {
+    "body": {
+      "$type": "typography",
+      "$extensions": { "dev.prosazhin.mixin": "body-lg" },
+      "$value": { "fontSize": "16px", "lineHeight": 1.5 }
+    }
+  }
+}
+```
+
+This gives the `body-lg` mixin. The legacy `mixin` field works too and has the highest priority.
+
+## Moving from the legacy format
+
+| Before (`value`)                                     | After (DTCG)                                                           |
+| ---------------------------------------------------- | ---------------------------------------------------------------------- |
+| `{ "value": "#ffffff" }`                             | `{ "$value": "#ffffff" }` + `"$type": "color"` on the group            |
+| `{ "value": "16px" }`                                | `{ "$value": { "value": 16, "unit": "px" } }` + `"$type": "dimension"` |
+| `"font-size"`, `"line-height"` with `"mixin": "h64"` | one `"$type": "typography"` token with an object in `$value`           |
+| `screen.lg.min` with `"mixin": "lg"`                 | `screen.lg.min` without `mixin`                                        |
+| `keyframes.show.from.opacity` with `"mixin": "show"` | the same path without `mixin`                                          |
+| `"mixin": "body-lg"` for a custom name               | `"$extensions": { "dev.prosazhin.mixin": "body-lg" }`                  |
+
+Variable names do not change: `font.h64` with `fontSize` gives the same `$font-h64-font-size` as the `font.h64.font-size` token in the legacy format. Simple tokens can be converted with `convertToDTCG` from `style-dictionary/utils`; add composite types by hand. A complete example is the [pbstyles](/docs/pbstyles/tokens) tokens.
+
+Migration is optional: the [legacy format](/docs/mixin-dictionary/legacy) keeps working.

@@ -1,0 +1,171 @@
+---
+title: Токены DTCG
+description: Новый формат токенов W3C Design Tokens 2025.10 — $value, $type, миксины из typography, брейкпоинтов и keyframes без поля mixin.
+---
+
+[DTCG](https://www.designtokens.org/tr/2025.10/format/) — стандарт формата дизайн-токенов от W3C Design Tokens Community Group. Служебные поля пишутся с `$`: `$value`, `$type`, `$description`, `$extensions`. С версии 1.6 `mixin-dictionary` читает его без дополнительной настройки.
+
+Формат определяется автоматически: если в токенах есть `$value`, сборка идёт в режиме DTCG. В одной сборке используется один формат — смешивать `value` и `$value` в одном наборе файлов (включая файлы тем) нельзя, это ошибка.
+
+## Простые токены
+
+`$type` можно задать один раз на группу — вложенные токены его наследуют. Ссылки пишутся как `{group.token}` и обязаны вести на существующий токен.
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "white": { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } },
+    "black": { "$value": "#000000" }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": { "$value": ["Inter", "sans-serif"] }
+    }
+  }
+}
+```
+
+```scss
+$color-white: #ffffff;
+$color-black: #000000;
+$font-family-sans: 'Inter', sans-serif;
+```
+
+| Значение DTCG                                                      | Результат                                                                                     |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `dimension` `{ "value": 16, "unit": "px" }`                        | `16px`                                                                                        |
+| `color` `{ "colorSpace": "srgb", "components": […], "hex": "#…" }` | `#…`; с `alpha` — `rgba(…)`; другие цветовые пространства — `oklch(…)`, `color(display-p3 …)` |
+| `fontFamily` `["Inter", "sans-serif"]`                             | `'Inter', sans-serif`                                                                         |
+| `shadow` (объект или массив слоёв)                                 | `0px 1px 2px 0px #000000, inset …`                                                            |
+| `duration`, `cubicBezier`, `border`, `transition`                  | `150ms`, `cubic-bezier(…)`, `1px solid #…`, …                                                 |
+| строка                                                             | как есть                                                                                      |
+
+Неизвестный `$type` не останавливает сборку: пакет выведет предупреждение с путём токена.
+
+## Миксины без поля `mixin`
+
+Миксины собираются из структуры токенов:
+
+- **составной `typography`** → миксин с именем токена: `font.h64` → `h64`, переменные `<путь>-font-size`, `<путь>-line-height` и так далее;
+- **категории из `mediaAliases`**: `screen.lg.{min,max}` → миксин медиазапроса `lg`. Нужны дочерние токены `min` и/или `max`: одиночный `screen.sm` остаётся переменной;
+- **категории из `keyframesAliases`**: `keyframes.<имя>.<кадр>.<свойство>` → keyframes `<имя>`.
+
+```json
+{
+  "font": {
+    "size": { "$type": "dimension", "64": { "$value": { "value": 64, "unit": "px" } } },
+    "leading": { "$type": "number", "tight": { "$value": 1.25 } },
+    "weight": { "$type": "fontWeight", "bold": { "$value": 700 } },
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  },
+  "screen": {
+    "$type": "dimension",
+    "lg": {
+      "min": { "$value": { "value": 921, "unit": "px" } },
+      "max": { "$value": { "value": 1440, "unit": "px" } }
+    }
+  },
+  "keyframes": {
+    "$type": "number",
+    "show": {
+      "from": { "opacity": { "$value": 0 } },
+      "to": { "opacity": { "$value": 1 } }
+    }
+  }
+}
+```
+
+SCSS:
+
+```scss
+$font-h64-font-size: 64px;
+$font-h64-line-height: 1.25;
+$font-h64-font-weight: 700;
+$screen-lg-min: 921px;
+$screen-lg-max: 1440px;
+$keyframes-show-from-opacity: 0;
+$keyframes-show-to-opacity: 1;
+
+@mixin h64 {
+  font-size: $font-h64-font-size;
+  line-height: $font-h64-line-height;
+  font-weight: $font-h64-font-weight;
+}
+@mixin lg {
+  @media all and (min-width: $screen-lg-min) and (max-width: $screen-lg-max) {
+    @content;
+  }
+}
+@include keyframes(show) {
+  from {
+    opacity: $keyframes-show-from-opacity;
+  }
+  to {
+    opacity: $keyframes-show-to-opacity;
+  }
+}
+```
+
+LESS:
+
+```less
+@font-h64-font-size: 64px;
+@font-h64-line-height: 1.25;
+@font-h64-font-weight: 700;
+@screen-lg-min: 921px;
+@screen-lg-max: 1440px;
+
+.h64() {
+  font-size: @font-h64-font-size;
+  line-height: @font-h64-line-height;
+  font-weight: @font-h64-font-weight;
+}
+.lg(@rules) {
+  @media all and (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
+    @rules();
+  }
+}
+.keyframes(show, { from { opacity: @keyframes-show-from-opacity; } to { opacity: @keyframes-show-to-opacity; } });
+```
+
+В CSS текстовый стиль раскладывается на отдельные переменные: `--font-h64-font-size`, `--font-h64-line-height`, `--font-h64-font-weight`.
+
+## Имя миксина через `$extensions`
+
+```json
+{
+  "font": {
+    "body": {
+      "$type": "typography",
+      "$extensions": { "dev.prosazhin.mixin": "body-lg" },
+      "$value": { "fontSize": "16px", "lineHeight": 1.5 }
+    }
+  }
+}
+```
+
+Получится миксин `body-lg`. Старое поле `mixin` тоже работает и имеет наивысший приоритет.
+
+## Переход со старого формата
+
+| Было (`value`)                                    | Стало (DTCG)                                                           |
+| ------------------------------------------------- | ---------------------------------------------------------------------- |
+| `{ "value": "#ffffff" }`                          | `{ "$value": "#ffffff" }` + `"$type": "color"` на группе               |
+| `{ "value": "16px" }`                             | `{ "$value": { "value": 16, "unit": "px" } }` + `"$type": "dimension"` |
+| `"font-size"`, `"line-height"` с `"mixin": "h64"` | один токен `"$type": "typography"` с объектом в `$value`               |
+| `screen.lg.min` с `"mixin": "lg"`                 | `screen.lg.min` без `mixin`                                            |
+| `keyframes.show.from.opacity` с `"mixin": "show"` | тот же путь без `mixin`                                                |
+| `"mixin": "body-lg"` для особого имени            | `"$extensions": { "dev.prosazhin.mixin": "body-lg" }`                  |
+
+Имена переменных после перехода не меняются: `font.h64` с `fontSize` даёт ту же `$font-h64-font-size`, что токен `font.h64.font-size` в старом формате. Простые токены можно перевести утилитой `convertToDTCG` из `style-dictionary/utils`, а составные типы дописать вручную. Готовый пример — токены [pbstyles](/docs/pbstyles/tokens).
+
+Перевод не обязателен: [старый формат](/docs/mixin-dictionary/legacy) продолжает работать.

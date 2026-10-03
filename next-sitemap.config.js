@@ -17,6 +17,10 @@ const data = [
     priority: 0.8,
   },
   {
+    path: '/design-system',
+    priority: 0.8,
+  },
+  {
     path: '/posts',
     priority: 0.7,
   },

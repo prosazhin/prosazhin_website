@@ -885,6 +885,14 @@ export const componentReference: Record<string, ComponentReference> = {
       placement('bottom-start'),
       portal,
       {
+        name: 'icon',
+        type: 'boolean',
+        ru: 'Добавляет Button-триггеру шеврон справа, если у него нет своего rightIcon. false — оставить кнопку как есть.',
+        en: 'Adds a chevron on the right of a Button trigger that has no rightIcon of its own. false keeps the button as is.',
+        default: true,
+        part: 'Trigger',
+      },
+      {
         name: 'search',
         type: '{ value, onChange, placeholder? }',
         ru: 'Строка поиска над содержимым.',
@@ -1105,6 +1113,13 @@ export const componentReference: Record<string, ComponentReference> = {
         ...portal,
         ru: 'Рендерит подсказку в портал — нужно, например, внутри SVG или overflow: hidden.',
         en: 'Renders the tooltip into a portal — needed, for example, inside SVG or overflow: hidden.',
+      },
+      {
+        name: 'maxWidth',
+        type: 'number | string',
+        ru: 'Максимальная ширина подсказки: число — в пикселях, строка — любое CSS-значение. Не больше ширины экрана.',
+        en: 'Maximum tooltip width: a number is pixels, a string is any CSS value. Never wider than the screen.',
+        default: 320,
       },
       className,
     ],

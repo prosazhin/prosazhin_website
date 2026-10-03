@@ -13,7 +13,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/docs/pbstyles/:section(getting-started|tokens|reference)',
+        source: '/docs/pbstyles/:section(getting-started|reference)',
         destination: '/docs/pbstyles',
         permanent: true,
       },

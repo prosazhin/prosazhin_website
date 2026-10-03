@@ -1,1 +1,14 @@
-{ "title": "tailwind-dictionary" }
+{
+  "title": "tailwind-dictionary",
+  "pages": [
+    "config",
+    "---Форматы токенов---",
+    "dtcg",
+    "legacy",
+    "---Возможности---",
+    "themes",
+    "figma",
+    "api",
+    "playground"
+  ]
+}

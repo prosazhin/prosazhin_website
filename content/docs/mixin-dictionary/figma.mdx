@@ -1,0 +1,43 @@
+---
+title: Из Figma
+description: Как выгрузить переменные из Figma и получить CSS-переменные, LESS и SCSS со светлой и тёмной темой.
+---
+
+Нативная выгрузка Figma работает без конвертации: **Variables → правый клик по коллекции → Export modes** даёт по одному файлу `*.tokens.json` (DTCG) на каждый режим.
+
+## Как разложить файлы
+
+1. Файл с примитивами (коллекция без режимов) положите в `source`.
+2. Файлы режимов — в `themes`: по одному файлу на тему (`light`, `dark`, …). Имя файла не важно.
+
+```json
+{
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/Primitives.tokens.json"],
+  "themes": {
+    "light": ["tokens/Light.tokens.json"],
+    "dark": ["tokens/Dark.tokens.json"]
+  },
+  "output": "./styles"
+}
+```
+
+Цвета объектом (`colorSpace`, `components`, `hex`), ссылки (`"{color.blue.600}"`) и служебные `$extensions` (`com.figma.*`) обрабатываются. Подробнее о режимах — в разделе [Темы](/docs/mixin-dictionary/themes).
+
+## Числа без единицы
+
+Figma выгружает FLOAT-переменную как число без единицы (`"$type": "number"`). В CSS `--radius-4: 4` недействительно, поэтому голые числа в размерных категориях получают единицу. Её задаёт опция `numberUnit`:
+
+| Значение              | Результат для `4`               |
+| --------------------- | ------------------------------- |
+| `"px"` (по умолчанию) | `4px`                           |
+| `"rem"`               | `0.25rem` (число делится на 16) |
+| `false`               | `4` (как есть)                  |
+
+Размерная категория — это первый сегмент пути токена. По умолчанию: `spacing`, `space`, `size`, `sizes`, `radius`, `radii`, `border-radius`, `border-width`, `width`, `height`, `gap`, `blur`, `font-size`, `container`, `stroke`, а также категории из `mediaAliases`. Свой список задаёт опция `dimensionAliases`. Токены `line-height`, `font-weight`, `opacity`, `z-index` и значение `0` остаются числами в любой категории.
+
+Старый формат (`value`) это не затрагивает.
+
+## Ограничения
+
+Figma не выгружает `description` переменных, а составные стили (типографика, тени) в нативной выгрузке неполные.

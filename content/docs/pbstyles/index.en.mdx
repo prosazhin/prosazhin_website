@@ -1,9 +1,9 @@
 ---
 title: pbstyles
-description: Ready-made colors, typography, sizes, and themes for CSS, LESS, SCSS, and Tailwind CSS 4.
+description: Ready-made colors, typography, sizes and themes for CSS, LESS, SCSS and Tailwind CSS 4, built from DTCG design tokens.
 ---
 
-`@prosazhin/pbstyles` provides basic styles for building interfaces quickly. It includes typography, palettes, semantic colors, sizes, containers, breakpoints, radii, and shadows. The same tokens ship as CSS, LESS, SCSS, and a Tailwind CSS 4 theme.
+`@prosazhin/pbstyles` is a set of basic styles for building interfaces quickly. It includes typography, a palette, semantic colors, sizes, containers, breakpoints, border radii, opacity and shadows. The same tokens ship as CSS, LESS, SCSS and a Tailwind CSS 4 theme.
 
 Resources: [GitHub](https://github.com/prosazhin/pbstyles) · [npm](https://www.npmjs.com/package/@prosazhin/pbstyles) · [Figma Community](https://www.figma.com/community/file/1213609862805339771) · [Behance](https://www.behance.net/gallery/162935391/pbstyles).
 
@@ -13,7 +13,7 @@ Resources: [GitHub](https://github.com/prosazhin/pbstyles) · [npm](https://www.
 npm install @prosazhin/pbstyles
 ```
 
-The package ships ready-to-use files. You do not need to run its generators to consume the published styles.
+The package contains ready-made files. You don't need to run the generators to use the published styles.
 
 ## Tailwind CSS 4
 
@@ -22,9 +22,9 @@ The package ships ready-to-use files. You do not need to run its generators to c
 @import '@prosazhin/pbstyles/styles/tailwind/theme.css';
 ```
 
-After the import, token-based utilities such as `bg-basic-0`, `text-basic-400`, `text-primary-400`, and theme sizes become available. This site imports the package this way. It also works with a Tailwind prefix, for example `@import 'tailwindcss' prefix(tw);`.
+After the import, token-based utilities are available: colors `bg-basic-0`, `text-basic-400`, `text-primary-400`, text styles `text-h64`, `text-t16`, as well as sizes, radii and shadows from the theme. This site uses the package exactly this way. The import also works with a Tailwind prefix, for example `@import 'tailwindcss' prefix(tw);`.
 
-## CSS, LESS, and SCSS
+## CSS, LESS and SCSS
 
 ```css
 @import '@prosazhin/pbstyles/styles/css';
@@ -38,60 +38,58 @@ After the import, token-based utilities such as `bg-basic-0`, `text-basic-400`, 
 @import '@prosazhin/pbstyles/styles/scss';
 ```
 
-## What the theme contains
+LESS and SCSS include mixins for text styles, breakpoints and animations:
 
-`pbstyles` includes typography, semantic colors (`basic`, `primary`, `secondary`, `success`, `danger`, `warning`, `outline`, `text`), palettes, sizes, containers, breakpoints, radii, opacity, and shadows. LESS and SCSS also include typography, animation, and breakpoint mixins.
-
-Semantic colors change between light and dark mode. Palette colors stay constant.
-
-## Theme switching
-
-Without an explicit attribute, the theme follows `prefers-color-scheme`. An attribute on `<html>` or a nested container selects a mode manually:
-
-```html
-<html data-theme="dark">
-  <body>
-    <section data-theme="light">A light section inside a dark page</section>
-  </body>
-</html>
-```
-
-On this site, the switch stores `THEME` in a cookie and the server sets `data-theme` on `<html>`. That attribute controls both the site and the documentation.
-
-## Overrides
-
-In Tailwind CSS 4, semantic variables are named `--theme-color-*`. Override them after importing the theme:
-
-```css
-:root {
-  --theme-color-primary-300: #7c3aed;
+```scss
+.title {
+  @include h64;
 }
-[data-theme='dark'] {
-  --theme-color-primary-300: #a78bfa;
+
+@include mobile {
+  .sidebar {
+    display: none;
+  }
 }
 ```
-
-Utilities such as `bg-primary-300` reference those variables and update without rebuilding CSS. Plain CSS uses `--color-*` names; LESS uses `@color-*`, and SCSS uses `$color-*`.
 
 ## Formats
 
-| Format     | Import                                          | Contents                                           |
-| ---------- | ----------------------------------------------- | -------------------------------------------------- |
-| CSS        | `@prosazhin/pbstyles/styles/css`                | CSS variables and semantic theme.                  |
-| LESS       | `@prosazhin/pbstyles/styles/less`               | Variables and mixins.                              |
-| SCSS       | `@prosazhin/pbstyles/styles/scss`               | Variables and mixins.                              |
-| Tailwind 4 | `@prosazhin/pbstyles/styles/tailwind/theme.css` | Token-based theme utilities and light/dark values. |
+| Format     | Import                                          | Contents                                            |
+| ---------- | ----------------------------------------------- | --------------------------------------------------- |
+| CSS        | `@prosazhin/pbstyles/styles/css`                | CSS variables and the semantic theme.               |
+| LESS       | `@prosazhin/pbstyles/styles/less`               | Variables and mixins.                               |
+| SCSS       | `@prosazhin/pbstyles/styles/scss`               | Variables and mixins.                               |
+| Tailwind 4 | `@prosazhin/pbstyles/styles/tailwind/theme.css` | Theme, token-based utilities and light/dark values. |
 
-## Token families
+## What's included
 
 | Category                                                                             | CSS | LESS | SCSS | Tailwind 4 |
 | ------------------------------------------------------------------------------------ | --- | ---- | ---- | ---------- |
 | Typography, colors, sizes, containers, breakpoints, borders, radii, opacity, shadows | ✓   | ✓    | ✓    | ✓          |
 | Columns                                                                              | ✓   | ✓    | ✓    | —          |
-| Animation, typography, and breakpoint mixins                                         | —   | ✓    | ✓    | ✓          |
+| Animation, typography and breakpoint mixins                                          | —   | ✓    | ✓    | ✓          |
 
-Plain CSS contains variables without mixins. LESS and SCSS provide variables and mixins; in Tailwind 4 they become part of the theme and utilities.
+Plain CSS has variables without mixins. LESS and SCSS have variables and mixins; in Tailwind 4 they become part of the theme and utilities.
+
+## Sections
+
+<Cards>
+  <Card
+    title='Themes'
+    href='/docs/pbstyles/themes'
+    description='Light and dark theme, data-theme on any element, overriding colors.'
+  />
+  <Card
+    title='DTCG tokens'
+    href='/docs/pbstyles/tokens'
+    description='How the source tokens are structured, how they become styles and what changed in 1.4.'
+  />
+</Cards>
+
+## Version 1.4
+
+Since 1.4 the pbstyles source tokens use the [DTCG 2025.10](https://www.designtokens.org/tr/2025.10/format/) standard. **The generated styles did not change**: upgrading from 1.3 requires no changes in your project. See [DTCG tokens](/docs/pbstyles/tokens) for details.
 
 ## How the package is built
 
-`mixin-dictionary` generates the ready-to-use CSS/LESS/SCSS files, while `tailwind-dictionary` creates the Tailwind CSS theme from tokens in the `pbstyles` repository. If you want to build your own token system, see [mixin-dictionary](/docs/mixin-dictionary) and [tailwind-dictionary](/docs/tailwind-dictionary).
+The CSS/LESS/SCSS files are generated by [mixin-dictionary](/docs/mixin-dictionary), and the Tailwind CSS theme by [tailwind-dictionary](/docs/tailwind-dictionary), from the tokens of the `pbstyles` repository. CI checks that the published styles match the token build.

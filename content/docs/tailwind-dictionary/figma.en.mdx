@@ -1,0 +1,53 @@
+---
+title: From Figma
+description: How to export variables from Figma and get a Tailwind theme with light and dark modes.
+---
+
+The native Figma export works without conversion: **Variables → right click on a collection → Export modes** gives one `*.tokens.json` file (DTCG) per mode.
+
+## How to arrange the files
+
+1. Put the file with the primitives (the collection without modes) into `source`.
+2. Put the files of the modes into `themes`: one file per theme (`light`, `dark`, …). The file name does not matter.
+
+```json
+{
+  "version": 4,
+  "source": ["tokens/Primitives.tokens.json"],
+  "themes": {
+    "light": ["tokens/Light.tokens.json"],
+    "dark": ["tokens/Dark.tokens.json"]
+  },
+  "output": "./styles",
+  "themeAliases": {
+    "color": "color",
+    "radius": "radius",
+    "spacing": "1px",
+    "font": "font/family",
+    "text": "font/size"
+  }
+}
+```
+
+Colors given as objects (`colorSpace`, `components`, `hex`), references (`"{color.blue.600}"`) and the service `$extensions` (`com.figma.*`) are handled. More about modes in [Themes](/docs/tailwind-dictionary/themes).
+
+## Numbers without a unit
+
+Figma exports a FLOAT variable as a number without a unit (`"$type": "number"`). `--radius-4: 4` is not valid CSS, so bare numbers in dimension keys get a unit. The `numberUnit` option sets it:
+
+| Value            | Result for `4`                          |
+| ---------------- | --------------------------------------- |
+| `"px"` (default) | `4px`                                   |
+| `"rem"`          | `0.25rem` (the number is divided by 16) |
+| `false`          | `4` (as is)                             |
+
+Dimension keys in Tailwind 4: `spacing`, `radius`, `text`, `breakpoint`, `container`, `blur`. In Tailwind 3: `spacing`, `borderRadius`, `borderWidth`, `fontSize`, `screens`, `width`, `height`, `minWidth`, `maxWidth`, `minHeight`, `maxHeight`, `size`, `blur`, `inset`, `gap`, `margin`, `padding`. Other keys (`leading`, `font-weight`, `opacity`, `z-index`) and the value `0` stay numbers.
+
+<Callout type='warn'>
+  In Tailwind 4 `themeAliases.spacing` is the base unit (`"1px"` or `"0.25rem"`), not a path to a
+  token. If the value does not look like a CSS length, the build prints a warning.
+</Callout>
+
+## Limits
+
+Figma does not export the variable `description`, and composite styles (typography, shadows) are incomplete in the native export.

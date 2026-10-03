@@ -6,7 +6,7 @@ description: 'A popup with arbitrary content; menus are built from it.'
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Compose `Popover.Trigger` with a single trigger element (usually a `Button`) and `Popover.Content`. Put `Popover.Item` elements inside to get a menu — it closes itself after an item is chosen — or any other markup. `placement` sets the side and alignment (`bottom-start` by default, `bottom-end`, `top`, etc.); when space runs out the popup flips and shifts so it stays on screen. Control visibility with `open` and `onOpenChange`, move the popup to the end of `body` with `portal`, and add a search field with `search` on `Popover.Content`.
+Compose `Popover.Trigger` with a single trigger element (usually a `Button`) and `Popover.Content`. Put `Popover.Item` elements inside to get a menu — it closes itself after an item is chosen — or any other markup. `placement` sets the side and alignment (`bottom-start` by default, `bottom-end`, `top`, etc.); when space runs out the popup flips and shifts so it stays on screen. Control visibility with `open` and `onOpenChange`, move the popup to the end of `body` with `portal`, and add a search field with `search` on `Popover.Content`. When the trigger is a `Button` without its own `rightIcon`, `Popover.Trigger` adds a chevron on the right; turn this off with `icon={false}`.
 
 ## Live example
 

@@ -94,3 +94,42 @@ export type ProjectType = {
   tags: TagType[];
   resourceLinks: ResourceLinksType[];
 };
+
+export type PlaygroundPackageType = 'tailwind-dictionary' | 'mixin-dictionary';
+
+export type PlaygroundThemeType = 'light' | 'dark';
+
+export type PlaygroundInputFileType = 'tokens' | 'light' | 'dark' | 'config';
+
+export type PlaygroundInputType = {
+  packageName: PlaygroundPackageType;
+  tailwindVersion: 3 | 4;
+  tokens: string;
+  light: string;
+  dark: string;
+  config: string;
+};
+
+export type PlaygroundErrorType = {
+  file: PlaygroundInputFileType | 'generator';
+  message: string;
+};
+
+export type PlaygroundResultType =
+  | { status: 'ok'; files: Record<string, string>; warnings: string[] }
+  | { status: 'error'; errors: PlaygroundErrorType[] };
+
+export type PreviewItemType = {
+  kind: 'color' | 'font' | 'text' | 'radius' | 'shadow';
+  name: string;
+  value: string;
+  lineHeight?: string;
+  weight?: string;
+};
+
+export type PreviewModelType = {
+  css: string;
+  items: PreviewItemType[];
+  defs: Record<string, string>;
+  byTheme: Record<string, Record<string, string>>;
+};

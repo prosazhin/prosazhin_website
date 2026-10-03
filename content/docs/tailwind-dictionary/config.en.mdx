@@ -1,0 +1,134 @@
+---
+title: Config and CLI
+description: config.json fields, theme aliases for Tailwind 3 and 4, command-line flags and how to use the output.
+---
+
+## Command line
+
+```bash
+npx tailwind-dictionary
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json --watch
+```
+
+| Flag              | Short | Purpose                                                                       |
+| ----------------- | ----- | ----------------------------------------------------------------------------- |
+| `--config <path>` | `-c`  | Path to the JSON config. Default is `./config.json`.                          |
+| `--watch`         | `-w`  | Rebuild the theme when token files (`source`, `themes`) or the config change. |
+| `--version`       | `-v`  | Print the package version.                                                    |
+
+Config and token errors are printed as one line with the file name and the token path, without a stack trace. The exit code is `1`.
+
+## Config fields
+
+```json
+{
+  "$schema": "./node_modules/tailwind-dictionary/schema/config.schema.json",
+  "version": 4,
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "themeAliases": { "color": "color" },
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+| Field          | Type                       | Default                | Purpose                                                                                                                                                                               |
+| -------------- | -------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `$schema`      | `string`                   | —                      | Path to the JSON Schema from the package: autocompletion and validation of the config in the editor.                                                                                  |
+| `version`      | `3` or `4`                 | `4`                    | Tailwind CSS version.                                                                                                                                                                 |
+| `source`       | `string[]`                 | `["tokens/**/*.json"]` | Globs or file paths of token files: `tokens/*.json` or `tokens/base.json`. JSON, JSON5 and JS are supported.                                                                          |
+| `output`       | `string`                   | `./styles`             | Output folder. Created if it does not exist. The theme goes to `<output>/tailwind/`.                                                                                                  |
+| `themeAliases` | object                     | —                      | Mapping of Tailwind theme keys to token paths.                                                                                                                                        |
+| `themes`       | object                     | —                      | Theme token files, the default theme and the variable prefix. See [Themes](/docs/tailwind-dictionary/themes).                                                                         |
+| `numberUnit`   | `"px"`, `"rem"` or `false` | `"px"`                 | Unit for bare numbers (`"$type": "number"`) in dimension keys: `4` → `4px`. `"rem"` divides by 16, `false` keeps the number as is. See [From Figma](/docs/tailwind-dictionary/figma). |
+
+<Callout type='warn'>
+  When you use `themes`, do not include the theme files in `source`. Use `tokens/*.json` instead of
+  `tokens/**/*.json`, otherwise tokens with the same names collide.
+</Callout>
+
+The `<output>/tailwind` folder is recreated on every build: any other files in it are deleted.
+
+## Theme aliases
+
+An alias is a path to a group of tokens separated by `/`: a category (`rounded`) or a category and a type (`font/family`). The key on the left is a Tailwind theme key, the value on the right is the token path. Keys must match the [Tailwind theme keys](https://tailwindcss.com/docs/theme).
+
+`spacing` is a special case in Tailwind 4: the value `"1px"` is written as is into `--spacing: 1px` and sets the step of the spacing utilities.
+
+### Tailwind CSS 4
+
+```json
+{
+  "version": 4,
+  "themeAliases": {
+    "font": "font/family",
+    "font-weight": "font/weight",
+    "leading": "font/leading",
+    "text": "font/size",
+    "color": "color",
+    "spacing": "1px",
+    "radius": "rounded",
+    "shadow": "shadow",
+    "breakpoint": "screen",
+    "animation": "animation",
+    "keyframes": "keyframes"
+  }
+}
+```
+
+The token `color.white` becomes `--color-white`, `font.family.sans` — `--font-sans`, `rounded.8` — `--radius-8`. Import the result after Tailwind:
+
+```css
+@import 'tailwindcss';
+@import './styles/tailwind/theme.css';
+```
+
+The theme starts with `--*: initial`, so the default Tailwind values are replaced with your tokens.
+
+### Tailwind CSS 3
+
+Version 3 uses the keys of the theme object: `fontFamily`, `colors`, `screens` and so on. Keys inside `extend` go to `theme.extend`.
+
+```json
+{
+  "version": 3,
+  "themeAliases": {
+    "fontFamily": "font/family",
+    "fontWeight": "font/weight",
+    "lineHeight": "font/leading",
+    "fontSize": "font/size",
+    "colors": "color",
+    "screens": "screen",
+    "spacing": "size",
+    "borderRadius": "rounded",
+    "borderWidth": "stroke",
+    "extend": {
+      "opacity": "opacity",
+      "boxShadow": "shadow",
+      "spacing": "container"
+    }
+  }
+}
+```
+
+Use the generated object in `tailwind.config.js`:
+
+```js
+const theme = require('./styles/tailwind/theme.js');
+
+module.exports = {
+  theme: {
+    ...theme,
+    extend: { ...theme.extend },
+  },
+};
+```
+
+With themes, a `theme.css` with theme values is generated next to `theme.js`: import it in your app. See [Themes](/docs/tailwind-dictionary/themes#tailwind-css-3).
+
+## Full example
+
+The real config of the pbstyles library: [config-tailwind-dictionary.json](https://github.com/prosazhin/pbstyles/blob/main/config-tailwind-dictionary.json).

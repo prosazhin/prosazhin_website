@@ -6,7 +6,7 @@ description: 'Попап с произвольным содержимым; из 
 import ComponentShowcase from '@/components/docs/ComponentShowcase';
 import ComponentAPI from '@/components/docs/ComponentAPI';
 
-Соберите `Popover.Trigger` с одним элементом-триггером (обычно `Button`) и `Popover.Content`. Внутрь можно положить `Popover.Item` — получится меню, после выбора пункта оно закрывается само, — или любую разметку. `placement` задаёт сторону и выравнивание (`bottom-start` по умолчанию, `bottom-end`, `top` и т. д.); при нехватке места попап переворачивается и сдвигается, не уходя за край экрана. Открытие можно контролировать через `open` и `onOpenChange`, `portal` выносит попап в конец `body`, `search` у `Popover.Content` добавляет строку поиска.
+Соберите `Popover.Trigger` с одним элементом-триггером (обычно `Button`) и `Popover.Content`. Внутрь можно положить `Popover.Item` — получится меню, после выбора пункта оно закрывается само, — или любую разметку. `placement` задаёт сторону и выравнивание (`bottom-start` по умолчанию, `bottom-end`, `top` и т. д.); при нехватке места попап переворачивается и сдвигается, не уходя за край экрана. Открытие можно контролировать через `open` и `onOpenChange`, `portal` выносит попап в конец `body`, `search` у `Popover.Content` добавляет строку поиска. Если триггер — `Button` без собственного `rightIcon`, `Popover.Trigger` сам добавляет шеврон справа; отключить это можно через `icon={false}`.
 
 ## Живой пример
 

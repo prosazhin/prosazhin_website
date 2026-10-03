@@ -63,7 +63,10 @@ const RootLayout = async ({ children }) => {
               nav={nav}
             />
             {children}
-            <Footer locale={locale} />
+            <Footer
+              locale={locale}
+              theme={theme}
+            />
             <CookieBanner />
             <ToTop />
           </PBCProvider>

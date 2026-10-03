@@ -1,0 +1,29 @@
+---
+title: Плейграунд
+description: Соберите тему Tailwind CSS 3 или 4 из своих токенов прямо в браузере, без установки пакета.
+---
+
+import TokensPlayground from '@/components/docs/playground/TokensPlayground';
+
+Плейграунд запускает `tailwind-dictionary` в браузере. Измените токены, и через долю секунды изменятся результат и превью. Вкладки входа:
+
+- `tokens.json` — базовые токены в формате [DTCG](/docs/tailwind-dictionary/dtcg): палитра, размеры, шрифты, текстовые стили, тени, брейкпоинты, анимации;
+- `light.json` и `dark.json` — семантические токены [тем](/docs/tailwind-dictionary/themes): `data-theme` переключает их на любом элементе страницы;
+- `config.json` — [алиасы темы](/docs/tailwind-dictionary/config) (`themeAliases`) и настройки тем (`themes.default`, `themes.prefix`). Версия Tailwind переключается кнопкой над редактором, у каждой версии свой набор алиасов. Поля `source` и `output` не нужны: токены берутся из вкладок.
+
+<TokensPlayground
+  packageName='tailwind-dictionary'
+  locale='ru'
+/>
+
+## Как это работает
+
+- В браузере вызывается [`generate()`](/docs/tailwind-dictionary/api) — тот же код, что в CLI. Токены и конфиг не отправляются на сервер и не покидают страницу.
+- Генератор загружается при первой сборке, а не вместе со страницей.
+- Превью — изолированный `iframe` без доступа к сети. Результат для Tailwind 4 содержит директиву `@theme`, которую браузер не понимает, поэтому в превью её переменные подставляются в `:root`. В настоящем проекте нужен Tailwind.
+- Цвета в примере записаны строками (`"#2563eb"`), чтобы их было удобно править. Объектная форма DTCG (`colorSpace`, `components`, `hex`) тоже поддерживается.
+- Если в токенах ошибка, под редактором показывается сообщение, а результат остаётся последним успешным.
+
+## Что дальше
+
+Скопируйте токены и конфиг в проект и запустите CLI: [быстрый старт](/docs/tailwind-dictionary). Готовые токены той же структуры лежат в [pbstyles](/docs/pbstyles/tokens). Для LESS и SCSS есть [плейграунд mixin-dictionary](/docs/mixin-dictionary/playground).

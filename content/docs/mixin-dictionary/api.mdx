@@ -1,0 +1,82 @@
+---
+title: API и режим watch
+description: Сборка стилей из кода через build() и generate(), TypeScript-типы и пересборка при изменении токенов.
+---
+
+## build()
+
+`build()` делает то же, что CLI: читает файлы токенов, собирает стили и записывает их в `output`. Принимает те же поля, что `config.json`, или путь к конфигу. Возвращает объект с содержимым записанных файлов.
+
+```js
+import { build } from 'mixin-dictionary';
+
+await build({
+  platforms: ['css', 'scss'],
+  source: ['tokens/*.json'],
+  output: './styles',
+});
+
+// или
+await build({ config: './config.json' });
+```
+
+## generate()
+
+`generate()` не работает с файловой системой: принимает токены объектами и возвращает содержимое файлов. Подходит для своих скриптов сборки, плагинов и браузера.
+
+```js
+import { generate } from 'mixin-dictionary/generate';
+
+const files = await generate({
+  tokens: { color: { $type: 'color', white: { $value: '#ffffff' } } },
+  themes: { dark: { color: { white: { $value: '#000000' } } } }, // необязательно
+  platforms: ['css', 'less', 'scss'],
+});
+
+files['css/index.css']; // а также 'less/index.less' и 'scss/index.scss'
+```
+
+Необязательные `mediaAliases` и `keyframesAliases` работают так же, как в конфиге. В `themes` можно передать и `default` — имя темы по умолчанию. Предупреждения выводятся через `console.warn`; чтобы их перехватить, передайте `logger: { warn(message) {} }`.
+
+<Callout>
+  В браузере `generate()` работает без полифиллов `fs` и `path`, но тянет за собой Style Dictionary:
+  бандл получается заметным: в продакшен-сборке с минификацией около 0,8 МБ (≈ 265 КБ в gzip), без
+  минификации около 3,6 МБ. Загружайте его лениво, через динамический `import()`.
+</Callout>
+
+## TypeScript
+
+Типы входят в пакет: для `build()`, `generate()` и конфига.
+
+```ts
+import { build } from 'mixin-dictionary';
+import { generate } from 'mixin-dictionary/generate';
+```
+
+Для JSON-конфига используйте JSON Schema из пакета:
+
+```json
+{
+  "$schema": "./node_modules/mixin-dictionary/schema/config.schema.json"
+}
+```
+
+## Режим watch
+
+```bash
+npx mixin-dictionary -c ./config.json --watch
+```
+
+Стили пересобираются при изменении файлов из `source`, `themes` и самого конфига. Отслеживаются только каталоги с токенами, а не весь проект.
+
+## Ошибки
+
+Ошибки выводятся одной строкой с именем файла и путём токена, код выхода — `1`:
+
+```text
+✘ Config file not found: nope.json
+✘ Token "color.text" (tokens/color.json) references {color.nope}, which is not defined
+✘ No token files matched: tokens/*.json
+```
+
+Останавливают сборку: битая ссылка, `typography` без `fontSize`, смешение `value` и `$value`, отсутствующий или битый конфиг. Неизвестный `$type` и токен темы, которого нет в одной из тем, дают предупреждение. Неизвестная платформа в `platforms`: в CLI и `build()` она пропускается с сообщением, а `generate()` бросает ошибку.

@@ -1,0 +1,54 @@
+---
+title: Темы
+description: Светлая и тёмная тема pbstyles, переключение через data-theme и переопределение семантических цветов.
+---
+
+Семантические цвета (`basic`, `primary`, `secondary`, `success`, `danger`, `warning`, `outline`, `text`) меняются между светлой и тёмной темой. Цвета палитры (`gray`, `blue` и другие) одинаковы в обеих темах.
+
+## Переключение темы
+
+Без явного атрибута тема следует системной настройке `prefers-color-scheme`. Атрибут на `<html>` или на вложенном контейнере задаёт режим вручную:
+
+```html
+<html data-theme="dark">
+  <body>
+    <section data-theme="light">Светлый блок внутри тёмной страницы</section>
+  </body>
+</html>
+```
+
+- **Системная** — автоматически через `@media (prefers-color-scheme: dark)`.
+- **`data-theme="dark"`** — тёмная тема на элементе и всём его содержимом.
+- **`data-theme="light"`** — светлая тема даже при тёмной системной настройке, на `<html>` или на вложенном контейнере.
+
+На этом сайте переключатель записывает `THEME` в cookie, а сервер ставит `data-theme` на `<html>`. Этот атрибут одновременно управляет сайтом и документацией.
+
+## Переопределение цветов
+
+Семантические цвета — обычные CSS-переменные. Любую можно переопределить каскадом: в `:root`, внутри `[data-theme='dark']` или на конкретном элементе.
+
+| Формат     | Имя переменной                                          |
+| ---------- | ------------------------------------------------------- |
+| CSS        | `--color-basic-0`, `--color-primary-300`, …             |
+| LESS       | `@color-basic-0` → `var(--color-basic-0)`               |
+| SCSS       | `$color-basic-0` → `var(--color-basic-0)`               |
+| Tailwind 4 | `--theme-color-basic-0`, `--theme-color-primary-300`, … |
+
+В Tailwind 4 переопределяйте переменные `--theme-color-*` после импорта темы:
+
+```css
+@import 'tailwindcss';
+@import '@prosazhin/pbstyles/styles/tailwind/theme.css';
+
+:root {
+  --theme-color-primary-300: #7c3aed;
+}
+
+[data-theme='dark'] {
+  --theme-color-primary-300: #a78bfa;
+}
+```
+
+Утилиты вроде `bg-primary-300` компилируются прямо в `var(--theme-color-primary-300)`, поэтому переопределение работает на любом уровне DOM и с любым префиксом Tailwind, без пересборки CSS.
+
+Как устроены темы в генераторах — в документации [tailwind-dictionary](/docs/tailwind-dictionary/themes) и [mixin-dictionary](/docs/mixin-dictionary/themes).

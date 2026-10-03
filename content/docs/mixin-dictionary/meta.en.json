@@ -1,1 +1,14 @@
-{ "title": "mixin-dictionary" }
+{
+  "title": "mixin-dictionary",
+  "pages": [
+    "config",
+    "---Token formats---",
+    "dtcg",
+    "legacy",
+    "---Features---",
+    "themes",
+    "figma",
+    "api",
+    "playground"
+  ]
+}

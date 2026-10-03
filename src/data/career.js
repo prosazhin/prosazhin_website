@@ -99,9 +99,11 @@ const career = {
       },
     ],
   },
+  // Не входит в careerGroups: в резюме это отдельный блок «Проекты», идущий параллельно
+  // с основной работой (см. buildProjectsBlock в src/utils/resume.ts).
   opensource: {
     dateFrom: '2024-05-25',
-    dateTo: '2024-12-12',
+    dateTo: 'now',
     positions: [
       {
         type: 'frontend',
@@ -404,7 +406,7 @@ const career = {
 // Группы с одним участником рендерятся как обычная карточка, без обёртки.
 export const careerGroups = [
   { id: 'sellmonitorCurrent', members: ['sellmonitorCurrent'] },
-  { id: 'project', members: ['15web', 'opensource', 'pixelpoint', 'ipgate'] },
+  { id: 'project', members: ['15web', 'pixelpoint', 'ipgate'] },
   { id: 'sellmonitor', members: ['sellmonitor'] },
   { id: 'regru', members: ['regru'] },
   { id: 'suplbiz', members: ['suplbiz'] },

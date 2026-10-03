@@ -1,0 +1,134 @@
+---
+title: Конфигурация и CLI
+description: Поля config.json, алиасы темы для Tailwind 3 и 4, флаги командной строки и подключение результата.
+---
+
+## Командная строка
+
+```bash
+npx tailwind-dictionary
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json --watch
+```
+
+| Флаг              | Коротко | Назначение                                                                     |
+| ----------------- | ------- | ------------------------------------------------------------------------------ |
+| `--config <path>` | `-c`    | Путь к JSON-конфигу. По умолчанию `./config.json`.                             |
+| `--watch`         | `-w`    | Пересобирать тему при изменении файлов токенов (`source`, `themes`) и конфига. |
+| `--version`       | `-v`    | Показать версию пакета.                                                        |
+
+Ошибки конфига и токенов выводятся одной строкой с именем файла и путём токена, без стектрейса. Код выхода — `1`.
+
+## Поля конфига
+
+```json
+{
+  "$schema": "./node_modules/tailwind-dictionary/schema/config.schema.json",
+  "version": 4,
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "themeAliases": { "color": "color" },
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+| Поле           | Тип                         | По умолчанию           | Назначение                                                                                                                                                                             |
+| -------------- | --------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `$schema`      | `string`                    | —                      | Путь к JSON Schema из пакета: автодополнение и проверка конфига в редакторе.                                                                                                           |
+| `version`      | `3` или `4`                 | `4`                    | Версия Tailwind CSS.                                                                                                                                                                   |
+| `source`       | `string[]`                  | `["tokens/**/*.json"]` | Glob-шаблоны или пути к файлам токенов: `tokens/*.json` или `tokens/base.json`. Поддерживаются JSON, JSON5 и JS.                                                                       |
+| `output`       | `string`                    | `./styles`             | Каталог результата. Создаётся, если его нет. Тема попадает в `<output>/tailwind/`.                                                                                                     |
+| `themeAliases` | объект                      | —                      | Соответствие ключей темы Tailwind путям к токенам.                                                                                                                                     |
+| `themes`       | объект                      | —                      | Файлы токенов тем, тема по умолчанию и префикс переменных. См. [Темы](/docs/tailwind-dictionary/themes).                                                                               |
+| `numberUnit`   | `"px"`, `"rem"` или `false` | `"px"`                 | Единица для голых чисел (`"$type": "number"`) в размерных ключах: `4` → `4px`. `"rem"` делит на 16, `false` оставляет число как есть. См. [Из Figma](/docs/tailwind-dictionary/figma). |
+
+<Callout type='warn'>
+  Если используете `themes`, не включайте файлы тем в `source`. Пишите `tokens/*.json`, а не
+  `tokens/**/*.json`, иначе одноимённые токены столкнутся.
+</Callout>
+
+Папка `<output>/tailwind` пересоздаётся при каждой сборке: другие файлы в ней будут удалены.
+
+## Алиасы темы
+
+Алиас — это путь к группе токенов через `/`: категория (`rounded`) или категория и тип (`font/family`). Слева стоит ключ темы Tailwind, справа — путь к токенам. Ключи должны совпадать с [ключами темы Tailwind](https://tailwindcss.com/docs/theme).
+
+Для Tailwind 4 особый случай — `spacing`: значение `"1px"` записывается как есть в `--spacing: 1px` и задаёт шаг утилит отступов.
+
+### Tailwind CSS 4
+
+```json
+{
+  "version": 4,
+  "themeAliases": {
+    "font": "font/family",
+    "font-weight": "font/weight",
+    "leading": "font/leading",
+    "text": "font/size",
+    "color": "color",
+    "spacing": "1px",
+    "radius": "rounded",
+    "shadow": "shadow",
+    "breakpoint": "screen",
+    "animation": "animation",
+    "keyframes": "keyframes"
+  }
+}
+```
+
+Токен `color.white` попадает в `--color-white`, `font.family.sans` — в `--font-sans`, `rounded.8` — в `--radius-8`. Подключите результат после Tailwind:
+
+```css
+@import 'tailwindcss';
+@import './styles/tailwind/theme.css';
+```
+
+Тема начинается с `--*: initial`, поэтому стандартные значения Tailwind заменяются вашими токенами.
+
+### Tailwind CSS 3
+
+В версии 3 используются ключи объекта темы: `fontFamily`, `colors`, `screens` и так далее. Ключи внутри `extend` попадают в `theme.extend`.
+
+```json
+{
+  "version": 3,
+  "themeAliases": {
+    "fontFamily": "font/family",
+    "fontWeight": "font/weight",
+    "lineHeight": "font/leading",
+    "fontSize": "font/size",
+    "colors": "color",
+    "screens": "screen",
+    "spacing": "size",
+    "borderRadius": "rounded",
+    "borderWidth": "stroke",
+    "extend": {
+      "opacity": "opacity",
+      "boxShadow": "shadow",
+      "spacing": "container"
+    }
+  }
+}
+```
+
+Подключите сгенерированный объект в `tailwind.config.js`:
+
+```js
+const theme = require('./styles/tailwind/theme.js');
+
+module.exports = {
+  theme: {
+    ...theme,
+    extend: { ...theme.extend },
+  },
+};
+```
+
+Если заданы темы, рядом с `theme.js` появляется `theme.css` со значениями тем: его нужно импортировать в приложение. Подробнее — в разделе [Темы](/docs/tailwind-dictionary/themes#tailwind-css-3).
+
+## Пример целиком
+
+Реальный конфиг библиотеки pbstyles: [config-tailwind-dictionary.json](https://github.com/prosazhin/pbstyles/blob/main/config-tailwind-dictionary.json).

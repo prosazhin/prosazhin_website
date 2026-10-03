@@ -1,0 +1,111 @@
+---
+title: Старый формат
+description: Токены Style Dictionary с полем value и миксины через поле mixin.
+---
+
+До версии 1.6 пакет читал только формат Style Dictionary, где значение лежит в поле `value`, а миксин собирается из токенов с одинаковым полем `mixin`. Этот формат по-прежнему поддерживается и даёт тот же результат, что и раньше. Для новых проектов удобнее [DTCG](/docs/mixin-dictionary/dtcg).
+
+В одной сборке используется один формат: нельзя смешивать файлы с `value` и `$value`.
+
+## Текстовый стиль
+
+```json
+{
+  "font": {
+    "h64": {
+      "font-size": { "value": "64px", "mixin": "h64" },
+      "line-height": { "value": "1.25", "mixin": "h64" },
+      "font-weight": { "value": "700", "mixin": "h64" }
+    }
+  }
+}
+```
+
+```scss
+@mixin h64 {
+  font-size: $font-h64-font-size;
+  line-height: $font-h64-line-height;
+  font-weight: $font-h64-font-weight;
+}
+```
+
+```less
+.h64() {
+  font-size: @font-h64-font-size;
+  line-height: @font-h64-line-height;
+  font-weight: @font-h64-font-weight;
+}
+```
+
+Имя свойства в миксине — последний сегмент пути токена (`font-size`), поэтому называйте токены так же, как CSS-свойства.
+
+## Медиазапрос
+
+Категория токенов должна быть в `mediaAliases`. Последний сегмент пути — `min` или `max`.
+
+```json
+{
+  "screen": {
+    "lg": {
+      "max": { "value": "1440px", "mixin": "lg" },
+      "min": { "value": "921px", "mixin": "lg" }
+    }
+  }
+}
+```
+
+```scss
+@mixin lg {
+  @media all and (max-width: $screen-lg-max) and (min-width: $screen-lg-min) {
+    @content;
+  }
+}
+```
+
+```less
+.lg(@rules) {
+  @media all and (max-width: @screen-lg-max) and (min-width: @screen-lg-min) {
+    @rules();
+  }
+}
+```
+
+## Keyframes
+
+Категория токенов должна быть в `keyframesAliases`. Предпоследний сегмент пути — кадр (`from`, `to`, `50%`), последний — свойство.
+
+```json
+{
+  "keyframes": {
+    "show": {
+      "from": { "opacity": { "value": 0, "mixin": "show" } },
+      "to": { "opacity": { "value": 1, "mixin": "show" } }
+    }
+  }
+}
+```
+
+```scss
+@include keyframes(show) {
+  from {
+    opacity: $keyframes-show-from-opacity;
+  }
+  to {
+    opacity: $keyframes-show-to-opacity;
+  }
+}
+```
+
+```less
+.keyframes(show, { from { opacity: @keyframes-show-from-opacity; } to { opacity: @keyframes-show-to-opacity; } });
+```
+
+Начиная с 1.6, для медиазапросов и keyframes поле `mixin` не обязательно: группа берётся из структуры, как в [DTCG](/docs/mixin-dictionary/dtcg). Для текстовых стилей в старом формате `mixin` по-прежнему нужен.
+
+## Приоритет имени миксина
+
+Если имя задано несколькими способами, используется первое из списка:
+
+1. поле `mixin`;
+2. `$extensions["dev.prosazhin.mixin"]`;
+3. имя по структуре токенов.

@@ -1,0 +1,30 @@
+---
+title: Playground
+description: Build CSS variables and LESS/SCSS variables and mixins from your own tokens right in the browser, with nothing to install.
+---
+
+import TokensPlayground from '@/components/docs/playground/TokensPlayground';
+
+The playground runs `mixin-dictionary` in the browser. Change the tokens and the result and the preview update a moment later. The input tabs:
+
+- `tokens.json` — base tokens in the [DTCG](/docs/mixin-dictionary/dtcg) format: palette, sizes, fonts, text styles, shadows, breakpoints, animations. Mixins are built from `typography`, `min`/`max` breakpoints and `keyframes`;
+- `light.json` and `dark.json` — semantic [theme](/docs/mixin-dictionary/themes) tokens: `data-theme` switches them on any element of the page;
+- `config.json` — `platforms`, `mediaAliases`, `keyframesAliases` and `themes.default`, see the [config](/docs/mixin-dictionary/config). `source` and `output` are not needed: tokens come from the tabs.
+
+<TokensPlayground
+  packageName='mixin-dictionary'
+  locale='en'
+/>
+
+## How it works
+
+- The browser calls [`generate()`](/docs/mixin-dictionary/api), the same code as in the CLI. Tokens and config are not sent to a server and never leave the page.
+- The generator is loaded on the first build, not with the page.
+- The preview is built from `css/index.css` and shows the palette, fonts, text styles, radii and shadows. If you remove the `css` platform from `platforms`, the preview disappears while `scss` and `less` stay.
+- The preview is an isolated `iframe` with no network access.
+- Colors in the example are written as strings (`"#2563eb"`) to make them easy to edit. The DTCG object form (`colorSpace`, `components`, `hex`) is supported too.
+- If the tokens have an error, a message is shown under the editor and the result stays at the last successful one.
+
+## What next
+
+Copy the tokens and the config into your project and run the CLI: [quick start](/docs/mixin-dictionary). Ready-made tokens of the same structure are in [pbstyles](/docs/pbstyles/tokens). For a Tailwind theme there is the [tailwind-dictionary playground](/docs/tailwind-dictionary/playground).

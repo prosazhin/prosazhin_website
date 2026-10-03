@@ -1,0 +1,151 @@
+---
+title: Токены DTCG
+description: Как устроены исходные токены pbstyles в стандарте DTCG 2025.10 и что изменилось при переходе со старого формата.
+---
+
+Исходные токены pbstyles лежат в [репозитории](https://github.com/prosazhin/pbstyles/tree/main/tokens) и записаны в стандарте [W3C Design Tokens (DTCG 2025.10)](https://www.designtokens.org/tr/2025.10/format/). Их можно взять за основу для своей дизайн-системы или использовать как пример DTCG-токенов для [tailwind-dictionary](/docs/tailwind-dictionary/dtcg) и [mixin-dictionary](/docs/mixin-dictionary/dtcg).
+
+CI репозитория проверяет, что закоммиченные стили в `styles/` совпадают с результатом сборки из токенов.
+
+## Структура
+
+```text
+tokens/
+├── palette.json      # color — палитра
+├── size.json         # size — базовые размеры
+├── font.json         # font — семейство, размеры, межстрочный интервал, начертания, текстовые стили
+├── rounded.json      # rounded — скругления
+├── stroke.json       # stroke — толщина границ
+├── shadow.json       # shadow — тени
+├── opacity.json      # opacity — непрозрачность
+├── screen.json       # screen — брейкпоинты
+├── container.json    # container — ширины контейнеров
+├── column.json       # column — колонки
+├── animation.json    # animation, keyframes — анимации
+└── themes/
+    ├── light.json    # семантические цвета светлой темы
+    └── dark.json     # семантические цвета тёмной темы
+```
+
+| Группа                                             | `$type`      | Пример значения                                                             |
+| -------------------------------------------------- | ------------ | --------------------------------------------------------------------------- |
+| `color`                                            | `color`      | `{ "colorSpace": "srgb", "components": [0, 0, 0], "hex": "#000000" }`       |
+| `size`, `rounded`, `stroke`, `container`, `screen` | `dimension`  | `{ "value": 16, "unit": "px" }` или ссылка `{size.16}`                      |
+| `font.family`                                      | `fontFamily` | `["Inter", "sans-serif"]`                                                   |
+| `font.weight`                                      | `fontWeight` | `400`, `600`, `700`                                                         |
+| `font.leading`, `opacity`, `column`, `keyframes`   | `number`     | `1.25`                                                                      |
+| `font.h64`, `font.t16`, …                          | `typography` | `{ "fontSize": "{font.size.64}", "lineHeight": "{font.leading.tight}", … }` |
+| `shadow`                                           | `shadow`     | массив слоёв с `color`, `offsetX`, `offsetY`, `blur`, `spread`              |
+
+`container.full` (`100%`), `animation` и `font.decoration` — строковые токены без `$type`: подходящего типа в DTCG для них нет.
+
+## Текстовые стили
+
+Каждый текстовый стиль — составной токен `typography`. Семейство шрифта и межбуквенный интервал наследуются от страницы.
+
+```json
+{
+  "font": {
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  }
+}
+```
+
+| Стили           | Межстрочный интервал | Начертание |
+| --------------- | -------------------- | ---------- |
+| `h64` … `h16`   | `tight` (1.25)       | `bold`     |
+| `t32` … `t10`   | `normal` (1.5)       | `regular`  |
+| `tm32` … `tm10` | `normal` (1.5)       | `medium`   |
+
+В Tailwind 4 стиль становится утилитой `text-h64` с размером, интервалом и начертанием, в LESS и SCSS — миксином `h64`.
+
+## Брейкпоинты и анимации
+
+Брейкпоинты и анимации становятся миксинами по своей структуре, без служебных полей:
+
+```json
+{
+  "screen": {
+    "$type": "dimension",
+    "md": {
+      "max": { "$value": { "value": 920, "unit": "px" } },
+      "min": { "$value": { "value": 769, "unit": "px" } }
+    },
+    "desktop": {
+      "min": { "$value": "{screen.md.min}" }
+    }
+  },
+  "keyframes": {
+    "$type": "number",
+    "show": {
+      "from": { "opacity": { "$value": 0 } },
+      "to": { "opacity": { "$value": 1 } }
+    }
+  }
+}
+```
+
+## Что изменилось в 1.4
+
+До версии 1.4 токены были в старом формате Style Dictionary. Сгенерированные CSS, LESS, SCSS и тема Tailwind **остались такими же**, менялись только исходники.
+
+| Было (1.3)                                                                           | Стало (1.4)                                                                                  |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `"white": { "value": "#ffffff" }`                                                    | `"white": { "$value": { "colorSpace": "srgb", "components": [1, 1, 1], "hex": "#ffffff" } }` |
+| `"16": { "value": "16px" }`                                                          | `"16": { "$value": { "value": 16, "unit": "px" } }`                                          |
+| `"sans": { "value": "'Inter', sans-serif" }`                                         | `"sans": { "$value": ["Inter", "sans-serif"] }`                                              |
+| тень — строка `"0px 1px 1px 0px rgba(15, 23, 42, 0.05), …"`                          | тень — массив слоёв с объектами `color`, `offsetX`, `offsetY`, `blur`, `spread`              |
+| `font.h64.font-size`, `line-height`, `font-weight` с `"mixin": "h64"`                | один токен `font.h64` с `"$type": "typography"`                                              |
+| `screen.lg.min` с `"mixin": "lg"`, `keyframes.show.from.opacity` с `"mixin": "show"` | те же пути без поля `mixin`                                                                  |
+| тип не указан                                                                        | `$type` на каждой группе                                                                     |
+
+Было:
+
+```json
+{
+  "font": {
+    "h64": {
+      "font-size": { "value": "{font.size.64}", "mixin": "h64" },
+      "line-height": { "value": "{font.leading.tight}", "mixin": "h64" },
+      "font-weight": { "value": "{font.weight.bold}", "mixin": "h64" }
+    }
+  }
+}
+```
+
+Стало:
+
+```json
+{
+  "font": {
+    "h64": {
+      "$type": "typography",
+      "$value": {
+        "fontSize": "{font.size.64}",
+        "lineHeight": "{font.leading.tight}",
+        "fontWeight": "{font.weight.bold}"
+      }
+    }
+  }
+}
+```
+
+Имена переменных при этом не изменились: и раньше, и сейчас получаются `--font-h64-font-size`, `$font-h64-line-height`, `--text-h64--font-weight`.
+
+## Своя дизайн-система на основе pbstyles
+
+1. Скопируйте каталог `tokens/` и конфиги `config-mixin-dictionary.json` и `config-tailwind-dictionary.json` из репозитория.
+2. Измените значения токенов: палитру, семантические цвета в `themes/`, шрифты.
+3. Соберите стили:
+
+```bash
+npx mixin-dictionary -c ./config-mixin-dictionary.json
+npx tailwind-dictionary -c ./config-tailwind-dictionary.json
+```

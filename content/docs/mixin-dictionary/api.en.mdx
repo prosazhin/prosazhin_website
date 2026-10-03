@@ -1,0 +1,82 @@
+---
+title: API and watch mode
+description: Building styles from code with build() and generate(), TypeScript types and rebuilding on token changes.
+---
+
+## build()
+
+`build()` does the same as the CLI: reads token files, builds the styles and writes them to `output`. It takes the same fields as `config.json` or a path to the config. It returns an object with the contents of the written files.
+
+```js
+import { build } from 'mixin-dictionary';
+
+await build({
+  platforms: ['css', 'scss'],
+  source: ['tokens/*.json'],
+  output: './styles',
+});
+
+// or
+await build({ config: './config.json' });
+```
+
+## generate()
+
+`generate()` does not touch the file system: it takes token objects and returns file contents. Use it in your own build scripts, plugins and in the browser.
+
+```js
+import { generate } from 'mixin-dictionary/generate';
+
+const files = await generate({
+  tokens: { color: { $type: 'color', white: { $value: '#ffffff' } } },
+  themes: { dark: { color: { white: { $value: '#000000' } } } }, // optional
+  platforms: ['css', 'less', 'scss'],
+});
+
+files['css/index.css']; // also 'less/index.less' and 'scss/index.scss'
+```
+
+Optional `mediaAliases` and `keyframesAliases` work the same way as in the config. `themes` may also contain `default`, the name of the default theme. Warnings go to `console.warn`; to intercept them pass `logger: { warn(message) {} }`.
+
+<Callout>
+  In the browser `generate()` works without `fs` and `path` polyfills, but it brings Style
+  Dictionary along: the bundle is sizeable: about 0.8 MB (≈ 265 KB gzipped) in a minified production
+  build, about 3.6 MB without minification. Load it lazily with a dynamic `import()`.
+</Callout>
+
+## TypeScript
+
+Types are included: for `build()`, `generate()` and the config.
+
+```ts
+import { build } from 'mixin-dictionary';
+import { generate } from 'mixin-dictionary/generate';
+```
+
+For the JSON config use the JSON Schema from the package:
+
+```json
+{
+  "$schema": "./node_modules/mixin-dictionary/schema/config.schema.json"
+}
+```
+
+## Watch mode
+
+```bash
+npx mixin-dictionary -c ./config.json --watch
+```
+
+The styles are rebuilt when files from `source`, `themes` or the config itself change. Only token folders are watched, not the whole project.
+
+## Errors
+
+Errors are printed as one line with the file name and the token path, the exit code is `1`:
+
+```text
+✘ Config file not found: nope.json
+✘ Token "color.text" (tokens/color.json) references {color.nope}, which is not defined
+✘ No token files matched: tokens/*.json
+```
+
+The build stops on a broken reference, `typography` without `fontSize`, mixed `value` and `$value`, a missing or broken config. An unknown `$type` and a theme token missing in one of the themes are warnings. An unknown platform in `platforms` is skipped with a message in the CLI and `build()`, while `generate()` throws an error.

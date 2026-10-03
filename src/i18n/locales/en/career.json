@@ -86,23 +86,9 @@
     {
       "type": "opensource",
       "title": "Open source",
-      "subtitle": "My own npm packages and Figma libraries",
-      "positions": {
-        "frontend": "Development and publishing of my own npm packages.",
-        "uxuiDesign": "Built the pbstyles and pbcomponents Figma libraries, kept in sync with the npm packages, and published them on Figma Community and Behance."
-      },
-      "details": {
-        "frontend": [
-          {
-            "text": "Published 4 npm packages.",
-            "items": [
-              "Tailwind Dictionary — design tokens into a Tailwind theme.",
-              "Mixin Dictionary — design tokens into Less and SCSS mixins.",
-              "pbstyles — a style library for rapid prototyping.",
-              "pbcomponents — a React component library built on pbstyles."
-            ]
-          }
-        ]
+      "summary": {
+        "developer": "Alongside my main job, I build my own open source libraries: React components, styles and theme generators from design tokens.",
+        "designer": "Alongside my main job, I build my own open source Figma libraries of styles and components, kept in sync with npm packages, and make app concepts."
       }
     },
     {

@@ -1,0 +1,98 @@
+---
+title: Config and CLI
+description: config.json fields, CSS, LESS and SCSS platforms, command-line flags and what the output contains.
+---
+
+## Command line
+
+```bash
+npx mixin-dictionary
+npx mixin-dictionary -c ./config-mixin-dictionary.json
+npx mixin-dictionary -c ./config-mixin-dictionary.json --watch
+```
+
+| Flag              | Short | Purpose                                                                        |
+| ----------------- | ----- | ------------------------------------------------------------------------------ |
+| `--config <path>` | `-c`  | Path to the JSON config. Default is `./config.json`.                           |
+| `--watch`         | `-w`  | Rebuild the styles when token files (`source`, `themes`) or the config change. |
+| `--version`       | `-v`  | Print the package version.                                                     |
+
+Config and token errors are printed as one line with the file name and the token path, without a stack trace. The exit code is `1`.
+
+## Config fields
+
+```json
+{
+  "$schema": "./node_modules/mixin-dictionary/schema/config.schema.json",
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/*.json"],
+  "output": "./styles",
+  "mediaAliases": ["screen", "breakpoint"],
+  "keyframesAliases": ["keyframes"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+| Field              | Type                       | Default                            | Purpose                                                                                                                                                                                  |
+| ------------------ | -------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `$schema`          | `string`                   | —                                  | Path to the JSON Schema from the package: autocompletion and validation of the config in the editor.                                                                                     |
+| `platforms`        | `string[]`                 | `["css", "less", "scss"]`          | Which files to build.                                                                                                                                                                    |
+| `source`           | `string[]`                 | `["tokens/**/*.json"]`             | Globs or file paths of token files: `tokens/*.json` or `tokens/base.json`. JSON, JSON5 and JS are supported.                                                                             |
+| `output`           | `string`                   | `./styles`                         | Output folder. Created if it does not exist.                                                                                                                                             |
+| `mediaAliases`     | `string[]`                 | `["screen", "breakpoint"]`         | Categories of breakpoint tokens: media query mixins are built from them.                                                                                                                 |
+| `keyframesAliases` | `string[]`                 | `["keyframes"]`                    | Categories of animation tokens: keyframes are built from them.                                                                                                                           |
+| `numberUnit`       | `"px"`, `"rem"` or `false` | `"px"`                             | Unit for bare numbers (`"$type": "number"`) in dimension categories: `4` → `4px`. `"rem"` divides by 16, `false` keeps the number as is. See [From Figma](/docs/mixin-dictionary/figma). |
+| `dimensionAliases` | `string[]`                 | `["spacing", "radius", "size", …]` | Categories (first path segment) whose bare numbers are dimensions. `mediaAliases` categories are always included.                                                                        |
+| `themes`           | object                     | —                                  | Theme token files and the default theme. See [Themes](/docs/mixin-dictionary/themes).                                                                                                    |
+
+<Callout type='warn'>
+  When you use `themes`, do not include the theme files in `source`. Use `tokens/*.json` instead of
+  `tokens/**/*.json`, otherwise tokens with the same names collide.
+</Callout>
+
+## What goes into the files
+
+| File              | Variables                  | Text styles  | Media queries | Keyframes                        |
+| ----------------- | -------------------------- | ------------ | ------------- | -------------------------------- |
+| `css/index.css`   | `--color-white` in `:root` | —            | —             | —                                |
+| `less/index.less` | `@color-white`             | `.h64()`     | `.lg(@rules)` | `.keyframes(show, { … })`        |
+| `scss/index.scss` | `$color-white`             | `@mixin h64` | `@mixin lg`   | `@include keyframes(show) { … }` |
+
+A variable name is the token path joined with dashes: `font.h64.font-size` → `$font-h64-font-size`. camelCase paths are converted to kebab-case too: `screen.tabletUp.min` → `$screen-tablet-up-min`, and mixins refer to the same variable names. The mixin name itself is the group name as is: `@mixin tabletUp`.
+
+CSS has no mixins: CSS has no mixin mechanism, so it gets variables only.
+
+## Usage
+
+```less
+@import './styles/less/index.less';
+
+.title {
+  .h64();
+}
+
+.lg({
+  .sidebar { display: none; }
+});
+```
+
+```scss
+@import './styles/scss/index.scss';
+
+.title {
+  @include h64;
+}
+
+@include lg {
+  .sidebar {
+    display: none;
+  }
+}
+```
+
+## Full example
+
+The real config of the pbstyles library: [config-mixin-dictionary.json](https://github.com/prosazhin/pbstyles/blob/main/config-mixin-dictionary.json).

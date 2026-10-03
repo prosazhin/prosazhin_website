@@ -1,0 +1,186 @@
+---
+title: Темы
+description: Светлая, тёмная и любые другие темы с переключением через data-theme на любом элементе страницы.
+---
+
+Темы — это отдельные файлы токенов, которые переопределяют семантические значения: например, `color.background` в светлой и тёмной теме. Базовые токены (палитра, размеры) лежат в `source` и одинаковы для всех тем.
+
+## Конфигурация
+
+```json
+{
+  "source": ["tokens/*.json"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+| Поле             | Тип        | Назначение                                                                                                                                 |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `themes.<имя>`   | `string[]` | Файлы токенов темы: `light`, `dark` или любое другое имя (`high-contrast`, `brand`).                                                       |
+| `themes.default` | `string`   | Тема, значения которой попадают в `:root`. По умолчанию `light`. Если файлов `light` нет, `light` означает базовые токены из `source`.     |
+| `themes.prefix`  | `string`   | Префикс CSS-переменных семантических токенов в v4: `--<prefix>-<key>-<name>`. По умолчанию `theme`; `"app"` даёт `--app-color-background`. |
+
+Файлы тем пишутся в том же формате, что и `source`: [DTCG](/docs/tailwind-dictionary/dtcg) или [старый](/docs/tailwind-dictionary/legacy).
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "background": { "$value": "{color.white}" },
+    "foreground": { "$value": "{color.gray.900}" }
+  }
+}
+```
+
+Семантические токены — те, что заданы в темах, кроме темы по умолчанию. Если такой токен есть не во всех темах, сборка выведет предупреждение со списком путей.
+
+<Callout type='warn'>
+  Не включайте файлы тем в `source`: пишите `tokens/*.json`, а не `tokens/**/*.json`.
+</Callout>
+
+## Переключение
+
+- **Без атрибута** — в `:root` значения темы по умолчанию, а светлая и тёмная следуют системной настройке `prefers-color-scheme`.
+- **`data-theme="<имя>"`** — включает тему на элементе и всём его содержимом: на `<html>` или на любом вложенном контейнере.
+- **`data-theme="light"` на `<html>`** перекрывает тёмную системную тему; на вложенном элементе создаёт светлый блок внутри тёмной страницы.
+
+```html
+<html data-theme="dark">
+  <body>
+    <section data-theme="light">Светлый блок внутри тёмной страницы</section>
+  </body>
+</html>
+```
+
+Если `default` — не `light`, а например `dark`, системная настройка работает наоборот: в `:root` значения тёмной темы, а блок `@media (prefers-color-scheme: light)` включает светлую.
+
+## Tailwind CSS 4
+
+Семантические токены объявляются как обычные CSS-переменные `--<prefix>-<key>-<name>` в `:root`, темы переопределяют те же имена, а в тему Tailwind они попадают через `@theme inline`. Утилиты вроде `bg-background` компилируются прямо в `var(--theme-color-background)`, поэтому темы работают на любом уровне DOM и с префиксом утилит (`@import 'tailwindcss' prefix(tw)`). Несемантические токены остаются в обычном блоке `@theme`.
+
+```css
+:root {
+  --theme-color-background: #ffffff;
+  --theme-color-foreground: #0f0f0f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --theme-color-background: #0f0f0f;
+    --theme-color-foreground: #ffffff;
+  }
+}
+
+[data-theme='dark'] {
+  --theme-color-background: #0f0f0f;
+  --theme-color-foreground: #ffffff;
+}
+
+[data-theme='light'] {
+  --theme-color-background: #ffffff;
+  --theme-color-foreground: #0f0f0f;
+}
+
+@theme {
+  --*: initial;
+
+  --color-*: initial;
+}
+
+@theme inline {
+  --color-background: var(--theme-color-background);
+  --color-foreground: var(--theme-color-foreground);
+}
+```
+
+Значения можно переопределить в своём CSS после импорта темы, без пересборки:
+
+```css
+:root {
+  --theme-color-background: #fafafa;
+}
+[data-theme='dark'] {
+  --theme-color-background: #18181b;
+}
+```
+
+## Больше двух тем
+
+```json
+{
+  "themes": {
+    "default": "light",
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"],
+    "high-contrast": ["tokens/themes/high-contrast.json"]
+  }
+}
+```
+
+Каждая тема получает свой блок `[data-theme='<имя>']`. Системная тёмная тема применяется, только пока на `:root` не задана другая тема:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='high-contrast']) {
+    /* значения dark */
+  }
+}
+
+[data-theme='dark'] {
+  /* значения dark */
+}
+
+[data-theme='high-contrast'] {
+  /* значения high-contrast */
+}
+
+[data-theme='light'] {
+  /* значения light */
+}
+```
+
+Конфиг только со светлой и тёмной темой даёт тот же результат, что в версиях до 2.5.
+
+## Tailwind CSS 3
+
+В версии 3 семантические токены в `theme.js` заменяются ссылками `var()`. Заменяются только семантические токены: другие токены с тем же значением сохраняют своё значение.
+
+```js
+module.exports = {
+  colors: {
+    background: 'var(--color-background)',
+    foreground: 'var(--color-foreground)',
+  },
+};
+```
+
+Рядом с `theme.js` создаётся `theme.css` со значениями тем. Импортируйте его в приложение:
+
+```css
+:root {
+  --color-background: #ffffff;
+  --color-foreground: #0f0f0f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-background: #0f0f0f;
+    --color-foreground: #ffffff;
+  }
+}
+
+[data-theme='dark'] {
+  --color-background: #0f0f0f;
+  --color-foreground: #ffffff;
+}
+
+[data-theme='light'] {
+  --color-background: #ffffff;
+  --color-foreground: #0f0f0f;
+}
+```
+
+Переключение через `data-theme` работает так же, как в версии 4.

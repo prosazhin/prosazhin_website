@@ -1,0 +1,139 @@
+---
+title: Темы
+description: Светлая, тёмная и любые другие темы для CSS, LESS и SCSS с переключением через data-theme на любом элементе.
+---
+
+Темы — это отдельные файлы токенов, которые переопределяют семантические значения, например `color.background`. Базовые токены (палитра, размеры) лежат в `source` и одинаковы для всех тем. Если `themes` не задан, пакет работает как раньше.
+
+## Конфигурация
+
+```json
+{
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/*.json"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  },
+  "output": "./styles"
+}
+```
+
+| Поле             | Тип        | Назначение                                                                                                                             |
+| ---------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `themes.<имя>`   | `string[]` | Файлы токенов темы: `light`, `dark` или любое другое имя (`high-contrast`, `brand`).                                                   |
+| `themes.default` | `string`   | Тема, значения которой попадают в `:root`. По умолчанию `light`. Если файлов `light` нет, `light` означает базовые токены из `source`. |
+
+Файлы тем пишутся в том же формате, что и `source`: [DTCG](/docs/mixin-dictionary/dtcg) или [старый](/docs/mixin-dictionary/legacy). Семантические токены — те, что заданы в темах, кроме темы по умолчанию. Если такой токен есть не во всех темах, сборка выведет предупреждение со списком путей.
+
+<Callout type='warn'>
+  Не включайте файлы тем в `source`: пишите `tokens/*.json`, а не `tokens/**/*.json`.
+</Callout>
+
+## Как это работает
+
+Style Dictionary собирает токены в памяти: один раз для темы по умолчанию и по одному разу для каждой другой темы.
+
+1. **Тема по умолчанию** — `source` + `themes.<default>` → все файлы платформ и миксины.
+2. **Остальные темы** — `source` + `themes.<имя>` → только блоки с переопределениями семантических токенов.
+
+## Переключение
+
+- **Без атрибута** — в `:root` значения темы по умолчанию, а светлая и тёмная следуют системной настройке `prefers-color-scheme`.
+- **`<html data-theme="dark">`** — тёмная тема независимо от системной настройки.
+- **`<html data-theme="light">`** — светлая тема независимо от системной настройки.
+- **`<div data-theme="light">`** или любая другая тема — переключает тему только для одного контейнера.
+
+Если `default` — не `light`, а например `dark`, системная настройка работает наоборот: в `:root` значения тёмной темы, а блок `@media (prefers-color-scheme: light)` включает светлую.
+
+## CSS
+
+Все токены попадают в `:root`, а семантические переопределения — в блоки `@media`, `[data-theme='dark']` и `[data-theme='light']`:
+
+```css
+:root {
+  --color-black: #000000;
+  --color-basic-0: #ffffff;
+  /* … все токены … */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-basic-0: #0f172a;
+  }
+}
+
+[data-theme='dark'] {
+  --color-basic-0: #0f172a;
+}
+
+[data-theme='light'] {
+  --color-basic-0: #ffffff;
+}
+```
+
+## LESS и SCSS
+
+В начало файла добавляются CSS-переменные семантических токенов и блоки тем. Сами переменные LESS и SCSS семантических токенов ссылаются на CSS-переменные, поэтому тема меняется без пересборки. Несемантические токены сохраняют реальные значения: `var()` не работает внутри `@media`, поэтому брейкпоинты остаются числами.
+
+```scss
+:root {
+  --color-basic-0: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-basic-0: #0f172a;
+  }
+}
+
+[data-theme='dark'] {
+  --color-basic-0: #0f172a;
+}
+
+[data-theme='light'] {
+  --color-basic-0: #ffffff;
+}
+
+$color-basic-0: var(--color-basic-0);
+$color-black: #000000;
+```
+
+В LESS то же самое, но с `@color-basic-0: var(--color-basic-0);`.
+
+## Больше двух тем
+
+```json
+{
+  "themes": {
+    "default": "light",
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"],
+    "high-contrast": ["tokens/themes/high-contrast.json"]
+  }
+}
+```
+
+Каждая тема получает свой блок `[data-theme='<имя>']`. Системная тёмная тема применяется, только пока на `:root` не задана другая тема:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='high-contrast']) {
+    /* значения dark */
+  }
+}
+
+[data-theme='dark'] {
+  /* значения dark */
+}
+
+[data-theme='high-contrast'] {
+  /* значения high-contrast */
+}
+
+[data-theme='light'] {
+  /* значения light */
+}
+```
+
+Конфиг только со светлой и тёмной темой даёт тот же результат, что в версиях до 1.6.

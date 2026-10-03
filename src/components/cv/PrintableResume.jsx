@@ -6,6 +6,7 @@ import { getFormatJobPeriod, getYearsDiff } from '@/utils/formatter';
 import {
   RESUME_PROJECT_SLUGS,
   buildCareerBlocks,
+  buildProjectsBlock,
   getTools,
   isSkillForProfession,
 } from '@/utils/resume';
@@ -16,12 +17,14 @@ const PrintableResume = ({ locale, profession, t }) => {
     .filter((entry) => isSkillForProfession(profession, entry.type))
     .map((entry) => ({ ...entry, tools: getTools(skillsByType[entry.type]) }));
 
+  const careerEntries = t('career:entries', { returnObjects: true });
   const careerBlocks = buildCareerBlocks({
-    entries: t('career:entries', { returnObjects: true }),
+    entries: careerEntries,
     careerByType,
     careerGroups,
     profession,
   });
+  const projectsBlock = buildProjectsBlock({ entries: careerEntries, careerByType, profession });
 
   const projects = t('projects:entries', { returnObjects: true })
     .filter((entry) => RESUME_PROJECT_SLUGS[profession].includes(entry.slug))
@@ -144,6 +147,14 @@ const PrintableResume = ({ locale, profession, t }) => {
 
       <section className='cv-section'>
         <h2>{t('pages:projects.title')}</h2>
+        {projectsBlock && (
+          <div className='cv-projects-intro'>
+            <p>{projectsBlock.summary}</p>
+            {projectsBlock.stack.length > 0 && (
+              <p className='cv-stack'>{projectsBlock.stack.join(' · ')}</p>
+            )}
+          </div>
+        )}
         {projects.map(({ slug, title, description, resourceLinks = [] }) => (
           <div
             className='cv-project'

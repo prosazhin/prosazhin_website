@@ -65,7 +65,9 @@ const AsideProfile = ({ profession }: { profession?: Profession }) => {
         </div>
         <Button
           size='s'
-          className='print:hidden!'
+          // С pbcomponents 2.1 у Button нет w-max: во flex-колонке без self-start кнопка тянется
+          // на всю ширину (на телефоне pbcomponents сам делает её во всю ширину — так и задумано).
+          className='self-start print:hidden!'
           leftIcon={ArrowDownTrayIcon}
           href={`/resume/cv-${locale}-${role}.pdf`}
           download={`${t(`cv.filename.${role}`)}.pdf`}

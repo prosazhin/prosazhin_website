@@ -1,0 +1,139 @@
+---
+title: Themes
+description: Light, dark and any other themes for CSS, LESS and SCSS, switched with data-theme on any element.
+---
+
+Themes are separate token files that override semantic values, for example `color.background`. Base tokens (palette, sizes) live in `source` and are the same for all themes. Without `themes` the package works as before.
+
+## Config
+
+```json
+{
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/*.json"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  },
+  "output": "./styles"
+}
+```
+
+| Field            | Type       | Purpose                                                                                                                   |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `themes.<name>`  | `string[]` | Token files of a theme: `light`, `dark` or any other name (`high-contrast`, `brand`).                                     |
+| `themes.default` | `string`   | Theme whose values go to `:root`. Default is `light`. Without `light` files, `light` means the base tokens from `source`. |
+
+Theme files use the same format as `source`: [DTCG](/docs/mixin-dictionary/dtcg) or [legacy](/docs/mixin-dictionary/legacy). Semantic tokens are the tokens defined in the themes other than the default one. If such a token is missing in one of the themes, the build prints a warning with the token paths.
+
+<Callout type='warn'>
+  Do not include the theme files in `source`: use `tokens/*.json` instead of `tokens/**/*.json`.
+</Callout>
+
+## How it works
+
+Style Dictionary resolves the tokens in memory: once for the default theme and once for every other theme.
+
+1. **Default theme** — `source` + `themes.<default>` → all platform files and mixins.
+2. **Other themes** — `source` + `themes.<name>` → only the override blocks of semantic tokens.
+
+## Switching
+
+- **No attribute** — `:root` gets the default theme, light and dark follow the system `prefers-color-scheme`.
+- **`<html data-theme="dark">`** — dark theme regardless of the system setting.
+- **`<html data-theme="light">`** — light theme regardless of the system setting.
+- **`<div data-theme="light">`** or any other theme — switches the theme for a single container.
+
+If `default` is not `light` but, for example, `dark`, the system setting works the other way round: `:root` gets the dark values and an `@media (prefers-color-scheme: light)` block switches to the light theme.
+
+## CSS
+
+All tokens go to `:root`, semantic overrides go to the `@media`, `[data-theme='dark']` and `[data-theme='light']` blocks:
+
+```css
+:root {
+  --color-black: #000000;
+  --color-basic-0: #ffffff;
+  /* … all tokens … */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-basic-0: #0f172a;
+  }
+}
+
+[data-theme='dark'] {
+  --color-basic-0: #0f172a;
+}
+
+[data-theme='light'] {
+  --color-basic-0: #ffffff;
+}
+```
+
+## LESS and SCSS
+
+CSS variables of semantic tokens and the theme blocks are added at the top of the file. LESS and SCSS variables of semantic tokens point to the CSS variables, so the theme switches without a rebuild. Non-semantic tokens keep real values: `var()` does not work inside `@media`, so breakpoints stay plain numbers.
+
+```scss
+:root {
+  --color-basic-0: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-basic-0: #0f172a;
+  }
+}
+
+[data-theme='dark'] {
+  --color-basic-0: #0f172a;
+}
+
+[data-theme='light'] {
+  --color-basic-0: #ffffff;
+}
+
+$color-basic-0: var(--color-basic-0);
+$color-black: #000000;
+```
+
+LESS is the same, with `@color-basic-0: var(--color-basic-0);`.
+
+## More than two themes
+
+```json
+{
+  "themes": {
+    "default": "light",
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"],
+    "high-contrast": ["tokens/themes/high-contrast.json"]
+  }
+}
+```
+
+Each theme gets its own `[data-theme='<name>']` block. The system dark scheme applies only while no other theme is set on `:root`:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='high-contrast']) {
+    /* dark values */
+  }
+}
+
+[data-theme='dark'] {
+  /* dark values */
+}
+
+[data-theme='high-contrast'] {
+  /* high-contrast values */
+}
+
+[data-theme='light'] {
+  /* light values */
+}
+```
+
+A config with only light and dark themes gives the same output as versions before 1.6.

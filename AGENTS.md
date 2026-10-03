@@ -89,6 +89,7 @@ src/
 
 - MDX-страницы: `content/docs/<библиотека>/*.mdx` (ru) и `*.en.mdx` (en) — каждую правку делать в обоих языках; навигация в `meta.json` / `meta.en.json`
 - pbcomponents: справочник API — `src/components/docs/component-reference.ts`, живые примеры — `src/components/docs/ComponentShowcase.tsx`
+- Плейграунды: страницы `content/docs/{tailwind-dictionary,mixin-dictionary}/playground.mdx` (+ `.en.mdx`), компонент `src/components/docs/playground/` (проп `packageName`) — запускает `generate()` из `tailwind-dictionary/generate` или `mixin-dictionary/generate` в браузере (грузятся лениво), превью в `iframe` с `sandbox`
 
 ## Интернационализация
 

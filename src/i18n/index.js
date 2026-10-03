@@ -4,6 +4,7 @@ import { createInstance } from 'i18next';
 
 import enCareer from '@/i18n/locales/en/career.json';
 import enCommon from '@/i18n/locales/en/common.json';
+import enDesignSystem from '@/i18n/locales/en/design-system.json';
 import enMatrix from '@/i18n/locales/en/matrix.json';
 import enPages from '@/i18n/locales/en/pages.json';
 import enPrivacy from '@/i18n/locales/en/privacy.json';
@@ -11,6 +12,7 @@ import enProjects from '@/i18n/locales/en/projects.json';
 import enSkills from '@/i18n/locales/en/skills.json';
 import ruCareer from '@/i18n/locales/ru/career.json';
 import ruCommon from '@/i18n/locales/ru/common.json';
+import ruDesignSystem from '@/i18n/locales/ru/design-system.json';
 import ruMatrix from '@/i18n/locales/ru/matrix.json';
 import ruPages from '@/i18n/locales/ru/pages.json';
 import ruPrivacy from '@/i18n/locales/ru/privacy.json';
@@ -20,9 +22,20 @@ import ruSkills from '@/i18n/locales/ru/skills.json';
 export const i18nConfig = {
   locales: ['ru', 'en'],
   defaultLocale: 'ru',
+  // Заголовок, которым proxy передаёт язык из ?lang= в серверный getLocale()
+  localeHeader: 'x-locale',
 };
 
-const NAMESPACES = ['common', 'pages', 'projects', 'career', 'skills', 'matrix', 'privacy'];
+const NAMESPACES = [
+  'common',
+  'pages',
+  'projects',
+  'career',
+  'skills',
+  'matrix',
+  'privacy',
+  'design-system',
+];
 
 // Обычные (не через import()) импорты: под Turbopack в dev-режиме динамический
 // import() локализаций не отслеживается файловым вотчером как обычная
@@ -38,6 +51,7 @@ const NAMESPACE_RESOURCES = {
     skills: ruSkills,
     matrix: ruMatrix,
     privacy: ruPrivacy,
+    'design-system': ruDesignSystem,
   },
   en: {
     common: enCommon,
@@ -47,6 +61,7 @@ const NAMESPACE_RESOURCES = {
     skills: enSkills,
     matrix: enMatrix,
     privacy: enPrivacy,
+    'design-system': enDesignSystem,
   },
 };
 

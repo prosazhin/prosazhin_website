@@ -1,0 +1,187 @@
+---
+title: Legacy format
+description: Style Dictionary tokens with the value field and text styles via the mixin field.
+---
+
+Before 2.5 the package read only the Style Dictionary format, where the value is in the `value` field. This format is still supported and gives the same output as before. For new projects [DTCG](/docs/tailwind-dictionary/dtcg) is more convenient.
+
+One build uses one format: files with `value` and `$value` cannot be mixed.
+
+## Simple tokens
+
+```json
+{
+  "font": {
+    "family": {
+      "sans": { "value": "'Inter', sans-serif" }
+    },
+    "weight": {
+      "regular": { "value": 400 },
+      "bold": { "value": 700 }
+    }
+  },
+  "rounded": {
+    "0": { "value": "0px" },
+    "8": { "value": "8px" }
+  }
+}
+```
+
+Tailwind 4:
+
+```css
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --radius-0: 0px;
+  --radius-8: 8px;
+}
+```
+
+Tailwind 3:
+
+```js
+module.exports = {
+  fontFamily: { sans: "'Inter', sans-serif" },
+  fontWeight: { regular: 400, bold: 700 },
+  borderRadius: { 0: '0px', 8: '8px' },
+};
+```
+
+## Text styles via `mixin`
+
+The legacy format has no composite types. The properties of a text style are separate tokens with the same `mixin` field:
+
+```json
+{
+  "font": {
+    "size": {
+      "16": { "value": "{size.16}" }
+    },
+    "h64": {
+      "font-size": { "value": "64px", "mixin": "h64" },
+      "line-height": { "value": "1.25", "mixin": "h64" },
+      "font-weight": { "value": "700", "mixin": "h64" }
+    }
+  }
+}
+```
+
+Tailwind 4 (alias `"text": "font/size"`):
+
+```css
+@theme {
+  --text-16: 16px;
+
+  --text-h64: 64px;
+  --text-h64--line-height: 1.25;
+  --text-h64--font-weight: 700;
+}
+```
+
+Tailwind 3 (alias `"fontSize": "font/size"`):
+
+```js
+module.exports = {
+  fontSize: {
+    16: '16px',
+    h64: ['64px', { lineHeight: '1.25', fontWeight: '700' }],
+  },
+};
+```
+
+Values go to the theme as they are written in the tokens: the string `"1.25"` stays a string.
+
+## Breakpoints
+
+Since 2.5 breakpoints are built from the structure in the legacy format too: the `mixin` field is optional. If it is set, its value becomes the group name.
+
+```json
+{
+  "screen": {
+    "xl": {
+      "min": { "value": "1441px" }
+    },
+    "lg": {
+      "max": { "value": "1440px" },
+      "min": { "value": "921px" }
+    }
+  }
+}
+```
+
+Tailwind 4 (alias `"breakpoint": "screen"`):
+
+```css
+@theme {
+  --breakpoint-xl: 1441px;
+  --breakpoint-lg-max: 1440px;
+  --breakpoint-lg-min: 921px;
+}
+```
+
+Tailwind 3 (alias `"screens": "screen"`):
+
+```js
+module.exports = {
+  screens: {
+    xl: { min: '1441px' },
+    lg: { max: '1440px', min: '921px' },
+  },
+};
+```
+
+## Animations
+
+```json
+{
+  "animation": {
+    "show": { "value": "show 300ms ease-in forwards" }
+  },
+  "keyframes": {
+    "show": {
+      "from": { "opacity": { "value": 0 } },
+      "to": { "opacity": { "value": 1 } }
+    }
+  }
+}
+```
+
+Tailwind 4 (aliases `"animation": "animation"` and `"keyframes": "keyframes"`):
+
+```css
+@theme {
+  --animation-show: show 300ms ease-in forwards;
+
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+```
+
+Tailwind 3 (aliases inside `extend`):
+
+```js
+module.exports = {
+  extend: {
+    animation: { show: 'show 300ms ease-in forwards' },
+    keyframes: { show: { from: { opacity: 0 }, to: { opacity: 1 } } },
+  },
+};
+```
+
+## Group name priority
+
+If a group name is set in several ways, the first one from the list wins:
+
+1. the `mixin` field (legacy format);
+2. `$extensions["dev.prosazhin.mixin"]`;
+3. the name from the token structure.

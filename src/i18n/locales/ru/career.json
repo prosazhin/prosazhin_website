@@ -86,23 +86,9 @@
     {
       "type": "opensource",
       "title": "Open source",
-      "subtitle": "Свои npm-пакеты и Figma-библиотеки",
-      "positions": {
-        "frontend": "Разработка и публикация собственных npm-пакетов.",
-        "uxuiDesign": "Собрал Figma-библиотеки pbstyles и pbcomponents, синхронные с npm-пакетами, и опубликовал их в Figma Community и на Behance."
-      },
-      "details": {
-        "frontend": [
-          {
-            "text": "Опубликовал 4 npm-пакета.",
-            "items": [
-              "Tailwind Dictionary — дизайн-токены в тему Tailwind.",
-              "Mixin Dictionary — дизайн-токены в миксины Less и SCSS.",
-              "pbstyles — библиотека стилей для быстрого прототипирования.",
-              "pbcomponents — библиотека React-компонентов на базе pbstyles."
-            ]
-          }
-        ]
+      "summary": {
+        "developer": "Параллельно с основной работой развиваю свои open source библиотеки: React-компоненты, стили и генераторы тем из дизайн-токенов.",
+        "designer": "Параллельно с основной работой развиваю свои open source Figma-библиотеки стилей и компонентов, синхронные с npm-пакетами, и делаю концепты приложений."
       }
     },
     {

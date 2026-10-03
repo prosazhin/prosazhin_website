@@ -1,1 +1,4 @@
-{ "title": "pbstyles" }
+{
+  "title": "pbstyles",
+  "pages": ["themes", "tokens"]
+}

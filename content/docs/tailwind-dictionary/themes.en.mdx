@@ -1,0 +1,186 @@
+---
+title: Themes
+description: Light, dark and any other themes, switched with data-theme on any element of the page.
+---
+
+Themes are separate token files that override semantic values, for example `color.background` in the light and dark theme. Base tokens (palette, sizes) live in `source` and are the same for all themes.
+
+## Config
+
+```json
+{
+  "source": ["tokens/*.json"],
+  "themes": {
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"]
+  }
+}
+```
+
+| Field            | Type       | Purpose                                                                                                                        |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `themes.<name>`  | `string[]` | Token files of a theme: `light`, `dark` or any other name (`high-contrast`, `brand`).                                          |
+| `themes.default` | `string`   | Theme whose values go to `:root`. Default is `light`. Without `light` files, `light` means the base tokens from `source`.      |
+| `themes.prefix`  | `string`   | Prefix of semantic CSS variables in v4: `--<prefix>-<key>-<name>`. Default is `theme`; `"app"` gives `--app-color-background`. |
+
+Theme files use the same format as `source`: [DTCG](/docs/tailwind-dictionary/dtcg) or [legacy](/docs/tailwind-dictionary/legacy).
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "background": { "$value": "{color.white}" },
+    "foreground": { "$value": "{color.gray.900}" }
+  }
+}
+```
+
+Semantic tokens are the tokens defined in the themes other than the default one. If such a token is missing in one of the themes, the build prints a warning with the token paths.
+
+<Callout type='warn'>
+  Do not include the theme files in `source`: use `tokens/*.json` instead of `tokens/**/*.json`.
+</Callout>
+
+## Switching
+
+- **No attribute** — `:root` gets the default theme, light and dark follow the system `prefers-color-scheme`.
+- **`data-theme="<name>"`** — forces the theme on the element and its subtree: on `<html>` or on any nested container.
+- **`data-theme="light"` on `<html>`** overrides a dark system scheme; on a nested element it creates a light block inside a dark page.
+
+```html
+<html data-theme="dark">
+  <body>
+    <section data-theme="light">A light block inside a dark page</section>
+  </body>
+</html>
+```
+
+If `default` is not `light` but, for example, `dark`, the system setting works the other way round: `:root` gets the dark values and an `@media (prefers-color-scheme: light)` block switches to the light theme.
+
+## Tailwind CSS 4
+
+Semantic tokens are declared as plain CSS variables `--<prefix>-<key>-<name>` in `:root`, themes override the same names, and they are mapped into the Tailwind theme via `@theme inline`. Utilities like `bg-background` compile straight to `var(--theme-color-background)`, so themes work on any DOM level and with a utility prefix (`@import 'tailwindcss' prefix(tw)`). Non-semantic tokens stay in the regular `@theme` block.
+
+```css
+:root {
+  --theme-color-background: #ffffff;
+  --theme-color-foreground: #0f0f0f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --theme-color-background: #0f0f0f;
+    --theme-color-foreground: #ffffff;
+  }
+}
+
+[data-theme='dark'] {
+  --theme-color-background: #0f0f0f;
+  --theme-color-foreground: #ffffff;
+}
+
+[data-theme='light'] {
+  --theme-color-background: #ffffff;
+  --theme-color-foreground: #0f0f0f;
+}
+
+@theme {
+  --*: initial;
+
+  --color-*: initial;
+}
+
+@theme inline {
+  --color-background: var(--theme-color-background);
+  --color-foreground: var(--theme-color-foreground);
+}
+```
+
+Values can be overridden in your own CSS after the theme import, without a rebuild:
+
+```css
+:root {
+  --theme-color-background: #fafafa;
+}
+[data-theme='dark'] {
+  --theme-color-background: #18181b;
+}
+```
+
+## More than two themes
+
+```json
+{
+  "themes": {
+    "default": "light",
+    "light": ["tokens/themes/light.json"],
+    "dark": ["tokens/themes/dark.json"],
+    "high-contrast": ["tokens/themes/high-contrast.json"]
+  }
+}
+```
+
+Each theme gets its own `[data-theme='<name>']` block. The system dark scheme applies only while no other theme is set on `:root`:
+
+```css
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='high-contrast']) {
+    /* dark values */
+  }
+}
+
+[data-theme='dark'] {
+  /* dark values */
+}
+
+[data-theme='high-contrast'] {
+  /* high-contrast values */
+}
+
+[data-theme='light'] {
+  /* light values */
+}
+```
+
+A config with only light and dark themes gives the same output as versions before 2.5.
+
+## Tailwind CSS 3
+
+In version 3 semantic tokens in `theme.js` are replaced with `var()` references. Only semantic tokens are replaced: other tokens with the same value keep their values.
+
+```js
+module.exports = {
+  colors: {
+    background: 'var(--color-background)',
+    foreground: 'var(--color-foreground)',
+  },
+};
+```
+
+A `theme.css` with theme values is generated next to `theme.js`. Import it in your app:
+
+```css
+:root {
+  --color-background: #ffffff;
+  --color-foreground: #0f0f0f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-background: #0f0f0f;
+    --color-foreground: #ffffff;
+  }
+}
+
+[data-theme='dark'] {
+  --color-background: #0f0f0f;
+  --color-foreground: #ffffff;
+}
+
+[data-theme='light'] {
+  --color-background: #ffffff;
+  --color-foreground: #0f0f0f;
+}
+```
+
+Switching with `data-theme` works the same way as in version 4.

@@ -1,0 +1,111 @@
+---
+title: Legacy format
+description: Style Dictionary tokens with the value field and mixins via the mixin field.
+---
+
+Before 1.6 the package read only the Style Dictionary format, where the value is in the `value` field and a mixin is built from tokens with the same `mixin` field. This format is still supported and gives the same output as before. For new projects [DTCG](/docs/mixin-dictionary/dtcg) is more convenient.
+
+One build uses one format: files with `value` and `$value` cannot be mixed.
+
+## Text style
+
+```json
+{
+  "font": {
+    "h64": {
+      "font-size": { "value": "64px", "mixin": "h64" },
+      "line-height": { "value": "1.25", "mixin": "h64" },
+      "font-weight": { "value": "700", "mixin": "h64" }
+    }
+  }
+}
+```
+
+```scss
+@mixin h64 {
+  font-size: $font-h64-font-size;
+  line-height: $font-h64-line-height;
+  font-weight: $font-h64-font-weight;
+}
+```
+
+```less
+.h64() {
+  font-size: @font-h64-font-size;
+  line-height: @font-h64-line-height;
+  font-weight: @font-h64-font-weight;
+}
+```
+
+The property name in the mixin is the last segment of the token path (`font-size`), so name tokens like CSS properties.
+
+## Media query
+
+The token category must be in `mediaAliases`. The last path segment is `min` or `max`.
+
+```json
+{
+  "screen": {
+    "lg": {
+      "max": { "value": "1440px", "mixin": "lg" },
+      "min": { "value": "921px", "mixin": "lg" }
+    }
+  }
+}
+```
+
+```scss
+@mixin lg {
+  @media all and (max-width: $screen-lg-max) and (min-width: $screen-lg-min) {
+    @content;
+  }
+}
+```
+
+```less
+.lg(@rules) {
+  @media all and (max-width: @screen-lg-max) and (min-width: @screen-lg-min) {
+    @rules();
+  }
+}
+```
+
+## Keyframes
+
+The token category must be in `keyframesAliases`. The second-to-last path segment is the frame (`from`, `to`, `50%`), the last one is the property.
+
+```json
+{
+  "keyframes": {
+    "show": {
+      "from": { "opacity": { "value": 0, "mixin": "show" } },
+      "to": { "opacity": { "value": 1, "mixin": "show" } }
+    }
+  }
+}
+```
+
+```scss
+@include keyframes(show) {
+  from {
+    opacity: $keyframes-show-from-opacity;
+  }
+  to {
+    opacity: $keyframes-show-to-opacity;
+  }
+}
+```
+
+```less
+.keyframes(show, { from { opacity: @keyframes-show-from-opacity; } to { opacity: @keyframes-show-to-opacity; } });
+```
+
+Since 1.6 the `mixin` field is optional for media queries and keyframes: the group comes from the structure, as in [DTCG](/docs/mixin-dictionary/dtcg). Text styles in the legacy format still need `mixin`.
+
+## Mixin name priority
+
+If a name is set in several ways, the first one from the list wins:
+
+1. the `mixin` field;
+2. `$extensions["dev.prosazhin.mixin"]`;
+3. the name from the token structure.

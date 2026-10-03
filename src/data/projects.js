@@ -11,7 +11,7 @@ const projects = {
         url: 'https://github.com/prosazhin/pbcomponents',
         title: 'GitHub',
       },
-      { url: 'https://www.npmjs.com/package/@prosazhin/pbcomponents', title: 'NPM' },
+      { url: 'https://www.npmjs.com/package/@prosazhin/pbcomponents', title: 'npm' },
       {
         url: 'https://www.figma.com/community/file/1214486013859546496',
         title: 'Figma Community',
@@ -28,7 +28,7 @@ const projects = {
     resourceLinks: [
       { url: '/docs/pbstyles', title: 'docs' },
       { url: 'https://github.com/prosazhin/pbstyles', title: 'GitHub' },
-      { url: 'https://www.npmjs.com/package/@prosazhin/pbstyles', title: 'NPM' },
+      { url: 'https://www.npmjs.com/package/@prosazhin/pbstyles', title: 'npm' },
       {
         url: 'https://www.figma.com/community/file/1213609862805339771',
         title: 'Figma Community',
@@ -59,8 +59,8 @@ const projects = {
     tags: ['Development'],
     resourceLinks: [
       { url: '/docs/mixin-dictionary', title: 'docs' },
-      { url: 'https://www.npmjs.com/package/mixin-dictionary', title: 'NPM' },
       { url: 'https://github.com/prosazhin/mixin-dictionary', title: 'GitHub' },
+      { url: 'https://www.npmjs.com/package/mixin-dictionary', title: 'npm' },
     ],
   },
   'tailwind-dictionary': {
@@ -71,8 +71,8 @@ const projects = {
     tags: ['Development'],
     resourceLinks: [
       { url: '/docs/tailwind-dictionary', title: 'docs' },
-      { url: 'https://www.npmjs.com/package/tailwind-dictionary', title: 'NPM' },
       { url: 'https://github.com/prosazhin/tailwind-dictionary', title: 'GitHub' },
+      { url: 'https://www.npmjs.com/package/tailwind-dictionary', title: 'npm' },
     ],
   },
   'bank-money-time': {

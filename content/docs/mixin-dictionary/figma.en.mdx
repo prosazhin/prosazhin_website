@@ -1,0 +1,43 @@
+---
+title: From Figma
+description: How to export variables from Figma and get CSS variables, LESS and SCSS with light and dark modes.
+---
+
+The native Figma export works without conversion: **Variables → right click on a collection → Export modes** gives one `*.tokens.json` file (DTCG) per mode.
+
+## How to arrange the files
+
+1. Put the file with the primitives (the collection without modes) into `source`.
+2. Put the files of the modes into `themes`: one file per theme (`light`, `dark`, …). The file name does not matter.
+
+```json
+{
+  "platforms": ["css", "less", "scss"],
+  "source": ["tokens/Primitives.tokens.json"],
+  "themes": {
+    "light": ["tokens/Light.tokens.json"],
+    "dark": ["tokens/Dark.tokens.json"]
+  },
+  "output": "./styles"
+}
+```
+
+Color objects (`colorSpace`, `components`, `hex`), references (`"{color.blue.600}"`) and `$extensions` (`com.figma.*`) are handled. More about modes in [Themes](/docs/mixin-dictionary/themes).
+
+## Numbers without a unit
+
+Figma exports a FLOAT variable as a number without a unit (`"$type": "number"`). `--radius-4: 4` is not valid CSS, so bare numbers in dimension categories get a unit. The `numberUnit` option sets it:
+
+| Value            | Output for `4`            |
+| ---------------- | ------------------------- |
+| `"px"` (default) | `4px`                     |
+| `"rem"`          | `0.25rem` (divided by 16) |
+| `false`          | `4` (as is)               |
+
+A dimension category is the first segment of the token path. By default: `spacing`, `space`, `size`, `sizes`, `radius`, `radii`, `border-radius`, `border-width`, `width`, `height`, `gap`, `blur`, `font-size`, `container`, `stroke`, and the categories from `mediaAliases`. Set your own list with the `dimensionAliases` option. `line-height`, `font-weight`, `opacity`, `z-index` tokens and the value `0` stay numbers in any category.
+
+The legacy format (`value`) is not affected.
+
+## Limitations
+
+Figma does not export the `description` of variables, and composite styles (typography, shadows) are incomplete in the native export.

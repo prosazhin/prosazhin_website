@@ -1,1 +1,14 @@
-{ "title": "tailwind-dictionary" }
+{
+  "title": "tailwind-dictionary",
+  "pages": [
+    "config",
+    "---Token formats---",
+    "dtcg",
+    "legacy",
+    "---Features---",
+    "themes",
+    "figma",
+    "api",
+    "playground"
+  ]
+}

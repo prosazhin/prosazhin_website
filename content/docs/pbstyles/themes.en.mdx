@@ -1,0 +1,54 @@
+---
+title: Themes
+description: The pbstyles light and dark theme, switching with data-theme and overriding semantic colors.
+---
+
+Semantic colors (`basic`, `primary`, `secondary`, `success`, `danger`, `warning`, `outline`, `text`) change between the light and dark theme. Palette colors (`gray`, `blue` and others) are the same in both themes.
+
+## Switching the theme
+
+Without an explicit attribute the theme follows the system `prefers-color-scheme`. An attribute on `<html>` or on a nested container sets the mode manually:
+
+```html
+<html data-theme="dark">
+  <body>
+    <section data-theme="light">A light block inside a dark page</section>
+  </body>
+</html>
+```
+
+- **System** — automatically via `@media (prefers-color-scheme: dark)`.
+- **`data-theme="dark"`** — dark theme on the element and its subtree.
+- **`data-theme="light"`** — light theme even with a dark system setting, on `<html>` or on a nested container.
+
+On this site the switcher stores `THEME` in a cookie, and the server sets `data-theme` on `<html>`. The attribute controls both the site and the documentation.
+
+## Overriding colors
+
+Semantic colors are plain CSS variables. Any of them can be overridden with the cascade: in `:root`, inside `[data-theme='dark']` or on a specific element.
+
+| Format     | Variable name                                           |
+| ---------- | ------------------------------------------------------- |
+| CSS        | `--color-basic-0`, `--color-primary-300`, …             |
+| LESS       | `@color-basic-0` → `var(--color-basic-0)`               |
+| SCSS       | `$color-basic-0` → `var(--color-basic-0)`               |
+| Tailwind 4 | `--theme-color-basic-0`, `--theme-color-primary-300`, … |
+
+In Tailwind 4 override the `--theme-color-*` variables after the theme import:
+
+```css
+@import 'tailwindcss';
+@import '@prosazhin/pbstyles/styles/tailwind/theme.css';
+
+:root {
+  --theme-color-primary-300: #7c3aed;
+}
+
+[data-theme='dark'] {
+  --theme-color-primary-300: #a78bfa;
+}
+```
+
+Utilities like `bg-primary-300` compile straight to `var(--theme-color-primary-300)`, so the override works on any DOM level and with any Tailwind prefix, without rebuilding CSS.
+
+How themes work in the generators: see [tailwind-dictionary](/docs/tailwind-dictionary/themes) and [mixin-dictionary](/docs/mixin-dictionary/themes).

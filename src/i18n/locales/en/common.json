@@ -121,5 +121,20 @@
       "month_many": "{{count}} months",
       "month_other": "{{count}} months"
     }
+  },
+  "footer": {
+    "columns": {
+      "about": "About me",
+      "products": "Products",
+      "openSource": "Open source"
+    },
+    "links": {
+      "resumeDeveloper": "Developer resume",
+      "resumeDesigner": "Designer resume",
+      "projects": "Projects",
+      "links": "Useful links",
+      "posts": "Posts",
+      "designSystem": "Design system"
+    }
   }
 }

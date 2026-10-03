@@ -121,5 +121,20 @@
       "month_many": "{{count}} месяцев",
       "month_other": "{{count}} месяца"
     }
+  },
+  "footer": {
+    "columns": {
+      "about": "Обо мне",
+      "products": "Продукты",
+      "openSource": "Open source"
+    },
+    "links": {
+      "resumeDeveloper": "Резюме разработчика",
+      "resumeDesigner": "Резюме дизайнера",
+      "projects": "Проекты",
+      "links": "Полезные ссылки",
+      "posts": "Заметки",
+      "designSystem": "Дизайн-система"
+    }
   }
 }

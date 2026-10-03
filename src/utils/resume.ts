@@ -39,6 +39,8 @@ export type CareerEntry = {
   subtitle?: string;
   positions?: Record<string, string>;
   details?: Record<string, CareerDetail[]>;
+  // Связный текст для профессии вместо позиций — у блока «Проекты».
+  summary?: Partial<Record<Profession, string>>;
 };
 
 export type CareerExtra = {
@@ -57,6 +59,21 @@ export type Job = {
 export type CareerBlock =
   | { id: string; jobs: Job[]; grouped: false }
   | { id: string; jobs: Job[]; grouped: true; dateFrom: string; dateTo: string };
+
+// Место работы с позициями только этой профессии; null — если релевантных позиций нет.
+const toJob = (
+  entry: CareerEntry,
+  extra: CareerExtra | undefined,
+  profession: Profession
+): Job | null => {
+  if (!extra) return null;
+
+  const positions = extra.positions.filter((position) =>
+    isPositionForProfession(profession, position.type)
+  );
+
+  return positions.length ? { entry, extra, positions } : null;
+};
 
 /**
  * Собирает карьеру для резюме профессии: оставляет места с релевантной позицией,
@@ -79,15 +96,8 @@ export const buildCareerBlocks = ({
   const jobsByType = new Map<string, Job>();
 
   entries.forEach((entry) => {
-    const extra = careerByType[entry.type];
-    if (!extra) return;
-
-    const positions = extra.positions.filter((position) =>
-      isPositionForProfession(profession, position.type)
-    );
-    if (!positions.length) return;
-
-    jobsByType.set(entry.type, { entry, extra, positions });
+    const job = toJob(entry, careerByType[entry.type], profession);
+    if (job) jobsByType.set(entry.type, job);
   });
 
   return careerGroups
@@ -110,6 +120,39 @@ export const buildCareerBlocks = ({
       return { id, jobs, grouped: true, dateFrom, dateTo };
     })
     .filter((block): block is CareerBlock => block !== null);
+};
+
+// Запись карьеры, из которой собирается блок «Проекты»: текст и стек,
+// под которыми идут карточки проектов. В careerGroups её нет.
+const PROJECTS_BLOCK_TYPE = 'opensource';
+
+export type ProjectsBlock = {
+  summary: string;
+  stack: string[];
+};
+
+/**
+ * Шапка блока «Проекты» в резюме: связный текст профессии и общий стек её позиций.
+ * Рендерится отдельно от карьеры — работа над проектами идёт параллельно.
+ * Используется и веб-резюме, и печатным шаблоном PDF.
+ */
+export const buildProjectsBlock = ({
+  entries,
+  careerByType,
+  profession,
+}: {
+  entries: CareerEntry[];
+  careerByType: Record<string, CareerExtra>;
+  profession: Profession;
+}): ProjectsBlock | null => {
+  const entry = entries.find(({ type }) => type === PROJECTS_BLOCK_TYPE);
+  const job = entry ? toJob(entry, careerByType[PROJECTS_BLOCK_TYPE], profession) : null;
+  if (!job) return null;
+
+  return {
+    summary: job.entry.summary?.[profession] ?? '',
+    stack: [...new Set(job.positions.flatMap(({ stack }) => stack))],
+  };
 };
 
 export const getTools = (extra?: { tools?: string[] }): string[] => extra?.tools ?? [];

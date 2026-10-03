@@ -1,0 +1,187 @@
+---
+title: Старый формат
+description: Токены Style Dictionary с полем value и текстовые стили через поле mixin.
+---
+
+До версии 2.5 пакет читал только формат Style Dictionary, где значение лежит в поле `value`. Этот формат по-прежнему поддерживается и даёт тот же результат, что и раньше. Для новых проектов удобнее [DTCG](/docs/tailwind-dictionary/dtcg).
+
+В одной сборке используется один формат: нельзя смешивать файлы с `value` и `$value`.
+
+## Простые токены
+
+```json
+{
+  "font": {
+    "family": {
+      "sans": { "value": "'Inter', sans-serif" }
+    },
+    "weight": {
+      "regular": { "value": 400 },
+      "bold": { "value": 700 }
+    }
+  },
+  "rounded": {
+    "0": { "value": "0px" },
+    "8": { "value": "8px" }
+  }
+}
+```
+
+Tailwind 4:
+
+```css
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --radius-0: 0px;
+  --radius-8: 8px;
+}
+```
+
+Tailwind 3:
+
+```js
+module.exports = {
+  fontFamily: { sans: "'Inter', sans-serif" },
+  fontWeight: { regular: 400, bold: 700 },
+  borderRadius: { 0: '0px', 8: '8px' },
+};
+```
+
+## Текстовые стили через `mixin`
+
+В старом формате нет составных типов. Свойства текстового стиля — отдельные токены с одинаковым полем `mixin`:
+
+```json
+{
+  "font": {
+    "size": {
+      "16": { "value": "{size.16}" }
+    },
+    "h64": {
+      "font-size": { "value": "64px", "mixin": "h64" },
+      "line-height": { "value": "1.25", "mixin": "h64" },
+      "font-weight": { "value": "700", "mixin": "h64" }
+    }
+  }
+}
+```
+
+Tailwind 4 (алиас `"text": "font/size"`):
+
+```css
+@theme {
+  --text-16: 16px;
+
+  --text-h64: 64px;
+  --text-h64--line-height: 1.25;
+  --text-h64--font-weight: 700;
+}
+```
+
+Tailwind 3 (алиас `"fontSize": "font/size"`):
+
+```js
+module.exports = {
+  fontSize: {
+    16: '16px',
+    h64: ['64px', { lineHeight: '1.25', fontWeight: '700' }],
+  },
+};
+```
+
+Значения попадают в тему в том виде, в каком записаны в токенах: строка `"1.25"` остаётся строкой.
+
+## Брейкпоинты
+
+Начиная с 2.5, брейкпоинты собираются по структуре и в старом формате: поле `mixin` не обязательно. Если оно задано, его значение становится именем группы.
+
+```json
+{
+  "screen": {
+    "xl": {
+      "min": { "value": "1441px" }
+    },
+    "lg": {
+      "max": { "value": "1440px" },
+      "min": { "value": "921px" }
+    }
+  }
+}
+```
+
+Tailwind 4 (алиас `"breakpoint": "screen"`):
+
+```css
+@theme {
+  --breakpoint-xl: 1441px;
+  --breakpoint-lg-max: 1440px;
+  --breakpoint-lg-min: 921px;
+}
+```
+
+Tailwind 3 (алиас `"screens": "screen"`):
+
+```js
+module.exports = {
+  screens: {
+    xl: { min: '1441px' },
+    lg: { max: '1440px', min: '921px' },
+  },
+};
+```
+
+## Анимации
+
+```json
+{
+  "animation": {
+    "show": { "value": "show 300ms ease-in forwards" }
+  },
+  "keyframes": {
+    "show": {
+      "from": { "opacity": { "value": 0 } },
+      "to": { "opacity": { "value": 1 } }
+    }
+  }
+}
+```
+
+Tailwind 4 (алиасы `"animation": "animation"` и `"keyframes": "keyframes"`):
+
+```css
+@theme {
+  --animation-show: show 300ms ease-in forwards;
+
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+```
+
+Tailwind 3 (алиасы внутри `extend`):
+
+```js
+module.exports = {
+  extend: {
+    animation: { show: 'show 300ms ease-in forwards' },
+    keyframes: { show: { from: { opacity: 0 }, to: { opacity: 1 } } },
+  },
+};
+```
+
+## Приоритет имени группы
+
+Если имя группы задано несколькими способами, используется первое из списка:
+
+1. поле `mixin` (старый формат);
+2. `$extensions["dev.prosazhin.mixin"]`;
+3. имя по структуре токенов.
