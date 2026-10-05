@@ -20,7 +20,7 @@ const ThemeSwitch = ({ theme }: { theme: ThemeType }) => {
   };
 
   return (
-    <Popover placement='bottom-end'>
+    <Popover>
       <Popover.Trigger>
         <Button
           size='xs'

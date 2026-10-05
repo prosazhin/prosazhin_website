@@ -1,10 +1,10 @@
 {
-  "metaTitle": "The pbstyles and pbcomponents design system",
+  "metaTitle": "Design system built on pbstyles and pbcomponents",
   "metaDescription": "Open-source style and React component libraries with matching Figma files: why a small team needs a design system and how this one works, from tokens to components.",
   "hero": {
-    "titleStart": "The design system ",
-    "titleAccent": "this site is built on",
-    "description": "pbstyles and pbcomponents are style and React component libraries. Each comes with a Figma file that has the same colors, fonts and components as the code.",
+    "titleStart": "Design system built on ",
+    "titleAccent": "pbstyles and pbcomponents",
+    "description": "Style and React component libraries this site is built on. Each comes with a Figma file that has the same colors, fonts and components as the code.",
     "copy": "Copy command",
     "copied": "Copied"
   },

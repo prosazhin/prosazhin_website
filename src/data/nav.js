@@ -15,9 +15,7 @@ export const footerNav = [
     links: [
       { key: 'resumeDeveloper', url: '/' },
       { key: 'resumeDesigner', url: '/designer' },
-      { key: 'projects', url: '/projects' },
-      { key: 'links', url: '/links' },
-      { key: 'posts', url: '/posts' },
+      { key: 'collaboration', url: '/collaboration' },
     ],
   },
   {
@@ -31,6 +29,9 @@ export const footerNav = [
   },
   {
     type: 'products',
-    links: [{ key: 'designSystem', url: '/design-system' }],
+    links: [
+      { key: 'designSystem', url: '/design-system' },
+      { key: 'tailwindDictionary', url: '/tailwind-dictionary' },
+    ],
   },
 ];

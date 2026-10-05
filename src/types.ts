@@ -84,13 +84,16 @@ export type ResourceLinksType = {
 };
 
 export type ProjectType = {
-  id: string;
+  slug: string;
   title: string;
   description: string;
+  role?: string;
   order: number;
   size: number;
   accent: boolean;
   first: boolean;
+  href: string;
+  children?: ProjectType[];
   tags: TagType[];
   resourceLinks: ResourceLinksType[];
 };

@@ -21,7 +21,7 @@ const LangSwitch = () => {
   };
 
   return (
-    <Popover placement='bottom-end'>
+    <Popover>
       <Popover.Trigger>
         <Button
           size='xs'

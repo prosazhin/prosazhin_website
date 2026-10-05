@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next/initReactI18next';
 import { createInstance } from 'i18next';
 
 import enCareer from '@/i18n/locales/en/career.json';
+import enCollaboration from '@/i18n/locales/en/collaboration.json';
 import enCommon from '@/i18n/locales/en/common.json';
 import enDesignSystem from '@/i18n/locales/en/design-system.json';
 import enMatrix from '@/i18n/locales/en/matrix.json';
@@ -10,7 +11,9 @@ import enPages from '@/i18n/locales/en/pages.json';
 import enPrivacy from '@/i18n/locales/en/privacy.json';
 import enProjects from '@/i18n/locales/en/projects.json';
 import enSkills from '@/i18n/locales/en/skills.json';
+import enTailwindDictionary from '@/i18n/locales/en/tailwind-dictionary.json';
 import ruCareer from '@/i18n/locales/ru/career.json';
+import ruCollaboration from '@/i18n/locales/ru/collaboration.json';
 import ruCommon from '@/i18n/locales/ru/common.json';
 import ruDesignSystem from '@/i18n/locales/ru/design-system.json';
 import ruMatrix from '@/i18n/locales/ru/matrix.json';
@@ -18,6 +21,7 @@ import ruPages from '@/i18n/locales/ru/pages.json';
 import ruPrivacy from '@/i18n/locales/ru/privacy.json';
 import ruProjects from '@/i18n/locales/ru/projects.json';
 import ruSkills from '@/i18n/locales/ru/skills.json';
+import ruTailwindDictionary from '@/i18n/locales/ru/tailwind-dictionary.json';
 
 export const i18nConfig = {
   locales: ['ru', 'en'],
@@ -35,6 +39,8 @@ const NAMESPACES = [
   'matrix',
   'privacy',
   'design-system',
+  'collaboration',
+  'tailwind-dictionary',
 ];
 
 // Обычные (не через import()) импорты: под Turbopack в dev-режиме динамический
@@ -52,6 +58,8 @@ const NAMESPACE_RESOURCES = {
     matrix: ruMatrix,
     privacy: ruPrivacy,
     'design-system': ruDesignSystem,
+    collaboration: ruCollaboration,
+    'tailwind-dictionary': ruTailwindDictionary,
   },
   en: {
     common: enCommon,
@@ -62,6 +70,8 @@ const NAMESPACE_RESOURCES = {
     matrix: enMatrix,
     privacy: enPrivacy,
     'design-system': enDesignSystem,
+    collaboration: enCollaboration,
+    'tailwind-dictionary': enTailwindDictionary,
   },
 };
 

@@ -13,14 +13,19 @@ const LinkList = ({
   items,
   size = 's',
   className,
+  itemClassName,
 }: {
   items: Array<{ title: string; url: string }>;
   size?: 's' | 'm';
   className?: string;
+  itemClassName?: string;
 }) => (
   <ul className={clsx('flex flex-row flex-wrap gap-8', className)}>
     {items.map(({ title, url }) => (
-      <li key={url}>
+      <li
+        key={url}
+        className={itemClassName}
+      >
         <Tag
           size={size}
           theme='border'

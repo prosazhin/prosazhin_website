@@ -131,10 +131,9 @@
     "links": {
       "resumeDeveloper": "Developer resume",
       "resumeDesigner": "Designer resume",
-      "projects": "Projects",
-      "links": "Useful links",
-      "posts": "Posts",
-      "designSystem": "Design system"
+      "designSystem": "Design system",
+      "collaboration": "Collaboration",
+      "tailwindDictionary": "Tailwind theme from tokens"
     }
   }
 }

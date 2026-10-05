@@ -1,0 +1,196 @@
+{
+  "metaTitle": "Collaboration: interface design and development",
+  "metaDescription": "Taking on design and frontend development projects: from an idea to a working interface. Design systems, Jamstack and headless CMS. How to work with me and how to get in touch.",
+  "hero": {
+    "titleStart": "Taking on projects in ",
+    "titleAccent": "design and development",
+    "description": "Frontend developer & Designer. I design interfaces that I can implement myself. I program what I have designed.",
+    "telegram": "Message on Telegram",
+    "email": "Email me"
+  },
+  "card": {
+    "role": "Frontend developer & Designer",
+    "rows": [
+      {
+        "label": "Where",
+        "value": "Sochi, working remotely"
+      },
+      {
+        "label": "Tools",
+        "value": "Figma, React, Next.js, TypeScript"
+      },
+      {
+        "label": "Approach",
+        "value": "Design systems, Jamstack and headless CMS"
+      },
+      {
+        "label": "Formats",
+        "value": "A consultation, a task, a project or work in your team"
+      }
+    ]
+  },
+  "help": {
+    "title": "How I can help",
+    "description": "Three areas. You can take them separately or together.",
+    "items": {
+      "design": {
+        "title": "Design",
+        "text": "I work out what the user needs and turn it into a clear interface: from scenarios and prototypes to finished screens and a design system.",
+        "features": [
+          "UX research",
+          "Interviews and usability tests",
+          "Metrics and A/B tests",
+          "User flows and prototypes",
+          "Tables, filters, charts",
+          "A design system in Figma",
+          "Interface copy"
+        ]
+      },
+      "development": {
+        "title": "Development",
+        "text": "I code what I designed — or what another designer drew. A website, a landing page or a content project often doesn't need a separate backend: the interface is built on Next.js, and the content lives in a headless CMS like Sanity or Strapi, where it's edited without a developer. I build such projects end to end. If you already have a backend, I work with its API.",
+        "features": [
+          "React and Next.js",
+          "TypeScript",
+          "Services and dashboards",
+          "Admin panels and CMS",
+          "Backend-free projects on a headless CMS",
+          "Sanity and Strapi",
+          "REST API integration",
+          "Component libraries",
+          "Accessibility, speed and SEO"
+        ]
+      },
+      "ai": {
+        "title": "AI automation",
+        "text": "I've built AI features in a product and automation around it: text pre-moderation via OpenAI, Telegram bots, support request analysis. I can build AI into your product or use it to take routine work off your team.",
+        "features": [
+          "AI features in a product",
+          "Text pre-moderation via OpenAI",
+          "Support automation",
+          "Telegram bots and assistants",
+          "Support request reports",
+          "AI in development: code, reviews, tests"
+        ]
+      }
+    }
+  },
+  "why": {
+    "title": "Why one person for design and code",
+    "description": "Time and meaning get lost between a mockup and the code. When one person does both, less gets lost.",
+    "usual": {
+      "title": "Usually",
+      "steps": [
+        "A designer draws a mockup",
+        "Hands it to a developer",
+        "The developer finds constraints",
+        "The mockup gets reworked",
+        "Another handoff and more fixes"
+      ],
+      "text": "Every clarification is another round between two people."
+    },
+    "me": {
+      "title": "With me",
+      "steps": [
+        "I design the interface",
+        "I build it in code right away",
+        "You see a working version"
+      ],
+      "text": "A decision is made once and checked in the browser right away."
+    },
+    "items": [
+      {
+        "icon": "chart",
+        "title": "Decisions based on data",
+        "text": "I rely on interviews, usability tests and product metrics, not on taste."
+      },
+      {
+        "icon": "rocket",
+        "title": "A quick start",
+        "text": "I start a new project on my own design system: buttons, inputs and the dark theme are already done.",
+        "link": "Design system"
+      },
+      {
+        "icon": "building",
+        "title": "Products and studios",
+        "text": "I've worked both at product companies and at studios: I know how work runs both in a product and with clients."
+      },
+      {
+        "icon": "users",
+        "title": "Leadership experience",
+        "text": "I led a frontend team of 5: priorities, reviews, releases and stack decisions."
+      },
+      {
+        "icon": "shield",
+        "title": "Tidy code",
+        "text": "I set up linting, git hooks, tests and CI/CD so the project is safe to keep developing."
+      },
+      {
+        "icon": "globe",
+        "title": "Remote work",
+        "text": "I live in Sochi and work remotely. We'll agree on communication and call times up front."
+      }
+    ]
+  },
+  "projects": {
+    "title": "My projects",
+    "description": "Open-source libraries I build myself — from Figma mockups to publishing on npm.",
+    "designSystem": {
+      "title": "Design system",
+      "text": "Styles and React components with matching Figma files. This site is built on it."
+    }
+  },
+  "how": {
+    "title": "How we'll work together",
+    "steps": [
+      {
+        "title": "You describe the task",
+        "text": "What the product is, what needs to be done and by when. If the task is still vague, we'll work it out together."
+      },
+      {
+        "title": "We agree on a format",
+        "text": "A consultation, a small task, a whole project or work in your team. Before starting, I give you the scope and timeline."
+      },
+      {
+        "title": "I work and show progress",
+        "text": "In small steps and with a working version, not just a description. We take feedback into account as we go."
+      },
+      {
+        "title": "I hand over the result",
+        "text": "The code goes to your repository, the mockups to your Figma, plus documentation."
+      }
+    ]
+  },
+  "fit": {
+    "title": "Who I'm a fit for",
+    "yesTitle": "A fit if",
+    "yes": [
+      "you need one person for both design and frontend",
+      "the product needs an interface with tables, charts and complex scenarios",
+      "you need to build an MVP or a new section of a service quickly",
+      "you need a website or a content project without a separate backend",
+      "you need to bring order to the interface: tokens, components, a design system",
+      "you want to add AI to the product or get rid of routine"
+    ],
+    "noTitle": "Not a fit if",
+    "no": [
+      "most of the work is backend",
+      "you need branding, illustrations or video",
+      "you need someone in the office full-time"
+    ]
+  },
+  "contact": {
+    "title": "Have a task in mind?",
+    "text": "Get in touch about working together. Describe the task in a couple of sentences — I'll reply with how I can help and how best to organize the work.",
+    "email": "Or by email",
+    "more": "More about me",
+    "links": {
+      "resumeDeveloper": "Developer resume",
+      "resumeDesigner": "Designer resume",
+      "designSystem": "Design system",
+      "tailwindDictionary": "Tailwind theme from tokens",
+      "projects": "Projects",
+      "github": "GitHub"
+    }
+  }
+}

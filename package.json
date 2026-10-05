@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@prosazhin/pbcomponents": "^2.1.0",
+    "@prosazhin/pbcomponents": "^2.1.1",
     "@prosazhin/pbstyles": "1.4.0",
     "@types/mdx": "^2.0.14",
     "dayjs": "^1.11.20",

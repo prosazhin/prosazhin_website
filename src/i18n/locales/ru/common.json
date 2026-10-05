@@ -131,10 +131,9 @@
     "links": {
       "resumeDeveloper": "Резюме разработчика",
       "resumeDesigner": "Резюме дизайнера",
-      "projects": "Проекты",
-      "links": "Полезные ссылки",
-      "posts": "Заметки",
-      "designSystem": "Дизайн-система"
+      "designSystem": "Дизайн-система",
+      "collaboration": "Сотрудничество",
+      "tailwindDictionary": "Тема Tailwind из токенов"
     }
   }
 }

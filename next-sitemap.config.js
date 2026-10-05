@@ -17,7 +17,15 @@ const data = [
     priority: 0.8,
   },
   {
+    path: '/collaboration',
+    priority: 0.8,
+  },
+  {
     path: '/design-system',
+    priority: 0.8,
+  },
+  {
+    path: '/tailwind-dictionary',
     priority: 0.8,
   },
   {

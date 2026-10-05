@@ -2,14 +2,21 @@
   "documentation": "Documentation",
   "entries": [
     {
+      "slug": "design-system",
+      "title": "Design system",
+      "description": "Style and React component libraries with Figma files that this site is built on"
+    },
+    {
       "slug": "pbcomponents",
       "title": "pbcomponents",
-      "description": "React component library for rapid interface prototyping"
+      "description": "React component library for rapid interface prototyping",
+      "role": "Components"
     },
     {
       "slug": "pbstyles",
       "title": "pbstyles",
-      "description": "Style and design token library for rapid interface prototyping"
+      "description": "Style and design token library for rapid interface prototyping",
+      "role": "Foundation"
     },
     {
       "slug": "prosazhin_website",

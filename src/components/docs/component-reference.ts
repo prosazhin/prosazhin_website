@@ -1481,7 +1481,7 @@ export const componentReference: Record<string, ComponentReference> = {
         type: 'number',
         ru: 'Длительность анимации в миллисекундах.',
         en: 'Animation duration in milliseconds.',
-        default: 200,
+        default: 400,
         control: 'number',
       },
       {
@@ -1537,7 +1537,7 @@ export const componentReference: Record<string, ComponentReference> = {
         type: 'number',
         ru: 'Длительность анимации диалога в миллисекундах.',
         en: 'Dialog animation duration in milliseconds.',
-        initial: 200,
+        initial: 400,
         control: 'number',
       },
       className,

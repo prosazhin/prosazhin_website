@@ -32,7 +32,7 @@ const CopyCommand = ({
 
   return (
     <div className='rounded-12 border-secondary-200 bg-secondary-50 desktop:w-auto flex w-full max-w-full flex-row items-center gap-x-12 border py-6 pr-6 pl-16'>
-      <code className='text-t14 text-basic-400 min-w-0 flex-1 overflow-x-auto font-mono whitespace-nowrap'>
+      <code className='text-t14 max-xs:text-t12 text-basic-400 min-w-0 flex-1 overflow-x-auto font-mono whitespace-nowrap'>
         <span
           aria-hidden='true'
           className='text-basic-300 select-none'

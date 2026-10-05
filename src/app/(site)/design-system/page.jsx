@@ -1,3 +1,8 @@
+import CodeBlock from '@/components/CodeBlock';
+import ContactSection from '@/components/ContactSection';
+import CopyCommand from '@/components/CopyCommand';
+import LinkList from '@/components/LinkList';
+import SectionHeader from '@/components/SectionHeader';
 import { initTranslations } from '@/i18n';
 import { getLocale } from '@/utils/get-locale';
 import getMetadata from '@/utils/get-metadata';
@@ -6,7 +11,6 @@ import {
   XMarkIcon as XMarkSolidIcon,
 } from '@heroicons/react/20/solid';
 import {
-  ArrowUpRightIcon,
   CheckIcon,
   MoonIcon,
   RocketLaunchIcon,
@@ -17,8 +21,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { Badge, Button, Container } from '@prosazhin/pbcomponents';
 import clsx from 'clsx';
-import CopyCommand from './components/CopyCommand';
-import LinkList from './components/LinkList';
+import NextLink from 'next/link';
 
 const WHY_ICONS = {
   shield: ShieldCheckIcon,
@@ -36,53 +39,38 @@ const FIT = {
 
 const formatIndex = (index) => String(index + 1).padStart(2, '0');
 
-const SectionHeader = ({ title, description }) => (
-  <div className='desktop:gap-y-16 flex max-w-[760px] flex-col gap-y-12'>
-    <h2 className='text-h32 desktop:text-h48 text-basic-400 tracking-[-0.02em]'>{title}</h2>
-    {description && <p className='text-t16 desktop:text-t20 text-basic-400'>{description}</p>}
-  </div>
-);
-
-const CodeBlock = ({ file, code }) => (
-  <figure className='rounded-16 border-secondary-200 bg-secondary-50 w-full min-w-0 overflow-hidden border'>
-    <figcaption className='border-secondary-200 text-t12 text-basic-300 border-b px-16 py-8 font-mono'>
-      {file}
-    </figcaption>
-    <pre className='text-t14 text-basic-400 p-16 font-mono [overflow-wrap:anywhere] whitespace-pre-wrap'>
-      <code>{code}</code>
-    </pre>
-  </figure>
-);
-
 const DesignSystemPage = async () => {
   const locale = await getLocale();
   const { t } = await initTranslations(locale);
-  const [
-    { default: projectsBySlug },
-    { default: contacts },
-    { INSTALL_COMMAND, libraries, flowSteps, cycleSteps },
-  ] = await Promise.all([
-    import('@/data/projects'),
-    import('@/data/contacts'),
-    import('@/data/design-system'),
-  ]);
+  const [{ default: projectsBySlug }, { INSTALL_COMMAND, libraries, flowSteps, cycleSteps }] =
+    await Promise.all([import('@/data/projects'), import('@/data/design-system')]);
 
   const tr = (key, options) => t(key, { ns: 'design-system', ...options });
   const list = (key) => tr(key, { returnObjects: true });
 
   const flowTitles = list('flow.items');
 
-  const libraryCards = libraries.map(({ slug, accent }) => ({
-    slug,
-    accent,
-    role: tr(`libraries.items.${slug}.role`),
-    description: tr(`libraries.items.${slug}.description`),
-    features: list(`libraries.items.${slug}.features`),
-    links: projectsBySlug[slug].resourceLinks.map((link) => ({
-      title: link.title === 'docs' ? tr('libraries.docs') : link.title,
-      url: link.url,
-    })),
-  }));
+  // Карточка целиком ведёт на href проекта (по умолчанию — документация), поэтому эта
+  // ссылка из тегов убирается. У tailwind-dictionary своя страница, и docs остаётся тегом.
+  const libraryCards = libraries.map(({ slug, accent }) => {
+    const { href, resourceLinks } = projectsBySlug[slug];
+    const cardHref = href ?? resourceLinks[0].url;
+
+    return {
+      slug,
+      accent,
+      href: cardHref,
+      role: tr(`libraries.items.${slug}.role`),
+      description: tr(`libraries.items.${slug}.description`),
+      features: list(`libraries.items.${slug}.features`),
+      links: resourceLinks
+        .filter((link) => link.url !== cardHref)
+        .map((link) => ({
+          title: link.title === 'docs' ? tr('libraries.docs') : link.title,
+          url: link.url,
+        })),
+    };
+  });
 
   const steps = list('cycle.steps').map((step, index) => {
     const { links, ...rest } = cycleSteps[index];
@@ -93,12 +81,9 @@ const DesignSystemPage = async () => {
     };
   });
 
-  const email = contacts.find(({ url }) => url.startsWith('mailto:'));
-  const telegram = contacts.find(({ url }) => url.startsWith('https://t.me/'));
-
   return (
     <Container size='m'>
-      <div className='desktop:gap-y-128 flex w-full flex-col gap-y-80'>
+      <div className='desktop:gap-y-112 flex w-full flex-col gap-y-72'>
         {/* Первый экран */}
         <section className='desktop:gap-y-56 flex w-full flex-col gap-y-40'>
           <div className='desktop:gap-y-32 flex w-full flex-col items-start gap-y-24'>
@@ -170,7 +155,7 @@ const DesignSystemPage = async () => {
         </section>
 
         {/* Зачем */}
-        <section className='desktop:gap-y-56 flex w-full flex-col gap-y-32'>
+        <section className='desktop:gap-y-32 flex w-full flex-col gap-y-24'>
           <SectionHeader
             title={tr('why.title')}
             description={tr('why.description')}
@@ -218,7 +203,7 @@ const DesignSystemPage = async () => {
         </section>
 
         {/* Библиотеки */}
-        <section className='desktop:gap-y-56 flex w-full flex-col gap-y-32'>
+        <section className='desktop:gap-y-32 flex w-full flex-col gap-y-24'>
           <SectionHeader
             title={tr('libraries.title')}
             description={tr('libraries.description')}
@@ -228,8 +213,10 @@ const DesignSystemPage = async () => {
               <li
                 key={library.slug}
                 className={clsx(
-                  'rounded-24 desktop:p-40 flex flex-col gap-y-24 p-24',
-                  library.accent ? 'bg-basic-50' : 'border-secondary-200 border'
+                  'group rounded-24 desktop:p-40 relative flex flex-col gap-y-24 p-24 transition-colors duration-150',
+                  library.accent
+                    ? 'bg-basic-50 hover:bg-primary-50'
+                    : 'border-secondary-200 hover:border-primary-300 border'
                 )}
               >
                 <div className='flex flex-col items-start gap-y-16'>
@@ -241,7 +228,7 @@ const DesignSystemPage = async () => {
                     {library.role}
                   </Badge>
                   <div className='flex flex-col gap-y-8'>
-                    <h3 className='text-h24 desktop:text-h32 text-basic-400 tracking-[-0.02em]'>
+                    <h3 className='text-h24 desktop:text-h32 text-basic-400 group-hover:text-primary-400 tracking-[-0.02em] transition-colors duration-150'>
                       {library.slug}
                     </h3>
                     <p className='text-t16 text-basic-400'>{library.description}</p>
@@ -261,7 +248,16 @@ const DesignSystemPage = async () => {
                     </li>
                   ))}
                 </ul>
-                <LinkList items={library.links} />
+                {/* Ссылка растянута на всю карточку; теги-ссылки лежат поверх неё */}
+                <NextLink
+                  href={library.href}
+                  aria-label={library.slug}
+                  className='rounded-24 absolute inset-0 z-10'
+                />
+                <LinkList
+                  items={library.links}
+                  itemClassName='relative z-20'
+                />
               </li>
             ))}
           </ul>
@@ -311,7 +307,7 @@ const DesignSystemPage = async () => {
         </section>
 
         {/* Кому подойдёт */}
-        <section className='desktop:gap-y-56 flex w-full flex-col gap-y-32'>
+        <section className='desktop:gap-y-32 flex w-full flex-col gap-y-24'>
           <SectionHeader title={tr('fit.title')} />
           <div className='md-min:grid-cols-2 grid w-full grid-cols-1 gap-16'>
             {Object.entries(FIT).map(([key, { Icon: FitIcon, iconClassName }]) => (
@@ -340,44 +336,12 @@ const DesignSystemPage = async () => {
         </section>
 
         {/* Контакты */}
-        <section className='rounded-24 bg-primary-50 desktop:p-64 flex w-full flex-col gap-y-32 p-24'>
-          <div className='desktop:gap-y-16 flex max-w-[720px] flex-col gap-y-12'>
-            <h2 className='text-h32 desktop:text-h48 text-basic-400 tracking-[-0.02em]'>
-              {tr('contact.title')}
-            </h2>
-            <p className='text-t16 desktop:text-t20 text-basic-400'>{tr('contact.text')}</p>
-          </div>
-          <ul className='md-min:grid-cols-2 grid w-full max-w-[800px] grid-cols-1 gap-16'>
-            {[
-              { label: tr('contact.email'), value: email.title, url: email.url },
-              {
-                label: tr('contact.telegram'),
-                value: `@${telegram.url.split('/').pop()}`,
-                url: telegram.url,
-              },
-            ].map(({ label, value, url }) => (
-              <li key={url}>
-                <a
-                  href={url}
-                  target={url.startsWith('mailto:') ? undefined : '_blank'}
-                  rel={url.startsWith('mailto:') ? undefined : 'noreferrer'}
-                  className='group rounded-16 bg-basic-0 border-secondary-200 hover:border-primary-300 flex flex-row items-center gap-x-16 border px-24 py-20 no-underline! transition-colors duration-150'
-                >
-                  <span className='flex min-w-0 flex-1 flex-col'>
-                    <span className='text-t14 text-basic-300'>{label}</span>
-                    <span className='text-tm20 text-basic-400 group-hover:text-primary-400 truncate transition-colors duration-150'>
-                      {value}
-                    </span>
-                  </span>
-                  <ArrowUpRightIcon
-                    aria-hidden='true'
-                    className='text-basic-300 group-hover:text-primary-400 size-24 shrink-0 transition-colors duration-150'
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <ContactSection
+          title={tr('contact.title')}
+          text={tr('contact.text')}
+          emailLabel={tr('contact.email')}
+          telegramLabel={tr('contact.telegram')}
+        />
       </div>
     </Container>
   );

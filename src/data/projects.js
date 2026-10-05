@@ -1,9 +1,21 @@
+// href — куда ведёт клик по карточке (по умолчанию первая из resourceLinks).
+// children — проекты, которые на /projects выводятся внутри карточки родителя.
 const projects = {
+  'design-system': {
+    order: 0,
+    size: 6,
+    accent: true,
+    first: true,
+    href: '/design-system',
+    children: ['pbstyles', 'pbcomponents'],
+    tags: ['Design', 'Development'],
+    resourceLinks: [],
+  },
   pbcomponents: {
     order: 1,
     size: 3,
     accent: true,
-    first: true,
+    first: false,
     tags: ['Design', 'Development'],
     resourceLinks: [
       { url: '/docs/pbcomponents', title: 'docs' },
@@ -37,7 +49,7 @@ const projects = {
     ],
   },
   prosazhin_website: {
-    order: 3,
+    order: 5,
     size: 2,
     accent: false,
     first: false,
@@ -53,7 +65,7 @@ const projects = {
   },
   'mixin-dictionary': {
     order: 4,
-    size: 3,
+    size: 2,
     accent: false,
     first: false,
     tags: ['Development'],
@@ -64,10 +76,11 @@ const projects = {
     ],
   },
   'tailwind-dictionary': {
-    order: 5,
-    size: 3,
-    accent: false,
+    order: 3,
+    size: 4,
+    accent: true,
     first: false,
+    href: '/tailwind-dictionary',
     tags: ['Development'],
     resourceLinks: [
       { url: '/docs/tailwind-dictionary', title: 'docs' },
@@ -76,8 +89,8 @@ const projects = {
     ],
   },
   'bank-money-time': {
-    order: 6,
-    size: 4,
+    order: 8,
+    size: 3,
     accent: true,
     first: false,
     tags: ['Design'],
@@ -90,7 +103,7 @@ const projects = {
     ],
   },
   'telegram-assistent-bot': {
-    order: 7,
+    order: 6,
     size: 2,
     accent: false,
     first: false,
@@ -100,7 +113,7 @@ const projects = {
     ],
   },
   'telegram-access-permission-bot': {
-    order: 8,
+    order: 7,
     size: 2,
     accent: false,
     first: false,
@@ -114,7 +127,7 @@ const projects = {
   },
   'shake-to-mind': {
     order: 9,
-    size: 4,
+    size: 3,
     accent: true,
     first: false,
     tags: ['Design'],

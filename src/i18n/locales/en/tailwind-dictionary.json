@@ -1,0 +1,159 @@
+{
+  "metaTitle": "tailwind-dictionary — a Tailwind CSS theme from design tokens",
+  "metaDescription": "An npm package that builds a Tailwind CSS 4 or 3 theme from Figma, Tokens Studio or Style Dictionary JSON tokens: light, dark and any other themes with one command, no build scripts.",
+  "hero": {
+    "titleStart": "A Tailwind theme from design tokens, ",
+    "titleAccent": "in one command",
+    "description": "tailwind-dictionary turns JSON tokens from Figma, Tokens Studio or Style Dictionary into a Tailwind CSS 4 or 3 theme — with light, dark and any other themes. One config.json instead of a build script."
+  },
+  "cta": {
+    "title": "Try it yourself",
+    "text": "Paste your tokens into the playground — the theme builds right in the browser, nothing to install. Or install the package and run one command.",
+    "copy": "Copy command",
+    "copied": "Copied",
+    "playground": "Try it in the browser",
+    "docs": "Documentation",
+    "links": {
+      "github": "GitHub",
+      "npm": "npm",
+      "changelog": "Changelog"
+    }
+  },
+  "demo": {
+    "title": "What you get",
+    "text": "A palette and the light and dark theme colors in DTCG format — and the theme the package builds from them. This is real build output: switch the Tailwind version to compare.",
+    "input": "Tokens",
+    "inputFile": "Token file",
+    "output": "Theme",
+    "version": "Tailwind version"
+  },
+  "why": {
+    "title": "Why a separate package",
+    "description": "A Tailwind theme edited by hand drifts away from the design over time. If colors and sizes already live in tokens, build the theme from them.",
+    "accent": {
+      "title": "Always in sync with the design",
+      "text": "The designer updated a color in Figma, you exported the variables and ran one command. No hunting for where that color is written in CSS and no checking that nothing got lost."
+    },
+    "dark": {
+      "title": "Why not Style Dictionary?",
+      "text": "Style Dictionary is a powerful tool, but you would have to describe the Tailwind theme format, @theme, semantic variables and theme switching yourself, in a JS script you also have to maintain. Here it is already done, covered by tests and configured with JSON."
+    },
+    "items": [
+      {
+        "icon": "document",
+        "title": "A JSON config, no code",
+        "text": "Token paths and their mapping to Tailwind theme keys live in one config.json. The JSON Schema suggests fields right in the editor."
+      },
+      {
+        "icon": "figma",
+        "title": "Figma export as is",
+        "text": "Export modes in Figma gives one file per mode — plug them in without conversion. Unitless numbers get px or rem."
+      },
+      {
+        "icon": "format",
+        "title": "DTCG and the legacy format",
+        "text": "The W3C Design Tokens 2025.10 format with composite typography and shadow. Style Dictionary tokens with a value field work too."
+      },
+      {
+        "icon": "moon",
+        "title": "Any number of themes",
+        "text": "Light, dark, high-contrast or brand themes. They switch with a data-theme attribute on any element; light and dark follow the system setting."
+      },
+      {
+        "icon": "versions",
+        "title": "Tailwind 4 and 3",
+        "text": "For v4 — theme.css with @theme, for v3 — an object for tailwind.config.js. The tokens are the same for both versions."
+      },
+      {
+        "icon": "terminal",
+        "title": "Clear errors and watch mode",
+        "text": "A broken token reference is one line with the token path and file name. In watch mode the theme rebuilds on every token change."
+      }
+    ]
+  },
+  "themes": {
+    "title": "Themes on any element",
+    "description": "The block below is built on the pbstyles theme that tailwind-dictionary generates. The switch changes only the data-theme attribute on the container — the classes stay the same.",
+    "label": "Block theme",
+    "light": "Light",
+    "dark": "Dark",
+    "card": {
+      "badge": "New",
+      "title": "Weekly report",
+      "text": "Background, text, border and button colors come from the semantic tokens of the current theme.",
+      "primary": "Open",
+      "secondary": "Later"
+    }
+  },
+  "steps": {
+    "title": "From Figma to code in four steps",
+    "description": "An example for Tailwind 4 and the native Figma variables export. For Tokens Studio and Style Dictionary, only the file paths change.",
+    "links": {
+      "figma": "More about the Figma export",
+      "config": "All config fields",
+      "themes": "How themes work"
+    },
+    "items": [
+      {
+        "title": "Export the variables",
+        "text": "In Figma: Variables → right-click the collection → Export modes. You get a file with primitives and one file per mode."
+      },
+      {
+        "title": "Describe the config",
+        "text": "Primitives go to source, modes go to themes. In themeAliases, specify which token groups map to which Tailwind theme keys."
+      },
+      {
+        "title": "Build the theme",
+        "text": "Run npx tailwind-dictionary and import the result after Tailwind. The default Tailwind theme is replaced with your tokens."
+      },
+      {
+        "title": "Write regular classes",
+        "text": "Classes are built from your tokens: bg-primary, rounded-12. In the dark theme, bg-primary becomes a different color on its own — no markup changes needed."
+      }
+    ]
+  },
+  "proof": {
+    "title": "In a real project",
+    "text": "The pbstyles theme is built with tailwind-dictionary — it is the foundation of the design system behind this site and its docs. The pbstyles config is public, so you can use it as a template.",
+    "facts": [
+      {
+        "value": "4 and 3",
+        "label": "Tailwind CSS versions"
+      },
+      {
+        "value": "2025.10",
+        "label": "DTCG format version"
+      },
+      {
+        "value": "MIT",
+        "label": "license"
+      }
+    ],
+    "links": {
+      "designSystem": "About the design system",
+      "pbstylesConfig": "pbstyles config on GitHub"
+    }
+  },
+  "fit": {
+    "title": "Who it is for",
+    "yesTitle": "A good fit if",
+    "yes": [
+      "your tokens already live in Figma, Tokens Studio or Style Dictionary",
+      "the project uses Tailwind CSS 4 or 3",
+      "you need light, dark or brand themes",
+      "the theme should be built from tokens, not edited by hand"
+    ],
+    "noTitle": "Not a fit if",
+    "no": [
+      "there are no tokens and won't be — a few variables are easier to write in @theme by hand",
+      "the project doesn't use Tailwind — for CSS variables, LESS and SCSS there is mixin-dictionary",
+      "you need custom Style Dictionary transforms and formats — then your own build script is more convenient"
+    ]
+  },
+  "contact": {
+    "title": "Need help?",
+    "text": "I can help set up the Figma export, themes and style builds in your project.",
+    "email": "Email",
+    "telegram": "Telegram"
+  }
+}
