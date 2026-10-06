@@ -4,9 +4,23 @@
   "hero": {
     "titleStart": "Design system built on ",
     "titleAccent": "pbstyles and pbcomponents",
-    "description": "Style and React component libraries this site is built on. Each comes with a Figma file that has the same colors, fonts and components as the code.",
+    "description": "Style and React component libraries this site is built on. Each comes with a Figma file that has the same colors, fonts and components as the code."
+  },
+  "cta": {
+    "title": "Try it yourself",
+    "text": "Install both packages, import the pbstyles theme in globals.css — and the components are ready to use. The Figma files with the same tokens are public.",
     "copy": "Copy command",
-    "copied": "Copied"
+    "copied": "Copied",
+    "buttons": {
+      "pbcomponents": "pbcomponents docs",
+      "pbstyles": "pbstyles docs"
+    },
+    "links": {
+      "githubComponents": "pbcomponents on GitHub",
+      "githubStyles": "pbstyles on GitHub",
+      "figmaComponents": "pbcomponents in Figma",
+      "figmaStyles": "pbstyles in Figma"
+    }
   },
   "flow": {
     "title": "The path of one color",

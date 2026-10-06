@@ -3,6 +3,23 @@
 
 export const INSTALL_COMMAND = 'npm i @prosazhin/pbcomponents @prosazhin/pbstyles';
 
+const FIGMA_STYLES = 'https://www.figma.com/community/file/1213609862805339771';
+const FIGMA_COMPONENTS = 'https://www.figma.com/community/file/1214486013859546496';
+
+// Блок «Попробуйте сами»: кнопки на документацию (подписи — cta.buttons.<key>)
+// и теги-ссылки на репозитории и файлы Figma (подписи — cta.links.<key>).
+export const ctaButtons = [
+  { key: 'pbcomponents', url: '/docs/pbcomponents', primary: true },
+  { key: 'pbstyles', url: '/docs/pbstyles' },
+];
+
+export const ctaLinks = [
+  { key: 'githubComponents', url: 'https://github.com/prosazhin/pbcomponents' },
+  { key: 'githubStyles', url: 'https://github.com/prosazhin/pbstyles' },
+  { key: 'figmaComponents', url: FIGMA_COMPONENTS },
+  { key: 'figmaStyles', url: FIGMA_STYLES },
+];
+
 // Порядок карточек в блоке «Состав»; accent — крупная карточка на фоне.
 export const libraries = [
   { slug: 'pbstyles', accent: true },
@@ -26,8 +43,8 @@ export const flowSteps = [
 export const cycleSteps = [
   {
     links: [
-      { key: 'figmaStyles', url: 'https://www.figma.com/community/file/1213609862805339771' },
-      { key: 'figmaComponents', url: 'https://www.figma.com/community/file/1214486013859546496' },
+      { key: 'figmaStyles', url: FIGMA_STYLES },
+      { key: 'figmaComponents', url: FIGMA_COMPONENTS },
     ],
   },
   {

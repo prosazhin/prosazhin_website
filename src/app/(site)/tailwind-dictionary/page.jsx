@@ -1,3 +1,4 @@
+import ActionButtons from '@/components/ActionButtons';
 import CodeBlock from '@/components/CodeBlock';
 import ContactSection from '@/components/ContactSection';
 import CopyCommand from '@/components/CopyCommand';
@@ -20,7 +21,6 @@ import {
 } from '@heroicons/react/24/outline';
 import { Container } from '@prosazhin/pbcomponents';
 import clsx from 'clsx';
-import ActionButtons from './components/ActionButtons';
 import ThemeDemo from './components/ThemeDemo';
 import TokensDemo from './components/TokensDemo';
 
@@ -89,11 +89,10 @@ const TailwindDictionaryPage = async () => {
                 command={INSTALL_COMMAND}
                 copyLabel={tr('cta.copy')}
                 copiedLabel={tr('cta.copied')}
+                surface='base'
               />
-              <div className='flex flex-row flex-wrap items-center gap-x-24 gap-y-16'>
-                <ActionButtons items={docsButtons} />
-                <LinkList items={toLinks(['github', 'npm', 'changelog'], 'cta.links')} />
-              </div>
+              <ActionButtons items={docsButtons} />
+              <LinkList items={toLinks(['github', 'npm', 'changelog'], 'cta.links')} />
             </div>
           </section>
 

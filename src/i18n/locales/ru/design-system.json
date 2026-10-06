@@ -4,9 +4,23 @@
   "hero": {
     "titleStart": "Дизайн-система на ",
     "titleAccent": "pbstyles и pbcomponents",
-    "description": "Библиотеки стилей и React-компонентов, на которых собран этот сайт. Для каждой есть файл в Figma с теми же цветами, шрифтами и компонентами, что и в коде.",
+    "description": "Библиотеки стилей и React-компонентов, на которых собран этот сайт. Для каждой есть файл в Figma с теми же цветами, шрифтами и компонентами, что и в коде."
+  },
+  "cta": {
+    "title": "Попробуйте сами",
+    "text": "Поставьте оба пакета, подключите тему pbstyles в globals.css — и компоненты готовы к работе. Макеты с теми же токенами открыты в Figma.",
     "copy": "Скопировать команду",
-    "copied": "Скопировано"
+    "copied": "Скопировано",
+    "buttons": {
+      "pbcomponents": "Документация pbcomponents",
+      "pbstyles": "Документация pbstyles"
+    },
+    "links": {
+      "githubComponents": "pbcomponents на GitHub",
+      "githubStyles": "pbstyles на GitHub",
+      "figmaComponents": "pbcomponents в Figma",
+      "figmaStyles": "pbstyles в Figma"
+    }
   },
   "flow": {
     "title": "Путь одного цвета",

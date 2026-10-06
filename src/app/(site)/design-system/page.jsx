@@ -1,3 +1,4 @@
+import ActionButtons from '@/components/ActionButtons';
 import CodeBlock from '@/components/CodeBlock';
 import ContactSection from '@/components/ContactSection';
 import CopyCommand from '@/components/CopyCommand';
@@ -42,13 +43,21 @@ const formatIndex = (index) => String(index + 1).padStart(2, '0');
 const DesignSystemPage = async () => {
   const locale = await getLocale();
   const { t } = await initTranslations(locale);
-  const [{ default: projectsBySlug }, { INSTALL_COMMAND, libraries, flowSteps, cycleSteps }] =
-    await Promise.all([import('@/data/projects'), import('@/data/design-system')]);
+  const [
+    { default: projectsBySlug },
+    { INSTALL_COMMAND, ctaButtons, ctaLinks, libraries, flowSteps, cycleSteps },
+  ] = await Promise.all([import('@/data/projects'), import('@/data/design-system')]);
 
   const tr = (key, options) => t(key, { ns: 'design-system', ...options });
   const list = (key) => tr(key, { returnObjects: true });
 
   const flowTitles = list('flow.items');
+
+  const docsButtons = ctaButtons.map(({ key, ...rest }) => ({
+    ...rest,
+    title: tr(`cta.buttons.${key}`),
+  }));
+  const repoLinks = ctaLinks.map(({ key, url }) => ({ title: tr(`cta.links.${key}`), url }));
 
   // Карточка целиком ведёт на href проекта (по умолчанию — документация), поэтому эта
   // ссылка из тегов убирается. У tailwind-dictionary своя страница, и docs остаётся тегом.
@@ -84,9 +93,10 @@ const DesignSystemPage = async () => {
   return (
     <Container size='m'>
       <div className='desktop:gap-y-112 flex w-full flex-col gap-y-72'>
-        {/* Первый экран */}
-        <section className='desktop:gap-y-56 flex w-full flex-col gap-y-40'>
-          <div className='desktop:gap-y-32 flex w-full flex-col items-start gap-y-24'>
+        {/* Первый экран, попробовать и путь цвета идут плотнее остальных секций */}
+        <div className='desktop:gap-y-56 flex w-full flex-col gap-y-40'>
+          {/* Первый экран */}
+          <section className='desktop:gap-y-32 flex w-full flex-col items-start gap-y-24'>
             <h1 className='text-h32 sm-min:text-h48 lg-min:text-h64 text-basic-400 max-w-[960px] tracking-[-0.03em]'>
               {tr('hero.titleStart')}
               <span className='text-primary-300'>{tr('hero.titleAccent')}</span>
@@ -94,16 +104,31 @@ const DesignSystemPage = async () => {
             <p className='text-t16 desktop:text-t20 text-basic-400 max-w-[760px]'>
               {tr('hero.description')}
             </p>
-            <CopyCommand
-              command={INSTALL_COMMAND}
-              copyLabel={tr('hero.copy')}
-              copiedLabel={tr('hero.copied')}
-            />
-          </div>
+          </section>
+
+          {/* Попробовать: установка, документация, репозитории и файлы Figma */}
+          <section className='rounded-24 bg-basic-50 desktop:p-40 desktop:gap-y-24 flex w-full flex-col items-start gap-y-20 p-24'>
+            <div className='desktop:gap-y-16 flex max-w-[720px] flex-col gap-y-12'>
+              <h2 className='text-h32 desktop:text-h48 text-basic-400 tracking-[-0.02em]'>
+                {tr('cta.title')}
+              </h2>
+              <p className='text-t16 desktop:text-t20 text-basic-400'>{tr('cta.text')}</p>
+            </div>
+            <div className='flex w-full min-w-0 flex-col items-start gap-y-16'>
+              <CopyCommand
+                command={INSTALL_COMMAND}
+                copyLabel={tr('cta.copy')}
+                copiedLabel={tr('cta.copied')}
+                surface='base'
+              />
+              <ActionButtons items={docsButtons} />
+              <LinkList items={repoLinks} />
+            </div>
+          </section>
 
           {/* Путь одного цвета: токен primary-300 на каждом шаге, меняется вместе с темой.
               Пять карточек в ряд помещаются только от ~1200px, ниже — столбик. */}
-          <div className='rounded-24 bg-basic-50 desktop:p-32 flex w-full flex-col gap-y-24 p-20'>
+          <section className='rounded-24 bg-basic-50 desktop:p-32 flex w-full flex-col gap-y-24 p-20'>
             <div className='flex max-w-[640px] flex-col gap-y-4'>
               <h2 className='text-tm20 text-basic-400'>{tr('flow.title')}</h2>
               <p className='text-t16 text-basic-400'>{tr('flow.text')}</p>
@@ -151,8 +176,8 @@ const DesignSystemPage = async () => {
                 </li>
               ))}
             </ol>
-          </div>
-        </section>
+          </section>
+        </div>
 
         {/* Зачем */}
         <section className='desktop:gap-y-32 flex w-full flex-col gap-y-24'>
