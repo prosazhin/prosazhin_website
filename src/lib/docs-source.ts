@@ -9,10 +9,7 @@ export const docsI18n = defineI18n({
   fallbackLanguage: null,
 });
 
-const docs = defineDocs({
-  dir: 'content/docs',
-  docs: { postprocess: { includeProcessedMarkdown: true } },
-});
+const docs = defineDocs({ dir: 'content/docs' });
 
 export const docsSource = loader({
   baseUrl: '/docs',
